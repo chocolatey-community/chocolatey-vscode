@@ -1,0 +1,4 @@
+*.vsix
+
+# Build Related
+tools/
