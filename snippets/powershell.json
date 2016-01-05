@@ -1,3 +1,31 @@
 {
-    
+    "Install-ChocolateyPackage": {
+        "prefix": "chocoInstallChocolateyPackage",
+        "body": [
+            "$packageName= '${1:packageName}'",
+            "$toolsDir   = \"$(Split-Path -parent $MyInvocation.MyCommand.Definition)\"",
+            "$url        = '${2:DownloadUrl}'",
+            "$url64      = '${3:64BitDownloadUrl}'",
+            "",
+            "$packageArgs = @{",
+                "\tpackageName   = $packageName",
+                "\tunzipLocation = $toolsDir",
+                "\tfileType      = '${4:fileType}'",
+                "\turl           = $url",
+                "\turl64bit      = $url64",
+
+                "\tsilentArgs    = \"${5:silentArgs}\"",
+                "\tvalidExitCodes= @(${6:validExitCodes})",
+
+                "\tsoftwareName  = '${7:softwareName}'",
+                "\tchecksum      = '${8:checkSum}'",
+                "\tchecksumType  = '${9:checkSumType}'",
+                "\tchecksum64    = '${10:checkSum64}'",
+                "\tchecksumType64= '${11:checkSum64Type}",
+            "}",
+            "",
+            "Install-ChocolateyPackage @packageArgs"
+        ],
+        "description": "Chocolatey Install-ChocolateyPackage Helper Function"
+    }
 }
