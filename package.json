@@ -4,7 +4,7 @@
 	"publisher": "gep13",
 	"description": "Set of snippets for helping with creating packages for Chocolatey.",
 	"version": "0.1.0",
-	"icon": "images/chocolate.png",
+	"icon": "images/chocolatey.png",
 	"private": true,
 	"author": {
 		"name": "gep13"
