@@ -2,6 +2,7 @@
 // ADDINS
 ///////////////////////////////////////////////////////////////////////////////
 #addin Cake.Json
+#addin Cake.VsCode
 
 ///////////////////////////////////////////////////////////////////////////////
 // ARGUMENTS
@@ -16,6 +17,7 @@ var configuration   = Argument<string>("configuration", "Release");
 
 var packageJsonFile            = "./package.json";
 var version                    = "0.1.0";
+var buildDirectory             = Directory("./.build");
 
 ///////////////////////////////////////////////////////////////////////////////
 // SETUP / TEARDOWN
@@ -51,8 +53,16 @@ Task("Find-Version-Number")
     Information("Running GitReleaseManager for version: {0}", version);
 });
 
+Task("Package-Extension")
+    .IsDependentOn("Find-Version-Number") 
+    .Does(() =>
+{
+    VscePackage(new VscePackageSettings());
+});
+
 Task("Create-Release-Notes")
-    .IsDependentOn("Find-Version-Number")  
+    .IsDependentOn("Find-Version-Number") 
+    .IsDependentOn("Package-Extension")  
     .Does(() =>
 {
     var userName = EnvironmentVariable("GITHUB_USERNAME");
@@ -60,10 +70,28 @@ Task("Create-Release-Notes")
 
     GitReleaseManagerCreate(userName, password, "gep13", "chocolatey-vscode", new GitReleaseManagerCreateSettings {
         Milestone         = version,
+        Assets            = string.Format("{0}/chocolatey-vscode-{1}.vsix", Context.Environment.WorkingDirectory, version), 
         Name              = version,
         Prerelease        = false,
         TargetCommitish   = "master"
     });
+});
+
+Task("Publish-Extension")
+    .IsDependentOn("Create-Release-Notes")
+    .Does(() =>
+{
+    var personalAccessToken = EnvironmentVariable("VSCE_PAT");
+    var userName = EnvironmentVariable("GITHUB_USERNAME");
+    var password = EnvironmentVariable("GITHUB_PASSWORD");
+    
+    VscePublish(new VscePublishSettings(){
+        PersonalAccessToken = personalAccessToken
+    });
+    
+    GitReleaseManagerPublish(userName, password, "gep13", "chocolatey-vscode", version, null);
+    
+    GitReleaseManagerClose(userName, password, "gep13", "chocolatey-vscode", version, null);
 });
 
 Task("Default")
