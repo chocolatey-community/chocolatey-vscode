@@ -89,10 +89,10 @@ Task("Publish-Extension")
         PersonalAccessToken = personalAccessToken
     });
     
-    GitReleaseManagerPublish(userName, password, "gep13", "chocolatey-vscode", version, GitReleaseManagerPublish{
+    GitReleaseManagerPublish(userName, password, "gep13", "chocolatey-vscode", version, new GitReleaseManagerPublishSettings {
     });
     
-    GitReleaseManagerClose(userName, password, "gep13", "chocolatey-vscode", version, new GitReleaseManagerCloseMilestoneSettings{
+    GitReleaseManagerClose(userName, password, "gep13", "chocolatey-vscode", version, new GitReleaseManagerCloseMilestoneSettings {
     });
 });
 
