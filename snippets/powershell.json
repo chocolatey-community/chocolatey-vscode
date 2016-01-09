@@ -2,6 +2,8 @@
     "Install-ChocolateyPackage": {
         "prefix": "chocoInstallChocolateyPackage",
         "body": [
+            "$ErrorActionPreference = 'Stop';",
+            "",
             "$packageName= '${1:packageName}'",
             "$toolsDir   = \"$(Split-Path -parent $MyInvocation.MyCommand.Definition)\"",
             "$url        = '${2:DownloadUrl}'",
@@ -21,7 +23,7 @@
                 "\tchecksum      = '${8:checkSum}'",
                 "\tchecksumType  = '${9:checkSumType}'",
                 "\tchecksum64    = '${10:checkSum64}'",
-                "\tchecksumType64= '${11:checkSum64Type}",
+                "\tchecksumType64= '${11:checkSum64Type}'",
             "}",
             "",
             "Install-ChocolateyPackage @packageArgs"
