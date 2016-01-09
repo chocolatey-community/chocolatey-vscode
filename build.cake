@@ -95,7 +95,7 @@ Task("Publish-Extension")
 });
 
 Task("Default")
-    .IsDependentOn("Create-Release-Notes");
+    .IsDependentOn("Package-Extension");
 
 ///////////////////////////////////////////////////////////////////////////////
 // EXECUTION
