@@ -44,7 +44,15 @@ Teardown(() =>
 // TASK DEFINITIONS
 ///////////////////////////////////////////////////////////////////////////////
 
+Task("Clean")
+    .Does(() =>
+{
+    CleanDirectories(new DirectoryPath[] {
+        buildDirectory});
+});
+
 Task("Create-Build-Directory")
+    .IsDependentOn("Clean")
 	.Does(() =>
 {
     if (!DirectoryExists(buildDirectory))
@@ -81,10 +89,10 @@ Task("Create-Release-Notes")
 {
     var userName = EnvironmentVariable("GITHUB_USERNAME");
     var password = EnvironmentVariable("GITHUB_PASSWORD");
-
+    
     GitReleaseManagerCreate(userName, password, "gep13", "chocolatey-vscode", new GitReleaseManagerCreateSettings {
         Milestone         = version,
-        Assets            = string.Format("{0}/chocolatey-vscode-{1}.vsix", Context.Environment.WorkingDirectory, version), 
+        Assets            = string.Format("{0}/.build/chocolatey-vscode-{1}.vsix", Context.Environment.WorkingDirectory, version), 
         Name              = version,
         Prerelease        = true,
         TargetCommitish   = "master"
