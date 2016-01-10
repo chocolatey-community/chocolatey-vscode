@@ -4,7 +4,12 @@ This addin brings a set of snippets which can be used when creating install/unin
 
 # Usage
 
-There are currently 1 snippet included in this VS Code extension.  To use it, simply open your powershell file, and then type `choco` followed by `ctrl-space`.  This will then show the available snippets...
+There are currently 2 snippets included in this VS Code extension. These are for the following Chocolatey Helper Functions:
+
+* Install-ChocolateyPackage
+* Uninstall-ChocolateyPackage
+
+To use them, simply open your powershell file, and then type `choco` followed by `ctrl-space`.  This will then show the available snippets...
 
 ![Available Chocolatey Snippets](https://raw.githubusercontent.com/gep13/chocolatey-vscode/master/images/Choco-Snippets.png)
 
