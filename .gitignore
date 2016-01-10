@@ -2,3 +2,4 @@
 
 # Build Related
 tools/
+.build/

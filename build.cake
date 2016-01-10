@@ -44,6 +44,15 @@ Teardown(() =>
 // TASK DEFINITIONS
 ///////////////////////////////////////////////////////////////////////////////
 
+Task("Create-Build-Directory")
+	.Does(() =>
+{
+    if (!DirectoryExists(buildDirectory))
+    {
+        CreateDirectory(buildDirectory);
+    }
+});
+
 Task("Find-Version-Number")
     .Does(() =>
 {
@@ -54,10 +63,15 @@ Task("Find-Version-Number")
 });
 
 Task("Package-Extension")
+    .IsDependentOn("Create-Build-Directory")
     .IsDependentOn("Find-Version-Number") 
     .Does(() =>
 {
-    VscePackage(new VscePackageSettings());
+    var packageFile = File("chocolatey-vscode-" + version + ".vsix");
+    
+    VscePackage(new VscePackageSettings() {
+        OutputFilePath = buildDirectory + packageFile,
+    });
 });
 
 Task("Create-Release-Notes")
@@ -84,9 +98,11 @@ Task("Publish-Extension")
     var personalAccessToken = EnvironmentVariable("VSCE_PAT");
     var userName = EnvironmentVariable("GITHUB_USERNAME");
     var password = EnvironmentVariable("GITHUB_PASSWORD");
+    var packageFile = File("chocolatey-vscode-" + version + ".vsix");
     
     VscePublish(new VscePublishSettings(){
-        PersonalAccessToken = personalAccessToken
+        PersonalAccessToken = personalAccessToken,
+        Package = buildDirectory + packageFile
     });
     
     GitReleaseManagerPublish(userName, password, "gep13", "chocolatey-vscode", version, new GitReleaseManagerPublishSettings {
