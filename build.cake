@@ -86,7 +86,7 @@ Task("Create-Release-Notes")
         Milestone         = version,
         Assets            = string.Format("{0}/chocolatey-vscode-{1}.vsix", Context.Environment.WorkingDirectory, version), 
         Name              = version,
-        Prerelease        = false,
+        Prerelease        = true,
         TargetCommitish   = "master"
     });
 });
