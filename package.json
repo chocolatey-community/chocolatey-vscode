@@ -30,7 +30,7 @@
 	"contributes": {
 		"snippets": [
             {
-                "language": "markdown",
+                "language": "powershell",
                 "path": "./snippets/powershell.json"
             }
         ]
