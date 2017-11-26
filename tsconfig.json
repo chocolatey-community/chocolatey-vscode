@@ -1,0 +1,23 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"target": "es6",
+		"outDir": "out",
+		"lib": [
+			"es6"
+		],
+		"sourceMap": true,
+		"noUnusedParameters": true,
+		"noUnusedLocals": true,
+		"noFallthroughCasesInSwitch": true,
+		"allowUnreachableCode": false,
+		"noImplicitAny": true,
+		"noImplicitReturns": true,
+		"alwaysStrict": true,
+		"noImplicitThis": true,
+		"strict": true
+	},
+	"exclude": [
+		"node_modules"
+	]
+}
