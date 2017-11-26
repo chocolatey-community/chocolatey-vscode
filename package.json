@@ -17,10 +17,14 @@
 		"type": "git",
 		"url": "https://github.com/gep13/chocolatey-vscode"
 	},
+	"main": "./out/extension",
 	"galleryBanner": {
 		"color": "#FFE05C",
 		"theme": "light"
 	},
+	"activationEvents": [
+		"onCommand:chocolatey.new"
+	],
 	"engines": {
 		"vscode": "^1.16.0"
 	},
@@ -28,6 +32,12 @@
 		"Snippets"
 	],
 	"contributes": {
+		"commands": [
+			{
+			  "command": "chocolatey.new",
+			  "title": "Chocolatey: Create new chocolatey package"
+			}
+		],
 		"snippets": [
 			{
 				"language": "powershell",
