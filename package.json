@@ -11,16 +11,16 @@
 	},
 	"bugs": {
 		"url": "https://github.com/gep13/chocolatey-vscode/issues"
-  },
-  "homepage": "https://github.com/gep13/chocolatey-vscode",
+	},
+	"homepage": "https://github.com/gep13/chocolatey-vscode",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/gep13/chocolatey-vscode"
 	},
 	"galleryBanner": {
-        "color": "#FFE05C",
-        "theme": "light"
-  },
+		"color": "#FFE05C",
+		"theme": "light"
+	},
 	"engines": {
 		"vscode": "^0.10.1"
 	},
@@ -29,10 +29,10 @@
 	],
 	"contributes": {
 		"snippets": [
-            {
-                "language": "powershell",
-                "path": "./snippets/powershell.json"
-            }
-        ]
+			{
+				"language": "powershell",
+				"path": "./snippets/powershell.json"
+			}
+		]
 	}
 }
