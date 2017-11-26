@@ -1,8 +1,8 @@
 {
 	"name": "chocolatey-vscode",
-	"displayName": "Chocolatey Snippets",
+	"displayName": "Chocolatey",
 	"publisher": "gep13",
-	"description": "Set of snippets for helping with creating packages for Chocolatey.",
+	"description": "Set of snippets and commands for helping with creating packages for Chocolatey.",
 	"version": "0.2.2",
 	"icon": "images/chocolatey.png",
 	"private": true,
@@ -22,7 +22,7 @@
 		"theme": "light"
 	},
 	"engines": {
-		"vscode": "^0.10.1"
+		"vscode": "^1.16.0"
 	},
 	"categories": [
 		"Snippets"
@@ -34,5 +34,18 @@
 				"path": "./snippets/powershell.json"
 			}
 		]
+	},
+	"scripts": {
+		"vscode:prepublish": "tsc -p ./",
+		"compile": "tsc -watch -p ./",
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "node ./node_modules/vscode/bin/test"
+	},
+	"devDependencies": {
+		"@types/mocha": "^2.2.32",
+		"@types/node": "^6.0.40",
+		"mocha": "^2.3.3",
+		"typescript": "2.5.3",
+		"vscode": "^1.0.0"
 	}
 }
