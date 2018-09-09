@@ -1,0 +1,25 @@
+# Build script
+init:
+  - git config --global core.autocrlf true
+
+# Build script
+build_script:
+  - ps: .\build.ps1 -Target "AppVeyor" --settings_skipverification=true
+
+# Tests
+test: off
+
+# Branches to build
+branches:
+  # Whitelist
+  only:
+    - develop
+    - master
+    - /r/.*/
+    - /release/.*/
+    - /hotfix/.*/
+
+# Build cache
+cache:
+- tools -> build.cake
+- node_modules -> package.json

@@ -1,6 +1,7 @@
 {
     "files.exclude": {
-        "out": false // set this to true to hide the "out" folder with the compiled JS files
+        "out": false, // set this to true to hide the "out" folder with the compiled JS files
+        "typings": false
     },
     "search.exclude": {
         "**/node_modules": true,
