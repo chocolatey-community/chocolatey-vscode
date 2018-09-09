@@ -10,7 +10,12 @@ export function getFullAppPath(): string {
 }
 
 export function getPathToChocolateyBin(): string {
-    let chocolateyInstallEnvironmentVariable = process.env.ChocolateyInstall || process.env["ChocolateyInstall"];
+    let chocolateyInstallEnvironmentVariable: string | undefined = process.env.ChocolateyInstall;
+
+    if(chocolateyInstallEnvironmentVariable === undefined) {
+        // todo: this is really an error condition, and something should be done
+        return "";
+    }
 
     return path.join(chocolateyInstallEnvironmentVariable, "bin/choco.exe");
 }

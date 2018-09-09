@@ -1,12 +1,11 @@
 import { OutputChannel, window, workspace } from "vscode";
 import * as cp from "child_process";
 import * as os from "os";
-import * as path from "path";
 
 import { capitalizeFirstLetter } from "./helpers";
 import { getFullAppPath, getPathToChocolateyBin } from "./config";
 
-export interface ChocolateyOperationResult {
+export interface IChocolateyOperationResult {
     code: Number;
     stdout: Array<string>;
     stderr: Array<string>;
@@ -14,8 +13,8 @@ export interface ChocolateyOperationResult {
 
 export class ChocolateyOperation {
     private _spawn = cp.spawn;
-    private _oc: OutputChannel;
-    private _process: cp.ChildProcess;
+    private _oc!: OutputChannel;
+    private _process!: cp.ChildProcess;
     private _isOutputChannelVisible: boolean;
     private _stdout: Array<string> = [];
     private _stderr: Array<string> = [];
@@ -23,22 +22,22 @@ export class ChocolateyOperation {
     public cmd: Array<string>;
     public created: boolean;
 
-    public getStdout() {
+    public getStdout(): string[] {
         return this._stdout;
     }
 
-    public getStderr() {
+    public getStderr(): string[] {
         return this._stderr;
     }
 
-    public showOutputChannel() {
+    public showOutputChannel(): void {
         if (this._oc) {
             this._oc.show();
             this._isOutputChannelVisible = true;
         }
     }
 
-    public hideOutputChannel() {
+    public hideOutputChannel(): void {
         if (this._oc) {
             this._oc.dispose();
             this._oc.hide();
@@ -46,35 +45,35 @@ export class ChocolateyOperation {
         }
     }
 
-    public kill() {
+    public kill(): void {
         if (this._process) {
             this._process.kill();
         }
     }
 
-    public run() {
+    public run(): Promise<{}> {
         return new Promise((resolve, reject) => {
             if (!workspace || !workspace.rootPath) {
                 return reject();
             }
 
-            let lastOut = "";
-            let chocolateyPath = getPathToChocolateyBin();
+            let lastOut: string = "";
+            let chocolateyPath: string = getPathToChocolateyBin();
 
             this._oc = window.createOutputChannel(`Chocolatey: ${capitalizeFirstLetter(this.cmd[0])}`);
 
             if (os.platform() === "win32") {
-                let joinedArgs = this.cmd;
+                let joinedArgs: string[] = this.cmd;
                 joinedArgs.unshift(chocolateyPath);
 
                 this._process = this._spawn("powershell.exe", joinedArgs, {
                     cwd: getFullAppPath(),
                     stdio: ["ignore", "pipe", "pipe"]
-                })
+                });
             } else {
                 this._process = this._spawn(chocolateyPath, this.cmd, {
                     cwd: getFullAppPath()
-                })
+                });
             }
 
             this._oc.append("Building...");
@@ -84,7 +83,7 @@ export class ChocolateyOperation {
             }
 
             this._process.stdout.on("data", (data) => {
-                let out = data.toString();
+                let out: string = data.toString();
 
                 if (lastOut && out && (lastOut + "." === out)
                     || (lastOut.slice(0, lastOut.length - 1)) === out
@@ -97,10 +96,10 @@ export class ChocolateyOperation {
                 this._oc.appendLine(out);
                 this._stdout.push(out);
                 lastOut = out;
-            })
+            });
 
             this._process.stderr.on("data", (data) => {
-				let out = data.toString();
+				let out: string = data.toString();
                 this._oc.appendLine(out);
                 this._stderr.push(out);
             });
@@ -108,22 +107,22 @@ export class ChocolateyOperation {
             this._process.on("close", (code) => {
                 this._oc.appendLine(`Chocolatey ${this.cmd[0]} process exited with code ${code}`);
 
-                resolve(<ChocolateyOperationResult>{
+                resolve(<IChocolateyOperationResult>{
                     code: code,
                     stderr: this._stderr,
                     stdout: this._stdout
                 });
             });
-        })
+        });
     }
 
-    constructor (cmd: string | Array<string>, options = { isOutputChannelVisible: true }) {
+    constructor (cmd: string | Array<string>, options: { isOutputChannelVisible: boolean;} = { isOutputChannelVisible: true }) {
         this._isOutputChannelVisible = options.isOutputChannelVisible;
         this.cmd = (Array.isArray(cmd)) ? cmd : [cmd];
         this.created = true;
     }
 
-    dispose() {
+    dispose(): void {
         if (this._oc) {
             this._oc.dispose();
         }
@@ -134,10 +133,10 @@ export class ChocolateyOperation {
 }
 
 export function isChocolateyCliInstalled(): boolean {
-    let emberBin = getPathToChocolateyBin();
+    let chocolateyBin: string = getPathToChocolateyBin();
 
     try {
-        let exec = cp.execSync(`${emberBin} -v`, {
+        let exec: Buffer = cp.execSync(`${chocolateyBin} -v`, {
             cwd: getFullAppPath()
         });
 
@@ -146,8 +145,6 @@ export function isChocolateyCliInstalled(): boolean {
 
         return true;
     } catch (e) {
-        debugger;
-
         return false;
     }
 }

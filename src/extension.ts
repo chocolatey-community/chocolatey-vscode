@@ -5,12 +5,12 @@ import * as chocolateyOps from "./ChocolateyOperation";
 var chocolateyManager : chocolateyCli.ChocolateyCliManager;
 var installed : boolean = false;
 
-export function activate() {
-    // Register Commands
+export function activate(): void {
+    // register Commands
     commands.registerCommand("chocolatey.new", 		 () => execute("new"));
 }
 
-function execute(cmd?: string, arg?: Array<any>) {
+function execute(cmd?: string | undefined, arg?: any[] | undefined): Thenable<string | undefined> | undefined {
     if (!chocolateyManager) {
         chocolateyManager = new chocolateyCli.ChocolateyCliManager();
     }
@@ -23,18 +23,20 @@ function execute(cmd?: string, arg?: Array<any>) {
         return;
     }
 
-    // Ensure Chocolatey is installed
+    // ensure Chocolatey is installed
     if (!installed) {
-        return window.showErrorMessage('Chocolatey is not installed');
-    };
+        return window.showErrorMessage("Chocolatey is not installed");
+    }
 
-    let ecmd = chocolateyManager[cmd];
-    if (typeof ecmd === 'function') {
+    let ecmd: any = chocolateyManager[cmd];
+    if (typeof ecmd === "function") {
         try {
             ecmd.apply(chocolateyManager, arg);
+            return;
         } catch (e) {
-            // Well, clearly we didn't call a function
+            // well, clearly we didn't call a function
             console.log(e);
+            return;
         }
     }
 }
