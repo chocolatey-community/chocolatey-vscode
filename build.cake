@@ -37,7 +37,7 @@ Setup(context =>
         )
     );
 
-    Information("Building version {0} of cake-vscode ({1}, {2}) using version {3} of Cake. (IsTagged: {4})",
+    Information("Building version {0} of chocolatey-vscode ({1}, {2}) using version {3} of Cake. (IsTagged: {4})",
         parameters.Version.SemVersion,
         parameters.Configuration,
         parameters.Target,
@@ -115,7 +115,7 @@ Task("Package-Extension")
     .Does(() =>
 {
     var buildResultDir = Directory("./build-results");
-    var packageFile = File("cake-vscode-" + parameters.Version.SemVersion + ".vsix");
+    var packageFile = File("chocolatey-vscode-" + parameters.Version.SemVersion + ".vsix");
 
     VscePackage(new VscePackageSettings() {
         OutputFilePath = buildResultDir + packageFile
@@ -183,7 +183,7 @@ Task("Appveyor")
 {
     if(publishingError)
     {
-        throw new Exception("An error occurred during the publishing of cake-vscode.  All publishing tasks have been attempted.");
+        throw new Exception("An error occurred during the publishing of chocolatey-vscode.  All publishing tasks have been attempted.");
     }
 });
 

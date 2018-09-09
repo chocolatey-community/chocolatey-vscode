@@ -39,4 +39,6 @@ function execute(cmd?: string | undefined, arg?: any[] | undefined): Thenable<st
             return;
         }
     }
+
+    return;
 }
