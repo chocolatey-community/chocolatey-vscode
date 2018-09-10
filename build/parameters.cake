@@ -9,8 +9,8 @@ public class BuildParameters
     public bool IsRunningOnWindows { get; private set; }
     public bool IsRunningOnAppVeyor { get; private set; }
     public bool IsPullRequest { get; private set; }
-    public bool IsMasterCakeVsCodeRepo { get; private set; }
-    public bool IsMasterCakeVsCodeBranch { get; private set; }
+    public bool IsMasterChocolateyVsCodeRepo { get; private set; }
+    public bool IsMasterChocolateyVsCodeBranch { get; private set; }
     public bool IsTagged { get; private set; }
     public bool IsPublishBuild { get; private set; }
     public bool IsReleaseBuild { get; private set; }
@@ -23,8 +23,8 @@ public class BuildParameters
     {
         get
         {
-            return !IsLocalBuild && !IsPullRequest && IsMasterCakeVsCodeRepo
-                && IsMasterCakeVsCodeBranch && IsTagged;
+            return !IsLocalBuild && !IsPullRequest && IsMasterChocolateyVsCodeRepo
+                && IsMasterChocolateyVsCodeBranch && IsTagged;
         }
     }
 
@@ -53,18 +53,18 @@ public class BuildParameters
             IsRunningOnWindows = context.IsRunningOnWindows(),
             IsRunningOnAppVeyor = buildSystem.AppVeyor.IsRunningOnAppVeyor,
             IsPullRequest = buildSystem.AppVeyor.Environment.PullRequest.IsPullRequest,
-            IsMasterCakeVsCodeRepo = StringComparer.OrdinalIgnoreCase.Equals("cake-build/cake-vscode", buildSystem.AppVeyor.Environment.Repository.Name),
-            IsMasterCakeVsCodeBranch = StringComparer.OrdinalIgnoreCase.Equals("master", buildSystem.AppVeyor.Environment.Repository.Branch),
+            IsMasterChocolateyVsCodeRepo = StringComparer.OrdinalIgnoreCase.Equals("gep13/chocolatey-vscode", buildSystem.AppVeyor.Environment.Repository.Name),
+            IsMasterChocolateyVsCodeBranch = StringComparer.OrdinalIgnoreCase.Equals("master", buildSystem.AppVeyor.Environment.Repository.Branch),
             IsTagged = (
                 buildSystem.AppVeyor.Environment.Repository.Tag.IsTag &&
                 !string.IsNullOrWhiteSpace(buildSystem.AppVeyor.Environment.Repository.Tag.Name)
             ),
             GitHub = new BuildCredentials (
-                userName: context.EnvironmentVariable("CAKEVSCODE_GITHUB_USERNAME"),
-                password: context.EnvironmentVariable("CAKEVSCODE_GITHUB_PASSWORD")
+                userName: context.EnvironmentVariable("CHOCOLATEYVSCODE_GITHUB_USERNAME"),
+                password: context.EnvironmentVariable("CHOCOLATEYVSCODE_GITHUB_PASSWORD")
             ),
             Marketplace = new VisualStudioMarketplaceCredentials (
-                token: context.EnvironmentVariable("CAKEVSCODE_VSMARKETPLACE_TOKEN")
+                token: context.EnvironmentVariable("CHOCOLATEYVSCODE_VSMARKETPLACE_TOKEN")
             ),
             IsPublishBuild = new [] {
                 "ReleaseNotes",
