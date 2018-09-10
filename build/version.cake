@@ -40,7 +40,7 @@ public class BuildVersion
 
             version = assertedVersions.MajorMinorPatch;
             semVersion = assertedVersions.LegacySemVerPadded;
-            milestone = string.Concat("v", version);
+            milestone = version;
 
             context.Information("Calculated Semantic Version: {0}", semVersion);
         }
@@ -50,7 +50,7 @@ public class BuildVersion
             context.Information("Hardcoding version number, as GitVersion didn't execute...");
             version = "0.1.0";
             semVersion = "0.1.0";
-            milestone = string.Concat("v", version);
+            milestone = version;
         }
 
         var cakeVersion = typeof(ICakeContext).Assembly.GetName().Version.ToString();
