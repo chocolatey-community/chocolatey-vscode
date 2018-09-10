@@ -86,7 +86,7 @@ Task("Install-Vsce")
 Task("Create-Release-Notes")
     .Does(() =>
 {
-    GitReleaseManagerCreate(parameters.GitHub.UserName, parameters.GitHub.Password, "cake-build", "cake-vscode", new GitReleaseManagerCreateSettings {
+    GitReleaseManagerCreate(parameters.GitHub.UserName, parameters.GitHub.Password, "gep13", "chocolatey-vscode", new GitReleaseManagerCreateSettings {
         Milestone         = parameters.Version.Milestone,
         Name              = parameters.Version.Milestone,
         Prerelease        = true,
@@ -128,7 +128,7 @@ Task("Upload-AppVeyor-Artifacts")
 .Does(() =>
 {
     var buildResultDir = Directory("./build-results");
-    var packageFile = File("cake-vscode-" + parameters.Version.SemVersion + ".vsix");
+    var packageFile = File("chocolatey-vscode-" + parameters.Version.SemVersion + ".vsix");
     AppVeyor.UploadArtifact(buildResultDir + packageFile);
 });
 
@@ -138,10 +138,10 @@ Task("Publish-GitHub-Release")
     .Does(() =>
 {
     var buildResultDir = Directory("./build-results");
-    var packageFile = File("cake-vscode-" + parameters.Version.SemVersion + ".vsix");
+    var packageFile = File("chocolatey-vscode-" + parameters.Version.SemVersion + ".vsix");
 
-    GitReleaseManagerAddAssets(parameters.GitHub.UserName, parameters.GitHub.Password, "cake-build", "cake-vscode", parameters.Version.Milestone, buildResultDir + packageFile);
-    GitReleaseManagerClose(parameters.GitHub.UserName, parameters.GitHub.Password, "cake-build", "cake-vscode", parameters.Version.Milestone);
+    GitReleaseManagerAddAssets(parameters.GitHub.UserName, parameters.GitHub.Password, "gep13", "chocolatey-vscode", parameters.Version.Milestone, buildResultDir + packageFile);
+    GitReleaseManagerClose(parameters.GitHub.UserName, parameters.GitHub.Password, "gep13", "chocolatey-vscode", parameters.Version.Milestone);
 })
 .OnError(exception =>
 {
@@ -155,7 +155,7 @@ Task("Publish-Extension")
     .Does(() =>
 {
     var buildResultDir = Directory("./build-results");
-    var packageFile = File("cake-vscode-" + parameters.Version.SemVersion + ".vsix");
+    var packageFile = File("chocolatey-vscode-" + parameters.Version.SemVersion + ".vsix");
 
     VscePublish(new VscePublishSettings(){
         PersonalAccessToken = parameters.Marketplace.Token,
