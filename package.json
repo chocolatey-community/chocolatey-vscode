@@ -1,8 +1,8 @@
 {
 	"name": "chocolatey-vscode",
-	"displayName": "Chocolatey Snippets",
+	"displayName": "Chocolatey",
 	"publisher": "gep13",
-	"description": "Set of snippets for helping with creating packages for Chocolatey.",
+	"description": "Set of snippets and commands for helping with creating packages for Chocolatey.",
 	"version": "0.2.2",
 	"icon": "images/chocolatey.png",
 	"private": true,
@@ -11,28 +11,61 @@
 	},
 	"bugs": {
 		"url": "https://github.com/gep13/chocolatey-vscode/issues"
-  },
-  "homepage": "https://github.com/gep13/chocolatey-vscode",
+	},
+	"homepage": "https://github.com/gep13/chocolatey-vscode",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/gep13/chocolatey-vscode"
 	},
+	"main": "./out/extension",
 	"galleryBanner": {
-        "color": "#FFE05C",
-        "theme": "light"
-  },
+		"color": "#FFE05C",
+		"theme": "light"
+	},
+	"activationEvents": [
+		"onCommand:chocolatey.new"
+	],
 	"engines": {
-		"vscode": "^0.10.1"
+		"vscode": "^1.24.0"
 	},
 	"categories": [
-		"Snippets"
+		"Other"
 	],
 	"contributes": {
+		"commands": [
+			{
+			  "command": "chocolatey.new",
+			  "title": "Chocolatey: Create new chocolatey package"
+			}
+		],
 		"snippets": [
-            {
-                "language": "powershell",
-                "path": "./snippets/powershell.json"
-            }
-        ]
-	}
+			{
+				"language": "powershell",
+				"path": "./snippets/powershell.json"
+			}
+		]
+	},
+
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "C:/Users/appveyor/AppData/Roaming/npm/tsc -p ./",
+		"watch": "C:/Users/appveyor/AppData/Roaming/npm/tsc -watch -p ./",
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "npm run compile && node ./node_modules/vscode/bin/test"
+  },
+	"devDependencies": {
+		"@types/byline": "^4.2.31",
+		"@types/expect": "^1.20.3",
+		"@types/ini": "^1.3.29",
+		"@types/mocha": "^2.2.48",
+		"@types/node": "^6.0.113",
+		"@types/node-fetch": "^1.6.9",
+		"@types/xml2js": "^0.4.3",
+		"expect": "^21.2.1",
+		"mocha": "^5.2.0",
+		"tslint": "^5.8.0",
+		"typemoq": "^2.1.0",
+		"typescript": "^2.6.1",
+		"vscode": "^1.1.6"
+  }
 }

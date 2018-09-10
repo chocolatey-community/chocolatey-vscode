@@ -1,5 +1,15 @@
 *.vsix
+out
+node_modules
+.vscode-test
 
-# Build Related
-tools/
-.build/
+# Build related
+build-results/
+tools/**
+!tools/packages.config
+
+# until we move to Yarn
+yarn.lock
+
+# Mac OS X files
+.DS_Store

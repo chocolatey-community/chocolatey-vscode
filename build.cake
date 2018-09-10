@@ -1,130 +1,197 @@
-///////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 // ADDINS
-///////////////////////////////////////////////////////////////////////////////
-#addin Cake.Json
-#addin Cake.VsCode
+//////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////////
-// ARGUMENTS
-///////////////////////////////////////////////////////////////////////////////
+#addin "nuget:?package=MagicChunks&version=1.2.0.58"
+#addin "nuget:?package=Cake.VsCode&version=0.8.0"
+#addin "nuget:?package=Cake.Npm&version=0.10.0"
+#addin "nuget:?package=Cake.AppVeyor&version=1.1.0.9"
 
-var target          = Argument<string>("target", "Default");
-var configuration   = Argument<string>("configuration", "Release");
+//////////////////////////////////////////////////////////////////////
+// TOOLS
+//////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////////
-// GLOBAL VARIABLES
-///////////////////////////////////////////////////////////////////////////////
+#tool "nuget:?package=gitreleasemanager&version=0.7.0"
+#tool "nuget:?package=GitVersion.CommandLine&version=3.6.5"
 
-var packageJsonFile            = "./package.json";
-var version                    = "0.1.0";
-var buildDirectory             = Directory("./.build");
+// Load other scripts.
+#load "./build/parameters.cake"
+
+//////////////////////////////////////////////////////////////////////
+// PARAMETERS
+//////////////////////////////////////////////////////////////////////
+
+BuildParameters parameters = BuildParameters.GetParameters(Context, BuildSystem);
+bool publishingError = false;
 
 ///////////////////////////////////////////////////////////////////////////////
 // SETUP / TEARDOWN
 ///////////////////////////////////////////////////////////////////////////////
 
-public class PackageJsonObject
+Setup(context =>
 {
-    public string version { get; set; }
-}
+    parameters.SetBuildVersion(
+        BuildVersion.CalculatingSemanticVersion(
+            context: Context,
+            parameters: parameters
+        )
+    );
 
-Setup(() =>
-{
-    // Executed BEFORE the first task.
-    Information("Running tasks...");
+    Information("Building version {0} of chocolatey-vscode ({1}, {2}) using version {3} of Cake. (IsTagged: {4})",
+        parameters.Version.SemVersion,
+        parameters.Configuration,
+        parameters.Target,
+        parameters.Version.CakeVersion,
+        parameters.IsTagged);
 });
 
-Teardown(() =>
-{
-    // Executed AFTER the last task.
-    Information("Finished running tasks.");
-});
-
-///////////////////////////////////////////////////////////////////////////////
-// TASK DEFINITIONS
-///////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+// TASKS
+//////////////////////////////////////////////////////////////////////
 
 Task("Clean")
     .Does(() =>
 {
-    CleanDirectories(new DirectoryPath[] {
-        buildDirectory});
+    CleanDirectories(new[] { "./build-results" });
 });
 
-Task("Create-Build-Directory")
-    .IsDependentOn("Clean")
-	.Does(() =>
-{
-    if (!DirectoryExists(buildDirectory))
-    {
-        CreateDirectory(buildDirectory);
-    }
-});
-
-Task("Find-Version-Number")
+Task("Npm-Install")
     .Does(() =>
 {
-    var packageJson = DeserializeJsonFromFile<PackageJsonObject>(MakeAbsolute((FilePath)packageJsonFile));
-    version = packageJson.version;
-    
-    Information("Running GitReleaseManager for version: {0}", version);
+    var settings = new NpmInstallSettings();
+    settings.LogLevel = NpmLogLevel.Silent;
+    NpmInstall(settings);
 });
 
-Task("Package-Extension")
-    .IsDependentOn("Create-Build-Directory")
-    .IsDependentOn("Find-Version-Number") 
+Task("Install-TypeScript")
     .Does(() =>
 {
-    var packageFile = File("chocolatey-vscode-" + version + ".vsix");
-    
-    VscePackage(new VscePackageSettings() {
-        OutputFilePath = buildDirectory + packageFile,
-    });
+    var settings = new NpmInstallSettings();
+    settings.Global = true;
+    settings.AddPackage("typescript", "2.9.2");
+    settings.LogLevel = NpmLogLevel.Silent;
+    NpmInstall(settings);
+});
+
+Task("Install-Vsce")
+    .Does(() =>
+{
+    var settings = new NpmInstallSettings();
+    settings.Global = true;
+    settings.AddPackage("vsce", "1.43.0");
+    settings.LogLevel = NpmLogLevel.Silent;
+    NpmInstall(settings);
 });
 
 Task("Create-Release-Notes")
-    .IsDependentOn("Find-Version-Number") 
-    .IsDependentOn("Package-Extension")  
     .Does(() =>
 {
-    var userName = EnvironmentVariable("GITHUB_USERNAME");
-    var password = EnvironmentVariable("GITHUB_PASSWORD");
-    
-    GitReleaseManagerCreate(userName, password, "gep13", "chocolatey-vscode", new GitReleaseManagerCreateSettings {
-        Milestone         = version,
-        Assets            = string.Format("{0}/.build/chocolatey-vscode-{1}.vsix", Context.Environment.WorkingDirectory, version), 
-        Name              = version,
+    GitReleaseManagerCreate(parameters.GitHub.UserName, parameters.GitHub.Password, "gep13", "chocolatey-vscode", new GitReleaseManagerCreateSettings {
+        Milestone         = parameters.Version.Milestone,
+        Name              = parameters.Version.Milestone,
         Prerelease        = true,
         TargetCommitish   = "master"
     });
 });
 
-Task("Publish-Extension")
-    .IsDependentOn("Create-Release-Notes")
+Task("Update-Project-Json-Version")
+    .WithCriteria(() => !parameters.IsLocalBuild)
     .Does(() =>
 {
-    var personalAccessToken = EnvironmentVariable("VSCE_PAT");
-    var userName = EnvironmentVariable("GITHUB_USERNAME");
-    var password = EnvironmentVariable("GITHUB_PASSWORD");
-    var packageFile = File("chocolatey-vscode-" + version + ".vsix");
-    
-    VscePublish(new VscePublishSettings(){
-        PersonalAccessToken = personalAccessToken,
-        Package = buildDirectory + packageFile
-    });
-    
-    GitReleaseManagerPublish(userName, password, "gep13", "chocolatey-vscode", version, new GitReleaseManagerPublishSettings {
-    });
-    
-    GitReleaseManagerClose(userName, password, "gep13", "chocolatey-vscode", version, new GitReleaseManagerCloseMilestoneSettings {
+    var projectToPackagePackageJson = "package.json";
+    Information("Updating {0} version -> {1}", projectToPackagePackageJson, parameters.Version.SemVersion);
+
+    TransformConfig(projectToPackagePackageJson, projectToPackagePackageJson, new TransformationCollection {
+        { "version", parameters.Version.SemVersion }
     });
 });
+
+Task("Package-Extension")
+    .IsDependentOn("Update-Project-Json-Version")
+    .IsDependentOn("Npm-Install")
+    .IsDependentOn("Install-TypeScript")
+    .IsDependentOn("Install-Vsce")
+    .IsDependentOn("Clean")
+    .Does(() =>
+{
+    var buildResultDir = Directory("./build-results");
+    var packageFile = File("chocolatey-vscode-" + parameters.Version.SemVersion + ".vsix");
+
+    VscePackage(new VscePackageSettings() {
+        OutputFilePath = buildResultDir + packageFile
+    });
+});
+
+Task("Upload-AppVeyor-Artifacts")
+    .IsDependentOn("Package-Extension")
+    .WithCriteria(() => parameters.IsRunningOnAppVeyor)
+.Does(() =>
+{
+    var buildResultDir = Directory("./build-results");
+    var packageFile = File("chocolatey-vscode-" + parameters.Version.SemVersion + ".vsix");
+    AppVeyor.UploadArtifact(buildResultDir + packageFile);
+});
+
+Task("Publish-GitHub-Release")
+    .IsDependentOn("Package-Extension")
+    .WithCriteria(() => parameters.ShouldPublish)
+    .Does(() =>
+{
+    var buildResultDir = Directory("./build-results");
+    var packageFile = File("chocolatey-vscode-" + parameters.Version.SemVersion + ".vsix");
+
+    GitReleaseManagerAddAssets(parameters.GitHub.UserName, parameters.GitHub.Password, "gep13", "chocolatey-vscode", parameters.Version.Milestone, buildResultDir + packageFile);
+    GitReleaseManagerClose(parameters.GitHub.UserName, parameters.GitHub.Password, "gep13", "chocolatey-vscode", parameters.Version.Milestone);
+})
+.OnError(exception =>
+{
+    Information("Publish-GitHub-Release Task failed, but continuing with next Task...");
+    publishingError = true;
+});
+
+Task("Publish-Extension")
+    .IsDependentOn("Package-Extension")
+    .WithCriteria(() => parameters.ShouldPublish)
+    .Does(() =>
+{
+    var buildResultDir = Directory("./build-results");
+    var packageFile = File("chocolatey-vscode-" + parameters.Version.SemVersion + ".vsix");
+
+    VscePublish(new VscePublishSettings(){
+        PersonalAccessToken = parameters.Marketplace.Token,
+        Package = buildResultDir + packageFile
+    });
+})
+.OnError(exception =>
+{
+    Information("Publish-Extension Task failed, but continuing with next Task...");
+    publishingError = true;
+});
+
+//////////////////////////////////////////////////////////////////////
+// TASK TARGETS
+//////////////////////////////////////////////////////////////////////
 
 Task("Default")
     .IsDependentOn("Package-Extension");
 
-///////////////////////////////////////////////////////////////////////////////
-// EXECUTION
-///////////////////////////////////////////////////////////////////////////////
+Task("Appveyor")
+    .IsDependentOn("Upload-AppVeyor-Artifacts")
+    .IsDependentOn("Publish-GitHub-Release")
+    .IsDependentOn("Publish-Extension")
+    .Finally(() =>
+{
+    if(publishingError)
+    {
+        throw new Exception("An error occurred during the publishing of chocolatey-vscode.  All publishing tasks have been attempted.");
+    }
+});
 
-RunTarget(target);
+Task("ReleaseNotes")
+    .IsDependentOn("Create-Release-Notes");
+
+//////////////////////////////////////////////////////////////////////
+// EXECUTION
+//////////////////////////////////////////////////////////////////////
+
+RunTarget(parameters.Target);
