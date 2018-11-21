@@ -50,7 +50,7 @@ The execution of the Chocolatey commands in this extension would not have been p
 
 ## Contributing
 
-If you would like to see any other snippet or features added for this VS Code Extension, feel free to raise an [issue](https://github.com/gep13/chocolatey-vscode/issues), and if possible, a follow up pill request.
+If you would like to see any other snippet or features added for this VS Code Extension, feel free to raise an [issue](https://github.com/gep13/chocolatey-vscode/issues), and if possible, a follow up pull request.
 
 ## Releases
 
