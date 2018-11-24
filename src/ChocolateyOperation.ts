@@ -117,6 +117,7 @@ export class ChocolateyOperation {
         });
     }
 
+    // tslint:disable-next-line:max-line-length
     constructor (cmd: string | Array<string>, options: { isOutputChannelVisible: boolean; currentWorkingDirectory: string } = { isOutputChannelVisible: true, currentWorkingDirectory: getFullAppPath() }) {
         this._isOutputChannelVisible = options.isOutputChannelVisible;
         this.cmd = (Array.isArray(cmd)) ? cmd : [cmd];

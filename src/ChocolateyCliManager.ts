@@ -1,6 +1,6 @@
 import { window, QuickPickItem, workspace } from "vscode";
 import { ChocolateyOperation } from "./ChocolateyOperation";
-import * as path from 'path';
+import * as path from "path";
 
 export class ChocolateyCliManager {
     public new(): void {
@@ -19,7 +19,7 @@ export class ChocolateyCliManager {
     public pack(): void {
         workspace.findFiles("**/*.nuspec").then((nuspecFiles) => {
             if(nuspecFiles.length ===0) {
-                window.showErrorMessage("There are no nuspec files in the current workspace.")
+                window.showErrorMessage("There are no nuspec files in the current workspace.");
                 return;
             }
 
@@ -35,7 +35,7 @@ export class ChocolateyCliManager {
             }
 
             window.showQuickPick(quickPickItems, {
-                placeHolder: 'Available nuspec files...'
+                placeHolder: "Available nuspec files..."
               }).then((nuspecSelection) => {
                 if(!nuspecSelection) {
                     return;
@@ -55,6 +55,7 @@ export class ChocolateyCliManager {
                             }
 
                             let cwd: string = quickPickItem.description ? quickPickItem.description : "";
+                            // tslint:disable-next-line:max-line-length
                             let packOp: ChocolateyOperation = new ChocolateyOperation(["pack", quickPickItem.label, additionalArguments], { isOutputChannelVisible: true, currentWorkingDirectory: cwd });
                             packOp.run();
                         });
@@ -64,10 +65,11 @@ export class ChocolateyCliManager {
                         }
 
                         let cwd: string = nuspecSelection.description ? nuspecSelection.description : "";
+                        // tslint:disable-next-line:max-line-length
                         let packOp: ChocolateyOperation = new ChocolateyOperation(["pack", nuspecSelection.label, additionalArguments], { isOutputChannelVisible: true, currentWorkingDirectory: cwd });
                         packOp.run();
                     }
-                })
+                });
             });
         });
     }

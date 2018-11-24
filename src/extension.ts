@@ -8,7 +8,7 @@ var installed : boolean = false;
 export function activate(): void {
     // register Commands
     commands.registerCommand("chocolatey.new", () => execute("new"));
-    commands.registerCommand("chocolatey.pack", () => execute("pack"))
+    commands.registerCommand("chocolatey.pack", () => execute("pack"));
 }
 
 function execute(cmd?: string | undefined, arg?: any[] | undefined): Thenable<string | undefined> | undefined {
@@ -29,7 +29,7 @@ function execute(cmd?: string | undefined, arg?: any[] | undefined): Thenable<st
         return window.showErrorMessage("Chocolatey is not installed");
     }
 
-    // Check if there is an open folder in workspace
+    // check if there is an open folder in workspace
     if (workspace.rootPath === undefined) {
         return window.showErrorMessage("You have not yet opened a folder.");
     }
