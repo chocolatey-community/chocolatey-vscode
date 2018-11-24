@@ -23,7 +23,8 @@ For more information about [Chocolatey](https://chocolatey.org/), please see the
 
 The Chocolatey Visual Studio Code provides the following commands:
 
-* `Chocolatey: Create new chocolatey package` to create the default templated Chocolatey package at the root of current workspace.
+* `Chocolatey: Create new Chocolatey package` to create the default templated Chocolatey package at the root of current workspace.
+* `Chocolatey: Pack Chocolatey package(s)` to search current workspace for nuspec files and package them
 
 ## Snippets
 
