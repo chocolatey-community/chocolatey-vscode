@@ -1,4 +1,4 @@
-# Chocolatey
+# Chocolatey Visual Studio Code Extension
 
 This extension brings support for [Chocolatey](https://chocolatey.org/) to Visual Studio Code.
 
