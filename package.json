@@ -19,7 +19,7 @@
 	},
 	"main": "./out/extension",
 	"galleryBanner": {
-		"color": "#FFE05C",
+		"color": "#DCEBFC",
 		"theme": "light"
 	},
 	"activationEvents": [
