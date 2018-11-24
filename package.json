@@ -23,7 +23,8 @@
 		"theme": "light"
 	},
 	"activationEvents": [
-		"onCommand:chocolatey.new"
+		"onCommand:chocolatey.new",
+		"onCommand:chocolatey.pack"
 	],
 	"engines": {
 		"vscode": "^1.24.0"
@@ -34,8 +35,12 @@
 	"contributes": {
 		"commands": [
 			{
-			  "command": "chocolatey.new",
-			  "title": "Chocolatey: Create new chocolatey package"
+				"command": "chocolatey.new",
+				"title": "Chocolatey: Create new Chocolatey package"
+			},
+			{
+				"command": "chocolatey.pack",
+				"title": "Chocolatey: Pack Chocolatey package(s)"
 			}
 		],
 		"snippets": [
@@ -45,7 +50,6 @@
 			}
 		]
 	},
-
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
 		"compile": "C:/Users/appveyor/AppData/Roaming/npm/tsc -p ./",
@@ -67,5 +71,5 @@
 		"typemoq": "^2.1.0",
 		"typescript": "^2.6.1",
 		"vscode": "^1.1.6"
-  }
+	}
 }
