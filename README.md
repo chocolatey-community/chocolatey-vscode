@@ -52,6 +52,8 @@ The execution of the Chocolatey commands in this extension would not have been p
 
 If you would like to see any other snippet or features added for this VS Code Extension, feel free to raise an [issue](https://github.com/gep13/chocolatey-vscode/issues), and if possible, a follow up pull request.
 
+You can also join in the Gitter Chat [![Join the chat at https://gitter.im/gep13/chocolatey-vscode](https://badges.gitter.im/gep13/chocolatey-vscode.svg)](https://gitter.im/gep13/chocolatey-vscode?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ## Releases
 
 To find out what was released in each version of this extension, check out the [releases](https://github.com/gep13/chocolatey-vscode/releases) page.
