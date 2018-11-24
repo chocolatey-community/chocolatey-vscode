@@ -2,10 +2,13 @@
 // ADDINS
 //////////////////////////////////////////////////////////////////////
 
-#addin "nuget:?package=MagicChunks&version=1.2.0.58"
+#addin "nuget:?package=MagicChunks&version=2.0.0.119"
 #addin "nuget:?package=Cake.VsCode&version=0.8.0"
 #addin "nuget:?package=Cake.Npm&version=0.10.0"
 #addin "nuget:?package=Cake.AppVeyor&version=1.1.0.9"
+#addin "nuget:?package=Cake.Wyam&version=1.7.4"
+#addin "nuget:?package=Cake.Git&version=0.19.0"
+#addin "nuget:?package=Cake.Kudu&version=0.8.0"
 
 //////////////////////////////////////////////////////////////////////
 // TOOLS
@@ -13,9 +16,12 @@
 
 #tool "nuget:?package=gitreleasemanager&version=0.7.0"
 #tool "nuget:?package=GitVersion.CommandLine&version=3.6.5"
+#tool "nuget:?package=Wyam&version=1.7.4"
+#tool "nuget:?package=KuduSync.NET&version=1.4.0"
 
 // Load other scripts.
 #load "./build/parameters.cake"
+#load "./build/wyam.cake"
 
 //////////////////////////////////////////////////////////////////////
 // PARAMETERS
@@ -177,6 +183,7 @@ Task("Default")
 
 Task("Appveyor")
     .IsDependentOn("Upload-AppVeyor-Artifacts")
+    .IsDependentOn("Publish-Documentation")
     .IsDependentOn("Publish-GitHub-Release")
     .IsDependentOn("Publish-Extension")
     .Finally(() =>

@@ -56,7 +56,7 @@
 		"watch": "C:/Users/appveyor/AppData/Roaming/npm/tsc -watch -p ./",
 		"postinstall": "node ./node_modules/vscode/bin/install",
 		"test": "npm run compile && node ./node_modules/vscode/bin/test"
-  },
+	},
 	"devDependencies": {
 		"@types/byline": "^4.2.31",
 		"@types/expect": "^1.20.3",
