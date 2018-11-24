@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+	<channel>
+		<title>Choco VS Code</title>
+		<link>http://gep13.github.io/chocolatey-vscode</link>
+		<description />
+		<copyright>2018</copyright>
+		<pubDate>Sat, 24 Nov 2018 16:56:43 GMT</pubDate>
+		<lastBuildDate>Sat, 24 Nov 2018 16:56:43 GMT</lastBuildDate>
+	</channel>
+</rss>

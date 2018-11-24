@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<link rel="self" href="http://gep13.github.io/chocolatey-vscode" />
+	<id>http://gep13.github.io/chocolatey-vscode</id>
+	<title>Choco VS Code</title>
+	<rights>2018</rights>
+	<updated>2018-11-24T16:56:43Z</updated>
+</feed>
