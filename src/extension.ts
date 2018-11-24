@@ -1,4 +1,4 @@
-import {window, commands} from "vscode";
+import {window, commands, workspace} from "vscode";
 import * as chocolateyCli from "./ChocolateyCliManager";
 import * as chocolateyOps from "./ChocolateyOperation";
 
@@ -7,7 +7,8 @@ var installed : boolean = false;
 
 export function activate(): void {
     // register Commands
-    commands.registerCommand("chocolatey.new", 		 () => execute("new"));
+    commands.registerCommand("chocolatey.new", () => execute("new"));
+    commands.registerCommand("chocolatey.pack", () => execute("pack"));
 }
 
 function execute(cmd?: string | undefined, arg?: any[] | undefined): Thenable<string | undefined> | undefined {
@@ -26,6 +27,11 @@ function execute(cmd?: string | undefined, arg?: any[] | undefined): Thenable<st
     // ensure Chocolatey is installed
     if (!installed) {
         return window.showErrorMessage("Chocolatey is not installed");
+    }
+
+    // check if there is an open folder in workspace
+    if (workspace.rootPath === undefined) {
+        return window.showErrorMessage("You have not yet opened a folder.");
     }
 
     let ecmd: any = chocolateyManager[cmd];

@@ -16,6 +16,7 @@ export class ChocolateyOperation {
     private _oc!: OutputChannel;
     private _process!: cp.ChildProcess;
     private _isOutputChannelVisible: boolean;
+    private _currentWorkingDirectory: string;
     private _stdout: Array<string> = [];
     private _stderr: Array<string> = [];
 
@@ -67,12 +68,12 @@ export class ChocolateyOperation {
                 joinedArgs.unshift(chocolateyPath);
 
                 this._process = this._spawn("powershell.exe", joinedArgs, {
-                    cwd: getFullAppPath(),
+                    cwd: this._currentWorkingDirectory ? this._currentWorkingDirectory : getFullAppPath(),
                     stdio: ["ignore", "pipe", "pipe"]
                 });
             } else {
                 this._process = this._spawn(chocolateyPath, this.cmd, {
-                    cwd: getFullAppPath()
+                    cwd: this._currentWorkingDirectory ? this._currentWorkingDirectory : getFullAppPath()
                 });
             }
 
@@ -116,9 +117,11 @@ export class ChocolateyOperation {
         });
     }
 
-    constructor (cmd: string | Array<string>, options: { isOutputChannelVisible: boolean;} = { isOutputChannelVisible: true }) {
+    // tslint:disable-next-line:max-line-length
+    constructor (cmd: string | Array<string>, options: { isOutputChannelVisible: boolean; currentWorkingDirectory: string } = { isOutputChannelVisible: true, currentWorkingDirectory: getFullAppPath() }) {
         this._isOutputChannelVisible = options.isOutputChannelVisible;
         this.cmd = (Array.isArray(cmd)) ? cmd : [cmd];
+        this._currentWorkingDirectory = options.currentWorkingDirectory;
         this.created = true;
     }
 
