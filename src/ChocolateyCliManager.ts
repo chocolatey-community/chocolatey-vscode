@@ -25,8 +25,8 @@ export class ChocolateyCliManager {
 
             let quickPickItems: Array<QuickPickItem> =  nuspecFiles.map((filePath) => {
                 return {
-                    label: path.basename(filePath.path),
-                    description: path.dirname(filePath.path)
+                    label: path.basename(filePath.fsPath),
+                    description: path.dirname(filePath.fsPath)
                 };
             });
 
