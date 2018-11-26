@@ -1,6 +1,8 @@
-import {window, commands, workspace} from "vscode";
+import {window, commands, workspace, QuickPickItem, FileChangeType} from "vscode";
 import * as chocolateyCli from "./ChocolateyCliManager";
 import * as chocolateyOps from "./ChocolateyOperation";
+import * as path from "path";
+import * as fs from "fs"
 
 var chocolateyManager : chocolateyCli.ChocolateyCliManager;
 var installed : boolean = false;
@@ -9,6 +11,51 @@ export function activate(): void {
     // register Commands
     commands.registerCommand("chocolatey.new", () => execute("new"));
     commands.registerCommand("chocolatey.pack", () => execute("pack"));
+    commands.registerCommand("chocolatey.delete", () => deleteNupkgs());
+}
+
+function deleteNupkgs() {
+    workspace.findFiles("**/*.nupkg").then((nupkgFiles) => {
+        if(nupkgFiles.length ===0) {
+            window.showErrorMessage("There are no nupkg files in the current workspace.");
+            return;
+        }
+
+        let quickPickItems: Array<QuickPickItem> =  nupkgFiles.map((filePath) => {
+            return {
+                label: path.basename(filePath.fsPath),
+                description: path.dirname(filePath.fsPath)
+            };
+        });
+
+        if(quickPickItems.length > 1) {
+            quickPickItems.unshift({label: "All nupkg files"});
+        }
+
+        window.showQuickPick(quickPickItems, {
+            placeHolder: "Available nupkg files..."
+          }).then((nupkgSelection) => {
+            if(!nupkgSelection) {
+                return;
+            }
+
+            if(nupkgSelection.label === "All nupkg files") {
+                quickPickItems.forEach((quickPickItem) => {
+                    if(quickPickItem.label === "All nupkg files") {
+                        return;
+                    }
+
+                    if(quickPickItem.description && fs.existsSync(quickPickItem.description)) {
+                        fs.unlinkSync(quickPickItem.description);
+                    }
+                });
+            } else {
+                if(nupkgSelection.description && fs.existsSync(nupkgSelection.description)) {
+                    fs.unlinkSync(nupkgSelection.description);
+                }
+            }
+        });
+    });
 }
 
 function execute(cmd?: string | undefined, arg?: any[] | undefined): Thenable<string | undefined> | undefined {
