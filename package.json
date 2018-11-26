@@ -24,7 +24,8 @@
 	},
 	"activationEvents": [
 		"onCommand:chocolatey.new",
-		"onCommand:chocolatey.pack"
+		"onCommand:chocolatey.pack",
+		"onCommand:chocolatey.delete"
 	],
 	"engines": {
 		"vscode": "^1.24.0"
@@ -41,6 +42,10 @@
 			{
 				"command": "chocolatey.pack",
 				"title": "Chocolatey: Pack Chocolatey package(s)"
+			},
+			{
+				"command": "chocolatey.delete",
+				"title": "Chocolatey: Delete Chocolatey package(s)"
 			}
 		],
 		"snippets": [
