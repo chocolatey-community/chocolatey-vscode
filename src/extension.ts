@@ -1,8 +1,8 @@
-import {window, commands, workspace, QuickPickItem, FileChangeType} from "vscode";
+import {window, commands, workspace, QuickPickItem} from "vscode";
 import * as chocolateyCli from "./ChocolateyCliManager";
 import * as chocolateyOps from "./ChocolateyOperation";
 import * as path from "path";
-import * as fs from "fs"
+import * as fs from "fs";
 
 var chocolateyManager : chocolateyCli.ChocolateyCliManager;
 var installed : boolean = false;
@@ -14,7 +14,7 @@ export function activate(): void {
     commands.registerCommand("chocolatey.delete", () => deleteNupkgs());
 }
 
-function deleteNupkgs() {
+function deleteNupkgs():void {
     workspace.findFiles("**/*.nupkg").then((nupkgFiles) => {
         if(nupkgFiles.length ===0) {
             window.showErrorMessage("There are no nupkg files in the current workspace.");
@@ -24,7 +24,7 @@ function deleteNupkgs() {
         let quickPickItems: Array<QuickPickItem> =  nupkgFiles.map((filePath) => {
             return {
                 label: path.basename(filePath.fsPath),
-                description: path.dirname(filePath.fsPath)
+                description: filePath.fsPath
             };
         });
 
@@ -47,11 +47,13 @@ function deleteNupkgs() {
 
                     if(quickPickItem.description && fs.existsSync(quickPickItem.description)) {
                         fs.unlinkSync(quickPickItem.description);
+                        console.log("Deleted file: " + quickPickItem.description);
                     }
                 });
             } else {
                 if(nupkgSelection.description && fs.existsSync(nupkgSelection.description)) {
                     fs.unlinkSync(nupkgSelection.description);
+                        console.log("Deleted file: " + nupkgSelection.description);
                 }
             }
         });
