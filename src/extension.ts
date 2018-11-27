@@ -12,6 +12,7 @@ export function activate(): void {
     commands.registerCommand("chocolatey.new", () => execute("new"));
     commands.registerCommand("chocolatey.pack", () => execute("pack"));
     commands.registerCommand("chocolatey.delete", () => deleteNupkgs());
+    commands.registerCommand("chocolatey.push", () => execute("push"));
 }
 
 function deleteNupkgs():void {

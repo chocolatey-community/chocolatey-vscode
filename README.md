@@ -27,6 +27,7 @@ The Chocolatey Visual Studio Code provides the following commands:
 * `Chocolatey: Create new Chocolatey package` to create the default templated Chocolatey package at the root of current workspace.
 * `Chocolatey: Pack Chocolatey package(s)` to search current workspace for nuspec files and package them
 * `Chocolatey: Delete Chocolatey package(s)` to search current workspace for nupkg files and delete them
+* `Chocolatey: Push Chocolatey package(s)` to search current workspace for nupkg files and push them
 
 ## Snippets
 
