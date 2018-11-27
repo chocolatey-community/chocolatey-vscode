@@ -1,8 +1,13 @@
 import { window, QuickPickItem, workspace } from "vscode";
 import { ChocolateyOperation } from "./ChocolateyOperation";
 import * as path from "path";
+import * as xml2js from "xml2js";
+import * as fs from "fs";
+import { getPathToChocolateyConfig } from "./config";
 
 export class ChocolateyCliManager {
+
+
     public new(): void {
         window.showInputBox({
             prompt: "Name for new Chocolatey Package?"
@@ -68,6 +73,142 @@ export class ChocolateyCliManager {
                         // tslint:disable-next-line:max-line-length
                         let packOp: ChocolateyOperation = new ChocolateyOperation(["pack", nuspecSelection.label, additionalArguments], { isOutputChannelVisible: true, currentWorkingDirectory: cwd });
                         packOp.run();
+                    }
+                });
+            });
+        });
+    }
+
+    public push(): void {
+        // tslint:disable-next-line:max-line-length
+        function pushPackage(packages: Array<QuickPickItem>, selectedNupkg: QuickPickItem, allPackages: boolean, source: string, apikey: string): void {
+            window.showInputBox({
+                prompt: "Additional command arguments?"
+            }).then((additionalArguments) => {
+                let chocolateyArguments: string[] = [];
+                if(source) {
+                    chocolateyArguments.push("--source=\"'" + source + "'\"");
+                }
+
+                if(apikey) {
+                    chocolateyArguments.push("--api-key=\"'" + apikey + "'\"");
+                }
+
+                if(!additionalArguments || additionalArguments === "") {
+                    additionalArguments = "";
+                }
+
+                chocolateyArguments.push(additionalArguments);
+
+                if(allPackages) {
+                    packages.forEach((packageToPush) => {
+                        if(packageToPush.label === "All nupkg files") {
+                            return;
+                        }
+
+                        let cwd: string = packageToPush.description ? packageToPush.description : "";
+                        chocolateyArguments.unshift(packageToPush.label);
+                        chocolateyArguments.unshift("push");
+
+                        // tslint:disable-next-line:max-line-length
+                        let pushOp: ChocolateyOperation = new ChocolateyOperation(chocolateyArguments, { isOutputChannelVisible: true, currentWorkingDirectory: cwd });
+                        pushOp.run();
+
+                        // remove the first three arguments.  These will be replaced in next iteration
+                        chocolateyArguments.splice(0, 3);
+                    });
+                } else {
+                    let cwd: string = selectedNupkg.description ? selectedNupkg.description : "";
+                    chocolateyArguments.unshift(selectedNupkg.label);
+                    chocolateyArguments.unshift("push");
+
+                    // tslint:disable-next-line:max-line-length
+                    let pushOp: ChocolateyOperation = new ChocolateyOperation(chocolateyArguments, { isOutputChannelVisible: true, currentWorkingDirectory: cwd });
+                    pushOp.run();
+                }
+            });
+        }
+
+        function getCustomSource(quickPickItems: Array<QuickPickItem>, nupkgSelection: QuickPickItem): void {
+            // need to get user to specify source
+            window.showInputBox({
+                prompt: "Source to push package(s) to..."
+            }).then((specifiedSource) => {
+                window.showInputBox({
+                    prompt: "API Key for Source (if required)..."
+                }).then((specifiedApiKey) => {
+                    if(!specifiedSource) {
+                        return;
+                    }
+
+                    // tslint:disable-next-line:max-line-length
+                    pushPackage(quickPickItems, nupkgSelection, nupkgSelection.label === "All nupkg files", specifiedSource, specifiedApiKey === undefined ? "" : specifiedApiKey);
+                });
+            });
+        }
+        workspace.findFiles("**/*.nupkg").then((nupkgFiles) => {
+            if(nupkgFiles.length ===0) {
+                window.showErrorMessage("There are no nupkg files in the current workspace.");
+                return;
+            }
+
+            let quickPickItems: Array<QuickPickItem> =  nupkgFiles.map((filePath) => {
+                return {
+                    label: path.basename(filePath.fsPath),
+                    description: path.dirname(filePath.fsPath)
+                };
+            });
+
+            if(quickPickItems.length > 1) {
+                quickPickItems.unshift({label: "All nupkg files"});
+            }
+
+            window.showQuickPick(quickPickItems, {
+                placeHolder: "Available nupkg files..."
+              }).then((nupkgSelection) => {
+                if(!nupkgSelection) {
+                    return;
+                }
+
+                let parser: xml2js.Parser = new xml2js.Parser();
+                const contents: string = fs.readFileSync(getPathToChocolateyConfig()).toString();
+                parser.parseString(contents, function(err: any, result: any): void {
+                    if(err) {
+                        console.log(err);
+                        return;
+                    }
+
+                    let sourceQuickPickItems: Array<QuickPickItem> = new Array<QuickPickItem>();
+
+                    if(result.chocolatey.apiKeys[0].apiKeys) {
+                        result.chocolatey.apiKeys[0].apiKeys.forEach((apiKey  => {
+                            sourceQuickPickItems.push({
+                                    label: apiKey.$.source,
+                                });
+                        }));
+                    }
+
+                    if(sourceQuickPickItems.length === 0) {
+                        getCustomSource(quickPickItems, nupkgSelection);
+                    } else {
+                        if(sourceQuickPickItems.length > 0) {
+                            sourceQuickPickItems.unshift({label: "Use custom source..."});
+                        }
+
+                        window.showQuickPick(sourceQuickPickItems, {
+                            placeHolder: "Select configured source..."
+                        }).then((sourceSelection) => {
+                            if(!sourceSelection || !sourceSelection.label) {
+                                return;
+                            }
+
+                            if(sourceSelection.label === "Use custom source...") {
+                                getCustomSource(quickPickItems, nupkgSelection);
+                            } else {
+                                // tslint:disable-next-line:max-line-length
+                                pushPackage(quickPickItems, nupkgSelection, nupkgSelection.label === "All nupkg files", sourceSelection.label, "");
+                            }
+                        });
                     }
                 });
             });

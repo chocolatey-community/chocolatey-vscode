@@ -24,7 +24,9 @@
 	},
 	"activationEvents": [
 		"onCommand:chocolatey.new",
-		"onCommand:chocolatey.pack"
+		"onCommand:chocolatey.pack",
+		"onCommand:chocolatey.delete",
+		"onCommand:chocolatey.push"
 	],
 	"engines": {
 		"vscode": "^1.24.0"
@@ -41,6 +43,14 @@
 			{
 				"command": "chocolatey.pack",
 				"title": "Chocolatey: Pack Chocolatey package(s)"
+			},
+			{
+				"command": "chocolatey.delete",
+				"title": "Chocolatey: Delete Chocolatey package(s)"
+			},
+			{
+				"command": "chocolatey.push",
+				"title": "Chocolatey: Push Chocolatey package(s)"
 			}
 		],
 		"snippets": [
@@ -71,5 +81,8 @@
 		"typemoq": "^2.1.0",
 		"typescript": "^2.6.1",
 		"vscode": "^1.1.6"
+	},
+	"dependencies": {
+		"xml2js": "^0.4.19"
 	}
 }
