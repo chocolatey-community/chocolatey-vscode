@@ -86,6 +86,7 @@
 		"xml2js": "^0.4.19"
 	},
 	"extensionDependencies": [
-		"ms-vscode.PowerShell"
+		"ms-vscode.PowerShell",
+		"slevesque.vscode-zipexplorer"
 	]
 }

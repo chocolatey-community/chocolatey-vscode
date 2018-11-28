@@ -51,6 +51,8 @@ and then simply arrow up/down to the one you want and press enter, or left mouse
 The extension takes a dependency on the following extensions:
 
 * [PowerShell](https://marketplace.visualstudio.com/items?itemName=ms-vscode.PowerShell) - since Chocolatey Packaging Scripts are written in PowerShell, this extension helps with the creation/maintenance of those.
+* [Zip File Explorer](https://marketplace.visualstudio.com/items?itemName=slevesque.vscode-zipexplorer) - to enable the ability to "view" the contents of the generated `nupkg` files, which are simply fancy zip files.
+  * **NOTE** This extension will attempt to add the necessary file association to your User Settings, so that `nupkg` files are treated in the same way as `zip` files.
 
 ## Resources
 
