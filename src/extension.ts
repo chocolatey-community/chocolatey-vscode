@@ -1,4 +1,4 @@
-import {window, commands, workspace, QuickPickItem} from "vscode";
+import {window, commands, workspace, QuickPickItem, WorkspaceConfiguration} from "vscode";
 import * as chocolateyCli from "./ChocolateyCliManager";
 import * as chocolateyOps from "./ChocolateyOperation";
 import * as path from "path";
@@ -7,12 +7,22 @@ import * as fs from "fs";
 var chocolateyManager : chocolateyCli.ChocolateyCliManager;
 var installed : boolean = false;
 
-export function activate(): void {
+export async function activate(): Promise<void> {
     // register Commands
     commands.registerCommand("chocolatey.new", () => execute("new"));
     commands.registerCommand("chocolatey.pack", () => execute("pack"));
     commands.registerCommand("chocolatey.delete", () => deleteNupkgs());
     commands.registerCommand("chocolatey.push", () => execute("push"));
+
+    const configuration: WorkspaceConfiguration = workspace.getConfiguration();
+    const currentValue: {} = configuration.get("files.associations", {});
+
+    if(!currentValue["*.nupkg"]) {
+        const value: {} = { ...currentValue, ...{ "*.nupkg": "zip" } };
+        await configuration.update("files.associations", value, true);
+        // tslint:disable-next-line:max-line-length
+        window.showInformationMessage("User settings have been updated with new files.assocations, to treat nupkg files as zip files.  This is to allow a right-click menu option on nupkg files, to allow viewing them in the Zip Explorer window.");
+    }
 }
 
 function deleteNupkgs():void {
