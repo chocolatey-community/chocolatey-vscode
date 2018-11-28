@@ -19,7 +19,7 @@
     <tags>chocolatey-vscode vscode extension</tags>
     <summary>Chocolatey Extension for Visual Studio Code</summary>
     <description>
-This extension bgrins support for Chocolatey to Visual Studio Code.
+This extension brings support for Chocolatey to Visual Studio Code.
 
 ## Commands
 The Chocolatey Visual Studio Code provides the following commands:
