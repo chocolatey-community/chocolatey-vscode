@@ -188,6 +188,7 @@ Task("Publish-GitHub-Release")
 
 Task("Publish-Chocolatey-Package")
     .IsDependentOn("Create-Chocolatey-Package")
+    .WithCriteria(() => parameters.ShouldPublish)
     .Does(() =>
 {
     foreach (var package in GetFiles(parameters.ChocolateyPackages + "/*.nupkg"))
