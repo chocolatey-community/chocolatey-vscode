@@ -198,6 +198,11 @@ Task("Publish-Chocolatey-Package")
             Source = parameters.Chocolatey.SourceUrl
         });
     }
+})
+.OnError(exception =>
+{
+    Information("Publish-Chocolatey-Package Task failed, but continuing with next Task...");
+    publishingError = true;
 });
 
 Task("Publish-Extension")
