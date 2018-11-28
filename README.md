@@ -8,6 +8,7 @@ This extension brings support for [Chocolatey](https://chocolatey.org/) to Visua
 1. [Commands](#commands)
 1. [Snippets](#snippets)
 1. [Resources](#resources)
+1. [Installation](#installation)
 1. [Documentation](#documentation)
 1. [Thanks](#thanks)
 1. [Contributing](#contributing)
@@ -47,6 +48,14 @@ and then simply arrow up/down to the one you want and press enter, or left mouse
 ## Resources
 
 Short YouTube videos of each of the releases of this extension can be found in this [playlist](https://www.youtube.com/playlist?list=PL84yg23i9GBhIhNG4LaeXNHwxZYJaSqgj).
+
+## Installation
+
+You can either install this extension in the normal way, or you can choose to install using Chocolatey:
+
+```
+choco install chocolatey-vscode
+```
 
 ## Documentation
 

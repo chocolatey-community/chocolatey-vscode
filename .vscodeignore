@@ -10,3 +10,4 @@ tslint.json
 tools/**
 build/**
 build-results/**
+chocolatey/**

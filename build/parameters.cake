@@ -17,10 +17,12 @@ public class BuildParameters
     public bool IsReleaseBuild { get; private set; }
     public bool SkipGitVersion { get; private set; }
     public BuildCredentials GitHub { get; private set; }
+    public ChocolateyCredentials Chocolatey { get; private set; }
     public VisualStudioMarketplaceCredentials Marketplace { get; private set; }
     public WyamCredentials Wyam { get; private set; }
     public BuildVersion Version { get; private set; }
 
+    public DirectoryPath ChocolateyPackages { get; private set; }
     public DirectoryPath WyamRootDirectoryPath { get; private set; }
     public DirectoryPath WyamPublishDirectoryPath { get; private set; }
     public FilePath WyamConfigurationFile { get; private set; }
@@ -111,6 +113,10 @@ public class BuildParameters
                 buildSystem.AppVeyor.Environment.Repository.Tag.IsTag &&
                 !string.IsNullOrWhiteSpace(buildSystem.AppVeyor.Environment.Repository.Tag.Name)
             ),
+            Chocolatey = new ChocolateyCredentials (
+                apiKey: context.EnvironmentVariable("CHOCOLATEYVSCODE_CHOCOLATEY_APIKEY"),
+                sourceUrl: context.EnvironmentVariable("CHOCOLATEYVSCODE_CHOCOLATEY_SOURCEURL") ?? "https://push.chocolatey.org"
+            ),
             GitHub = new BuildCredentials (
                 userName: context.EnvironmentVariable("CHOCOLATEYVSCODE_GITHUB_USERNAME"),
                 password: context.EnvironmentVariable("CHOCOLATEYVSCODE_GITHUB_PASSWORD")
@@ -134,6 +140,7 @@ public class BuildParameters
                 publishTarget => StringComparer.OrdinalIgnoreCase.Equals(publishTarget, target)
             ),
             SkipGitVersion = StringComparer.OrdinalIgnoreCase.Equals("True", context.EnvironmentVariable("CAKE_SKIP_GITVERSION")),
+            ChocolateyPackages = context.MakeAbsolute(context.Directory("build-results/_Packages/chocolatey")),
             WyamRootDirectoryPath = context.MakeAbsolute(context.Environment.WorkingDirectory),
             WyamPublishDirectoryPath = context.MakeAbsolute(context.Directory("build-results/_PublishedDocumentation")),
             WyamConfigurationFile = context.MakeAbsolute((FilePath)"config.wyam"),
@@ -155,6 +162,18 @@ public class BuildCredentials
     {
         UserName = userName;
         Password = password;
+    }
+}
+
+public class ChocolateyCredentials
+{
+    public string ApiKey { get; private set; }
+    public string SourceUrl { get; private set; }
+
+    public ChocolateyCredentials(string apiKey, string sourceUrl)
+    {
+        ApiKey = apiKey;
+        SourceUrl = sourceUrl;
     }
 }
 

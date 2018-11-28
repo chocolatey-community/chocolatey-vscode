@@ -128,6 +128,32 @@ Task("Package-Extension")
     });
 });
 
+Task("Create-Chocolatey-Package")
+    .IsDependentOn("Package-Extension")
+    .Does(() =>
+{
+    // TODO: Automatically update the release notes in the nuspec file
+    // TODO: Automatically update the description from the Readme.md file
+
+    var nuspecFile = File("./chocolatey/chocolatey-vscode.nuspec");
+
+    EnsureDirectoryExists(parameters.ChocolateyPackages);
+    var extensionFile = MakeAbsolute((FilePath)("./build-results/chocolatey-vscode-" + parameters.Version.SemVersion + ".vsix"));
+    CopyFile("LICENSE", "./chocolatey/tools/LICENSE.txt");
+    var files = GetFiles("./chocolatey/tools/**/*").Select(f => new ChocolateyNuSpecContent {
+                  Source = MakeAbsolute((FilePath)f).ToString(),
+                  Target = "tools"
+                }).ToList();
+    files.Add(new ChocolateyNuSpecContent { Source = extensionFile.ToString(), Target = "tools/chocolatey-vscode.vsix" });
+
+    ChocolateyPack(nuspecFile, new ChocolateyPackSettings {
+        Version = parameters.Version.SemVersion,
+        OutputDirectory = parameters.ChocolateyPackages,
+        WorkingDirectory = "./chocolatey",
+        Files = files.ToArray()
+    });
+});
+
 Task("Upload-AppVeyor-Artifacts")
     .IsDependentOn("Package-Extension")
     .WithCriteria(() => parameters.IsRunningOnAppVeyor)
@@ -140,18 +166,42 @@ Task("Upload-AppVeyor-Artifacts")
 
 Task("Publish-GitHub-Release")
     .IsDependentOn("Package-Extension")
+    .IsDependentOn("Create-Chocolatey-Package")
     .WithCriteria(() => parameters.ShouldPublish)
     .Does(() =>
 {
-    var buildResultDir = Directory("./build-results");
-    var packageFile = File("chocolatey-vscode-" + parameters.Version.SemVersion + ".vsix");
+    var packageFiles = GetFiles("./build-results/*.vsix")
+                     + GetFiles(parameters.ChocolateyPackages + "/*.nupkg");
 
-    GitReleaseManagerAddAssets(parameters.GitHub.UserName, parameters.GitHub.Password, "gep13", "chocolatey-vscode", parameters.Version.Milestone, buildResultDir + packageFile);
+    foreach (var package in packageFiles.Select(f => MakeAbsolute(f)))
+    {
+        GitReleaseManagerAddAssets(parameters.GitHub.UserName, parameters.GitHub.Password, "gep13", "chocolatey-vscode", parameters.Version.Milestone, package.ToString());
+    }
+
     GitReleaseManagerClose(parameters.GitHub.UserName, parameters.GitHub.Password, "gep13", "chocolatey-vscode", parameters.Version.Milestone);
 })
 .OnError(exception =>
 {
     Information("Publish-GitHub-Release Task failed, but continuing with next Task...");
+    publishingError = true;
+});
+
+Task("Publish-Chocolatey-Package")
+    .IsDependentOn("Create-Chocolatey-Package")
+    .WithCriteria(() => parameters.ShouldPublish)
+    .Does(() =>
+{
+    foreach (var package in GetFiles(parameters.ChocolateyPackages + "/*.nupkg"))
+    {
+        ChocolateyPush(package, new ChocolateyPushSettings {
+            ApiKey = parameters.Chocolatey.ApiKey,
+            Source = parameters.Chocolatey.SourceUrl
+        });
+    }
+})
+.OnError(exception =>
+{
+    Information("Publish-Chocolatey-Package Task failed, but continuing with next Task...");
     publishingError = true;
 });
 
@@ -186,6 +236,7 @@ Task("Appveyor")
     .IsDependentOn("Publish-Documentation")
     .IsDependentOn("Publish-GitHub-Release")
     .IsDependentOn("Publish-Extension")
+    .IsDependentOn("Publish-Chocolatey-Package")
     .Finally(() =>
 {
     if(publishingError)
