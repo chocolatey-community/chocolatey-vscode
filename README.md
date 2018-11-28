@@ -7,6 +7,7 @@ This extension brings support for [Chocolatey](https://chocolatey.org/) to Visua
 1. [What is Chocolatey?](#what-is-chocolatey)
 1. [Commands](#commands)
 1. [Snippets](#snippets)
+1. [Dependencies](#dependencies)
 1. [Resources](#resources)
 1. [Installation](#installation)
 1. [Documentation](#documentation)
@@ -44,6 +45,12 @@ To use them, simply open your powershell file, and then type `choco` followed by
 and then simply arrow up/down to the one you want and press enter, or left mouse click.  From there the PowerShell for the helper function will be generated, and the cursor will be placed ready for you to start filling in the content of function...
 
 ![Expanded Chocolatey Snippet](https://raw.githubusercontent.com/gep13/chocolatey-vscode/master/images/Expanded-Choco-Snippet.png)
+
+## Dependencies
+
+The extension takes a dependency on the following extensions:
+
+* [PowerShell](https://marketplace.visualstudio.com/items?itemName=ms-vscode.PowerShell) - since Chocolatey Packaging Scripts are written in PowerShell, this extension helps with the creation/maintenance of those.
 
 ## Resources
 
