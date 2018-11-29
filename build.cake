@@ -9,6 +9,8 @@
 #addin "nuget:?package=Cake.Wyam&version=1.7.4"
 #addin "nuget:?package=Cake.Git&version=0.19.0"
 #addin "nuget:?package=Cake.Kudu&version=0.8.0"
+#addin "nuget:?package=Cake.Gitter&version=0.10.0"
+#addin "nuget:?package=Cake.Twitter&version=0.9.0"
 
 //////////////////////////////////////////////////////////////////////
 // TOOLS
@@ -22,6 +24,8 @@
 // Load other scripts.
 #load "./build/parameters.cake"
 #load "./build/wyam.cake"
+#load "./build/gitter.cake"
+#load "./build/twitter.cake"
 
 //////////////////////////////////////////////////////////////////////
 // PARAMETERS
@@ -49,6 +53,29 @@ Setup(context =>
         parameters.Target,
         parameters.Version.CakeVersion,
         parameters.IsTagged);
+});
+
+Teardown(context =>
+{
+    Information("Starting Teardown...");
+
+    if(context.Successful)
+    {
+        if(!parameters.IsLocalBuild && !parameters.IsPullRequest && parameters.IsMasterRepo && (parameters.IsMasterBranch || ((parameters.IsReleaseBranch || parameters.IsHotFixBranch))) && parameters.IsTagged)
+        {
+            if(parameters.CanPostToTwitter)
+            {
+                SendMessageToTwitter();
+            }
+
+            if(parameters.CanPostToGitter)
+            {
+                SendMessageToGitterRoom();
+            }
+        }
+    }
+
+    Information("Finished running tasks.");
 });
 
 //////////////////////////////////////////////////////////////////////
