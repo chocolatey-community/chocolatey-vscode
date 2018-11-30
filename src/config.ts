@@ -30,3 +30,15 @@ export function getPathToChocolateyBin(): string {
 
     return path.join(chocolateyInstallEnvironmentVariable, "bin/choco.exe");
 }
+
+export function getPathToChocolateyTemplates(): string {
+    let chocolateyInstallEnvironmentVariable: string | undefined = process.env.ChocolateyInstall;
+
+    if (chocolateyInstallEnvironmentVariable === undefined) {
+        // todo: this is really an error condition, and something should be done
+        console.error("Chocolatey installation path could not be found.");
+        return "";
+    }
+
+    return path.join(chocolateyInstallEnvironmentVariable, "templates");
+}
