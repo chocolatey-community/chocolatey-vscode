@@ -58,7 +58,13 @@
 				"language": "powershell",
 				"path": "./snippets/powershell.json"
 			}
-		]
+		],
+		"languages": [{
+			"id": "zip",
+			"extensions": [
+				".nupkg"
+			]
+		}]
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
