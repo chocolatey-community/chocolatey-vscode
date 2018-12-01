@@ -58,7 +58,13 @@
 				"language": "powershell",
 				"path": "./snippets/powershell.json"
 			}
-		]
+		],
+		"languages": [{
+			"id": "zip",
+			"extensions": [
+				".nupkg"
+			]
+		}]
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
@@ -86,6 +92,7 @@
 		"xml2js": "^0.4.19"
 	},
 	"extensionDependencies": [
-		"ms-vscode.PowerShell"
+		"ms-vscode.PowerShell",
+		"slevesque.vscode-zipexplorer"
 	]
 }
