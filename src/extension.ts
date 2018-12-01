@@ -16,6 +16,11 @@ export function activate(): void {
 }
 
 function deleteNupkgs():void {
+    // Check if there is an open folder in workspace
+    if (workspace.rootPath === undefined) {
+        window.showErrorMessage("You have not yet opened a folder.");
+    }
+
     workspace.findFiles("**/*.nupkg").then((nupkgFiles) => {
         if(nupkgFiles.length ===0) {
             window.showErrorMessage("There are no nupkg files in the current workspace.");
@@ -62,6 +67,11 @@ function deleteNupkgs():void {
 }
 
 function execute(cmd?: string | undefined, arg?: any[] | undefined): Thenable<string | undefined> | undefined {
+    // Check if there is an open folder in workspace
+    if (workspace.rootPath === undefined) {
+        window.showErrorMessage("You have not yet opened a folder.");
+    }
+
     if (!chocolateyManager) {
         chocolateyManager = new chocolateyCli.ChocolateyCliManager();
     }
