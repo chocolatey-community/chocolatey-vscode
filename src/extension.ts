@@ -13,6 +13,7 @@ export function activate(): void {
     commands.registerCommand("chocolatey.pack", () => execute("pack"));
     commands.registerCommand("chocolatey.delete", () => deleteNupkgs());
     commands.registerCommand("chocolatey.push", () => execute("push"));
+    commands.registerCommand("chocolatey.installTemplates", () => execute("installTemplates"));
 }
 
 function deleteNupkgs():void {
