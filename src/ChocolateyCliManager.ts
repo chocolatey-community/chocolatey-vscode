@@ -6,8 +6,6 @@ import * as fs from "fs";
 import { getPathToChocolateyConfig, getPathToChocolateyTemplates } from "./config";
 
 export class ChocolateyCliManager {
-
-
     public new(): void {
         window.showInputBox({
             prompt: "Name for new Chocolatey Package?"
@@ -235,6 +233,21 @@ export class ChocolateyCliManager {
                 });
             });
         });
+    }
+
+    public installTemplates(): void {
+        const config = workspace.getConfiguration("chocolatey").templatePackages;
+
+        let chocoArguments: Array<string> = ["install"];
+
+        config.names.forEach((name) => {
+            chocoArguments.push(name);
+        });
+
+        chocoArguments.push(`--source="'${config.source}'"`);
+
+        let installTemplatesOp: ChocolateyOperation = new ChocolateyOperation(chocoArguments);
+        installTemplatesOp.run();
     }
 
     private _findPackageTemplates(): string[] {
