@@ -3,11 +3,9 @@ import { ChocolateyOperation } from "./ChocolateyOperation";
 import * as path from "path";
 import * as xml2js from "xml2js";
 import * as fs from "fs";
-import { getPathToChocolateyConfig } from "./config";
+import { getPathToChocolateyConfig, getPathToChocolateyTemplates } from "./config";
 
 export class ChocolateyCliManager {
-
-
     public new(): void {
         window.showInputBox({
             prompt: "Name for new Chocolatey Package?"
@@ -16,8 +14,30 @@ export class ChocolateyCliManager {
                 return;
             }
 
-            let newOp: ChocolateyOperation = new ChocolateyOperation(["new", result]);
-            newOp.run();
+            let availableTemplates : Array<QuickPickItem> = this._findPackageTemplates().map((filepath) => {
+                return {
+                    label: path.basename(filepath),
+
+                };
+            });
+            if (availableTemplates.length > 0) {
+                availableTemplates.unshift({label: "Default Template" });
+                window.showQuickPick(availableTemplates, {
+                    placeHolder: "Available templates"
+                }).then(template => {
+                    let chocoArguments: Array<string> = ["new", result];
+
+                    if (template && template.label !== "Default Template") {
+                        chocoArguments.push(`--template-name="'${template.label}'"`);
+                    }
+
+                    let newOp: ChocolateyOperation = new ChocolateyOperation(chocoArguments);
+                    newOp.run();
+                });
+            } else {
+                let newOp: ChocolateyOperation = new ChocolateyOperation(["new", result]);
+                newOp.run();
+            }
         });
     }
 
@@ -213,5 +233,34 @@ export class ChocolateyCliManager {
                 });
             });
         });
+    }
+
+    public installTemplates(): void {
+        const config = workspace.getConfiguration("chocolatey").templatePackages;
+
+        let chocoArguments: Array<string> = ["install"];
+
+        config.names.forEach((name) => {
+            chocoArguments.push(name);
+        });
+
+        chocoArguments.push(`--source="'${config.source}'"`);
+
+        let installTemplatesOp: ChocolateyOperation = new ChocolateyOperation(chocoArguments);
+        installTemplatesOp.run();
+    }
+
+    private _findPackageTemplates(): string[] {
+        let templateDir = getPathToChocolateyTemplates();
+
+        if (!templateDir || !fs.existsSync(templateDir) || !this._isDirectory(templateDir)) {
+            return [];
+        }
+
+        return fs.readdirSync(templateDir).map(name => path.join(templateDir, name)).filter(this._isDirectory);
+    }
+
+    private _isDirectory(path: string) {
+        return fs.lstatSync(path).isDirectory();
     }
 }

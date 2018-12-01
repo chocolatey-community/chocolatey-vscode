@@ -26,7 +26,8 @@
 		"onCommand:chocolatey.new",
 		"onCommand:chocolatey.pack",
 		"onCommand:chocolatey.delete",
-		"onCommand:chocolatey.push"
+		"onCommand:chocolatey.push",
+		"onCommand:chocolatey.installTemplates"
 	],
 	"engines": {
 		"vscode": "^1.24.0"
@@ -35,6 +36,40 @@
 		"Other"
 	],
 	"contributes": {
+		"configuration": [
+			{
+				"type": "object",
+				"title": "Chocolatey Configuration",
+				"properties": {
+					"chocolatey.templatePackages": {
+						"type": "object",
+						"default": {
+							"names": [
+								"msi.template",
+								"zip.template"
+							],
+							"source": "https://chocolatey.org/api/v2/"
+						},
+						"properties": {
+							"names": {
+								"type": "array",
+								"description": "The names of the Chocolatey Packages which contain templates which should be installed.",
+								"default": [
+									"msi.template",
+									"zip.template"
+								]
+							},
+							"source": {
+								"type": "string",
+								"description": "The source to install the template packages from.",
+								"default": "https://chocolatey.org/api/v2/"
+							}
+						},
+						"description": "The Chocolatey Template Packages Configuration"
+					}
+				}
+			}
+		],
 		"commands": [
 			{
 				"command": "chocolatey.new",
@@ -51,12 +86,24 @@
 			{
 				"command": "chocolatey.push",
 				"title": "Chocolatey: Push Chocolatey package(s)"
+			},
+			{
+				"command": "chocolatey.installTemplates",
+				"title": "Chocolatey: Install Template package(s)"
 			}
 		],
 		"snippets": [
 			{
 				"language": "powershell",
 				"path": "./snippets/powershell.json"
+			}
+		],
+		"languages": [
+			{
+				"id": "zip",
+				"extensions": [
+					".nupkg"
+				]
 			}
 		]
 	},
@@ -84,5 +131,9 @@
 	},
 	"dependencies": {
 		"xml2js": "^0.4.19"
-	}
+	},
+	"extensionDependencies": [
+		"ms-vscode.PowerShell",
+		"slevesque.vscode-zipexplorer"
+	]
 }
