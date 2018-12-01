@@ -22,7 +22,7 @@ export class ChocolateyCliManager {
 
                 };
             });
-            if (availableTemplates.length > 1) {
+            if (availableTemplates.length > 0) {
                 availableTemplates.unshift({label: "Default Template" });
                 window.showQuickPick(availableTemplates, {
                     placeHolder: "Available templates"
