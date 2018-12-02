@@ -191,7 +191,7 @@ Task("Upload-AppVeyor-Artifacts")
     var packageFile = File("chocolatey-vscode-" + parameters.Version.SemVersion + ".vsix");
     var chocolateyPackageFile = File("chocolatey-vscode." + parameters.Version.SemVersion + ".nupkg");
     AppVeyor.UploadArtifact(buildResultDir + packageFile);
-    AppVeyor.UploadArtifact(buildResultDir + chocolateyPackageFile);
+    AppVeyor.UploadArtifact(buildResultDir + "_Packages/chocolatey/" + chocolateyPackageFile);
 });
 
 Task("Publish-GitHub-Release")
