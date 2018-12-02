@@ -183,6 +183,7 @@ Task("Create-Chocolatey-Package")
 
 Task("Upload-AppVeyor-Artifacts")
     .IsDependentOn("Package-Extension")
+    .IsDependentOn("Create-Chocolatey-Package")
     .WithCriteria(() => parameters.IsRunningOnAppVeyor)
 .Does(() =>
 {
