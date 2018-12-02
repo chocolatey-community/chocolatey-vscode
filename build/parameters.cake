@@ -107,7 +107,7 @@ public class BuildParameters
     {
         get
         {
-            return "Version " + Version.SemVersion + " of the Chocolatey VSCode Extension has just been released, https://marketplace.visualstudio.com/items?itemName=gep13.chocolatey-vscode.";
+            return "Version " + Version.SemVersion + " of the Chocolatey VSCode Extension has just been released, https://marketplace.visualstudio.com/items?itemName=gep13.chocolatey-vscode. @chocolateynuget @code";
         }
     }
 
