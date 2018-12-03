@@ -99,7 +99,7 @@ public class BuildParameters
     {
         get
         {
-            return "@/all Version " + Version.SemVersion + " of the Chocolatey VSCode Extension has just been released, https://marketplace.visualstudio.com/items?itemName=gep13.chocolatey-vscode.";
+            return "@/all Version " + Version.SemVersion + " of the Chocolatey VSCode Extension has just been released, https://marketplace.visualstudio.com/items?itemName=gep13.chocolatey-vscode.  Full release notes: https://github.com/gep13/chocolatey-vscode/releases/tag/" + Version.SemVersion;
         }
     }
 
@@ -107,7 +107,7 @@ public class BuildParameters
     {
         get
         {
-            return "Version " + Version.SemVersion + " of the Chocolatey VSCode Extension has just been released, https://marketplace.visualstudio.com/items?itemName=gep13.chocolatey-vscode. @chocolateynuget @code";
+            return "Version " + Version.SemVersion + " of the Chocolatey VSCode Extension has just been released, https://marketplace.visualstudio.com/items?itemName=gep13.chocolatey-vscode. @chocolateynuget @code  Full release notes: https://github.com/gep13/chocolatey-vscode/releases/tag/" + Version.SemVersion;
         }
     }
 
