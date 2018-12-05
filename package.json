@@ -127,7 +127,7 @@
 		"tslint": "^5.8.0",
 		"typemoq": "^2.1.0",
 		"typescript": "^3.2.1",
-		"vscode": "^1.1.22"
+		"vscode": "^1.1.24"
 	},
 	"dependencies": {
 		"xml2js": "^0.4.19"
