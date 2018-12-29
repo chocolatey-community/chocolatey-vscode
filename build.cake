@@ -232,7 +232,10 @@ Task("Publish-Chocolatey-Package")
 .OnError(exception =>
 {
     Information("Publish-Chocolatey-Package Task failed, but continuing with next Task...");
-    publishingError = true;
+    
+    // TODO: Don't fail build if failure to push package to Chocolatey, as this is known to cause
+    // some errors at the minute.  An error can be returned, but the package is pushed correctly
+    // publishingError = true;
 });
 
 Task("Publish-Extension")
