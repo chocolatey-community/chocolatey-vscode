@@ -132,7 +132,7 @@
 	"dependencies": {
 		"xml2js": "^0.4.19"
 	},
-	"extensionDependencies": [
+	"extensionPack": [
 		"ms-vscode.PowerShell",
 		"slevesque.vscode-zipexplorer"
 	]
