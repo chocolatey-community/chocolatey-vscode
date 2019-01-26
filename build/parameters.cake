@@ -99,7 +99,7 @@ public class BuildParameters
     {
         get
         {
-            return "@/all Version " + Version.SemVersion + " of the Chocolatey VSCode Extension has just been released, https://marketplace.visualstudio.com/items?itemName=gep13.chocolatey-vscode.";
+            return "@/all Version " + Version.SemVersion + " of the Chocolatey VSCode Extension has just been released, https://marketplace.visualstudio.com/items?itemName=gep13.chocolatey-vscode.  Full release notes: https://github.com/gep13/chocolatey-vscode/releases/tag/" + Version.SemVersion;
         }
     }
 
@@ -107,7 +107,7 @@ public class BuildParameters
     {
         get
         {
-            return "Version " + Version.SemVersion + " of the Chocolatey VSCode Extension has just been released, https://marketplace.visualstudio.com/items?itemName=gep13.chocolatey-vscode.";
+            return "Version " + Version.SemVersion + " of the Chocolatey VSCode Extension has just been released, https://marketplace.visualstudio.com/items?itemName=gep13.chocolatey-vscode. @chocolateynuget @code  Full release notes: https://github.com/gep13/chocolatey-vscode/releases/tag/" + Version.SemVersion;
         }
     }
 
@@ -191,9 +191,9 @@ public class BuildParameters
             }.Any(
                 publishTarget => StringComparer.OrdinalIgnoreCase.Equals(publishTarget, target)
             ),
-            SkipGitVersion = StringComparer.OrdinalIgnoreCase.Equals("True", context.EnvironmentVariable("CAKE_SKIP_GITVERSION")),
+            SkipGitVersion = StringComparer.OrdinalIgnoreCase.Equals("True", context.EnvironmentVariable("CHOCOLATEYVSCODE_SKIP_GITVERSION")),
             ChocolateyPackages = context.MakeAbsolute(context.Directory("build-results/_Packages/chocolatey")),
-            WyamRootDirectoryPath = context.MakeAbsolute(context.Environment.WorkingDirectory),
+            WyamRootDirectoryPath = context.MakeAbsolute(context.Directory("docs")),
             WyamPublishDirectoryPath = context.MakeAbsolute(context.Directory("build-results/_PublishedDocumentation")),
             WyamConfigurationFile = context.MakeAbsolute((FilePath)"config.wyam"),
             WyamRecipe = "Docs",

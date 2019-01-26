@@ -2,7 +2,7 @@ VERIFICATION
 Verification is intended to assist the Chocolatey moderators and community
 in verifying that this package's contents are trustworthy.
 
-This package is being officially supplied by the software author of these scripts (Kim J. Nordmo)
+This package is being officially supplied by the software author of these scripts (Gary Ewan Park, thanks to contributions from Kim J. Nordmo)
 
 The included binary file can be downloaded from our releases page located at
 <https://github.com/gep13/chocolatey-vscode/releases>

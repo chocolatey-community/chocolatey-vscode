@@ -24,7 +24,7 @@ For more information about [Chocolatey](https://chocolatey.org/), please see the
 
 ## Commands
 
-The Chocolatey Visual Studio Code provides the following commands:
+The Chocolatey Visual Studio Code Extension provides the following commands:
 
 * `Chocolatey: Create new Chocolatey package` to create the default templated Chocolatey package at the root of current workspace.
 * `Chocolatey: Pack Chocolatey package(s)` to search current workspace for nuspec files and package them
@@ -43,7 +43,7 @@ To use them, simply open your powershell file, and then type `choco` followed by
 
 ![Available Chocolatey Snippets](https://raw.githubusercontent.com/gep13/chocolatey-vscode/master/images/Choco-Snippets.png)
 
-and then simply arrow up/down to the one you want and press enter, or left mouse click.  From there the PowerShell for the helper function will be generated, and the cursor will be placed ready for you to start filling in the content of function...
+and then simply arrow up/down to the one you want and press enter, or left mouse click.  From there the PowerShell code for the helper function will be generated, and the cursor will be placed ready for you to start filling in the content of function...
 
 ![Expanded Chocolatey Snippet](https://raw.githubusercontent.com/gep13/chocolatey-vscode/master/images/Expanded-Choco-Snippet.png)
 
@@ -79,7 +79,7 @@ The execution of the Chocolatey commands in this extension would not have been p
 
 If you would like to see any other snippet or features added for this VS Code Extension, feel free to raise an [issue](https://github.com/gep13/chocolatey-vscode/issues), and if possible, a follow up pull request.
 
-You can also join in the Gitter Chat [![Join the chat at https://gitter.im/gep13/chocolatey-vscode](https://badges.gitter.im/gep13/chocolatey-vscode.svg)](https://gitter.im/gep13/chocolatey-vscode?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+You can also join in the Gitter Chat [![Join the chat at https://gitter.im/gep13-oss/community](https://badges.gitter.im/gep13-oss/community.svg)](https://gitter.im/gep13-oss/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Releases
 

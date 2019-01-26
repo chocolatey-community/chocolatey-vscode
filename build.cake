@@ -183,12 +183,15 @@ Task("Create-Chocolatey-Package")
 
 Task("Upload-AppVeyor-Artifacts")
     .IsDependentOn("Package-Extension")
+    .IsDependentOn("Create-Chocolatey-Package")
     .WithCriteria(() => parameters.IsRunningOnAppVeyor)
 .Does(() =>
 {
     var buildResultDir = Directory("./build-results");
     var packageFile = File("chocolatey-vscode-" + parameters.Version.SemVersion + ".vsix");
+    var chocolateyPackageFile = File("_Packages/chocolatey/chocolatey-vscode." + parameters.Version.SemVersion + ".nupkg");
     AppVeyor.UploadArtifact(buildResultDir + packageFile);
+    AppVeyor.UploadArtifact(buildResultDir + chocolateyPackageFile);
 });
 
 Task("Publish-GitHub-Release")
@@ -229,7 +232,10 @@ Task("Publish-Chocolatey-Package")
 .OnError(exception =>
 {
     Information("Publish-Chocolatey-Package Task failed, but continuing with next Task...");
-    publishingError = true;
+    
+    // TODO: Don't fail build if failure to push package to Chocolatey, as this is known to cause
+    // some errors at the minute.  An error can be returned, but the package is pushed correctly
+    // publishingError = true;
 });
 
 Task("Publish-Extension")
