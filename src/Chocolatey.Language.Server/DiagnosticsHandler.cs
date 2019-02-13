@@ -38,7 +38,7 @@ namespace Chocolatey.Language.Server
             var diagnostics = new List<Diagnostic>();
 
             diagnostics.AddRange(NuspecDoesNotContainTemplatedValuesRequirement(syntaxTree, textPositions));
-            diagnostics.AddRange(NuspecDescriptionLengthRequirement(syntaxTree, textPositions));
+            diagnostics.AddRange(NuspecDescriptionLengthValidation(syntaxTree, textPositions));
 
             _router.Document.PublishDiagnostics(new PublishDiagnosticsParams
             {
@@ -66,7 +66,13 @@ namespace Chocolatey.Language.Server
             }
         }
 
-        private IEnumerable<Diagnostic> NuspecDescriptionLengthRequirement(XmlDocumentSyntax syntaxTree, TextPositions textPositions)
+        /// <summary>
+        ///   Handler to validate the length of description in the package metadata.
+        /// </summary>
+        /// <seealso href="https://github.com/chocolatey/package-validator/blob/master/src/chocolatey.package.validator/infrastructure.app/rules/DescriptionRequirement.cs">Package validator requirement for description.</seealso>
+        /// <seealso href="https://github.com/chocolatey/package-validator/blob/master/src/chocolatey.package.validator/infrastructure.app/rules/DescriptionWordCountMaximum4000Requirement.cs">Package validator maximum length requirement for description.</seealso>
+        /// <seealso href="https://github.com/chocolatey/package-validator/blob/master/src/chocolatey.package.validator/infrastructure.app/rules/DescriptionWordCountMinimum30Guideline.cs">Package validator minimum length guideline for description.</seealso>
+        private IEnumerable<Diagnostic> NuspecDescriptionLengthValidation(XmlDocumentSyntax syntaxTree, TextPositions textPositions)
         {
             var descriptionElement = syntaxTree.DescendantNodes().OfType<XmlElementSyntax>().FirstOrDefault(x => string.Equals(x.Name, "description", StringComparison.OrdinalIgnoreCase));
 
