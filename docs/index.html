@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/chocolatey-vscode/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/chocolatey-vscode/assets/img/favicon.ico" type="image/x-icon">
-        <title>Choco VS Code - Chocolatey Visual Studio Code Extension</title>
+        <title>Choco VS Code - Docs</title>
         <link href="/chocolatey-vscode/assets/css/highlight.css" rel="stylesheet">
         <link href="/chocolatey-vscode/assets/css/bootstrap/bootstrap.css" rel="stylesheet" />
         <link href="/chocolatey-vscode/assets/css/adminlte/AdminLTE.css" rel="stylesheet" />
@@ -31,9 +31,9 @@
 
         
     </head>
-    <body class="hold-transition wyam layout-boxed layout-top-nav no-gutter">    
+    <body class="hold-transition wyam layout-boxed  ">    
         <div class="top-banner"></div>
-        <div class="wrapper">
+        <div class="wrapper with-container">
             <!-- Header -->
             <header class="main-header">   
                      
@@ -43,6 +43,10 @@
                          
                 <nav class="navbar navbar-static-top" role="navigation">
                     <!-- Sidebar toggle button-->
+                        <a href="#" class="sidebar-toggle visible-xs-block" data-toggle="offcanvas" role="button">
+                            <span class="sr-only">Toggle side menu</span>
+                            <i class="fa fa-chevron-circle-right"></i>
+                        </a>
                                         
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
@@ -54,7 +58,7 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
                         <ul class="nav navbar-nav">                            
-                                    <li><a href="/chocolatey-vscode/docs">Docs</a></li>
+                                    <li class="active"><a href="/chocolatey-vscode/docs">Docs</a></li>
  
                         </ul>       
                     </div>
@@ -65,10 +69,9 @@
             </header>
             
             <!-- Left side column. contains the logo and sidebar -->
-            <aside class="main-sidebar hidden">
+            <aside class="main-sidebar ">
                 <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
                     	
-        <div><p><a href="https://github.com/gep13/chocolatey-vscode/tree/master/input/index.cshtml"><i class="fa fa-pencil-square" aria-hidden="true"></i> Edit Content</a></p></div>
     <div id="infobar-headings"></div>
 
                 </section>
@@ -78,6 +81,19 @@
 
                     <ul class="sidebar-menu">
                         
+
+                <li class="treeview">
+                    <a href="/chocolatey-vscode/docs/commands">Commands</a> <a href="#" class="expand"></a>
+                    <ul class="treeview-menu">
+                        
+                <li><a href="/chocolatey-vscode/docs/commands/create">Create new Chocolatey package</a></li>
+                <li><a href="/chocolatey-vscode/docs/commands/pack">Pack Chocolatey package(s)</a></li>
+                <li><a href="/chocolatey-vscode/docs/commands/delete">Delete Chocolatey package(s)</a></li>
+                <li><a href="/chocolatey-vscode/docs/commands/push">Push Chocolatey package(s)</a></li>
+                <li><a href="/chocolatey-vscode/docs/commands/install">Install Template package(s)</a></li>
+
+                    </ul>
+                </li>
 
                     </ul>
                             
@@ -90,17 +106,26 @@
 
 
 
+		<section class="content-header">
+			<h1>Docs</h1>
+		</section>
+	<section class="content">
+					<div class="box">
+				<div class="box-body no-padding">
+					<table class="table table-striped table-hover two-cols-alt table-responsive">
+						
+						<tbody>
+								<tr>
+									<td><strong><a href="/chocolatey-vscode/docs/commands">Commands</a></strong></td>
+									<td>
+How to use the Chocolatey VSCode Extension									</td>
+								</tr>
+						</tbody>				
+					</table>
+				</div>
+			</div> 
 
-<div class="jumbotron">
-    <div class="container">
-        <h1 class="display-4">Chocolatey Visual Studio Code Extension</h1>
-        <p>
-            This extension brings support for Chocolatey to Visual Studio Code.<br/>
-        </p>
-        <a class="btn btn-primary btn-lg" href="docs" role="button">Learn more</a>
-        <a class="btn btn-primary btn-lg" href="docs/commands" role="button">Commands</a>
-    </div>
-</div>
+	</section>
                 
             </div>           
             
