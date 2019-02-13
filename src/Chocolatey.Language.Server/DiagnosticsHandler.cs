@@ -88,7 +88,7 @@ namespace Chocolatey.Language.Server
 
                 yield return new Diagnostic {
                     Message = "Description should be sufficient to explain the software.",
-                    Severity = DiagnosticSeverity.Error,
+                    Severity = DiagnosticSeverity.Warning,
                     Range = range
                 };
             }
