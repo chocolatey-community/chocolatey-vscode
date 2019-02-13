@@ -47,6 +47,10 @@ namespace Chocolatey.Language.Server
             });
         }
 
+        /// <summary>
+        ///   Handler to validate that no templated values remain in the nuspec.
+        /// </summary>
+        /// <seealso href="https://github.com/chocolatey/package-validator/blob/master/src/chocolatey.package.validator/infrastructure.app/rules/NuspecDoesNotContainTemplatedValuesRequirement.cs">Package validator requirement for templated values.</seealso>
         private IEnumerable<Diagnostic> NuspecDoesNotContainTemplatedValuesRequirement(XmlDocumentSyntax syntaxTree, TextPositions textPositions)
         {
             foreach (var node in syntaxTree.DescendantNodesAndSelf().OfType<XmlTextSyntax>())
