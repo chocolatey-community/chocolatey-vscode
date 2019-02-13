@@ -92,6 +92,16 @@ namespace Chocolatey.Language.Server
                     Range = range
                 };
             }
+            else if (descriptionLength > 4000)
+            {
+                var range = textPositions.GetRange(descriptionElement.StartTag.End, descriptionElement.EndTag.Start);
+
+                yield return new Diagnostic {
+                    Message = "Description should not exceed 4000 characters",
+                    Severity = DiagnosticSeverity.Error,
+                    Range = range
+                };
+            }
         }
     }
 }
