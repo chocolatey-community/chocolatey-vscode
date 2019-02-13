@@ -77,7 +77,7 @@ namespace Chocolatey.Language.Server
                 var range = textPositions.GetRange(descriptionElement?.StartTag.End ?? 0, descriptionElement?.EndTag.Start ?? 0);
 
                 yield return new Diagnostic {
-                    Message = "Description is required.",
+                    Message = "Description is required. See https://github.com/chocolatey/package-validator/wiki/DescriptionNotEmpty",
                     Severity = DiagnosticSeverity.Error,
                     Range = range
                 };
@@ -87,7 +87,7 @@ namespace Chocolatey.Language.Server
                 var range = textPositions.GetRange(descriptionElement.StartTag.End, descriptionElement.EndTag.Start);
 
                 yield return new Diagnostic {
-                    Message = "Description should be sufficient to explain the software.",
+                    Message = "Description should be sufficient to explain the software. See https://github.com/chocolatey/package-validator/wiki/DescriptionCharacterCountMinimum",
                     Severity = DiagnosticSeverity.Warning,
                     Range = range
                 };
@@ -97,7 +97,7 @@ namespace Chocolatey.Language.Server
                 var range = textPositions.GetRange(descriptionElement.StartTag.End, descriptionElement.EndTag.Start);
 
                 yield return new Diagnostic {
-                    Message = "Description should not exceed 4000 characters",
+                    Message = "Description should not exceed 4000 characters. See https://github.com/chocolatey/package-validator/wiki/DescriptionCharacterCountMaximum",
                     Severity = DiagnosticSeverity.Error,
                     Range = range
                 };
