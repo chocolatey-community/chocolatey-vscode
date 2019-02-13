@@ -32,7 +32,7 @@ namespace Chocolatey.Language.Server.Validations
                 var range = textPositions.GetRange(node.Start, node.End);
 
                 yield return new Diagnostic {
-                    Message = "Templated value which should be removed",
+                    Message = "Templated value which should be removed.  See https://github.com/chocolatey/package-validator/wiki/NuspecDoesNotContainTemplatedValues",
                     Severity = DiagnosticSeverity.Error,
                     Range = range
                 };
