@@ -70,11 +70,21 @@ namespace Chocolatey.Language.Server
         {
             var descriptionElement = syntaxTree.DescendantNodes().OfType<XmlElementSyntax>().FirstOrDefault(x => string.Equals(x.Name, "description", StringComparison.OrdinalIgnoreCase));
 
-            var descriptionLength = descriptionElement?.GetContentValue().Trim().Length ?? 0;
+            if (descriptionElement == null)
+            {
+                yield return new Diagnostic {
+                    Message = "Description is required. See https://github.com/chocolatey/package-validator/wiki/DescriptionNotEmpty",
+                    Severity = DiagnosticSeverity.Error,
+                    Range = textPositions.GetRange(0, syntaxTree.End)
+                };
+                yield break;
+            }
+
+            var descriptionLength = descriptionElement.GetContentValue().Trim().Length;
 
             if (descriptionLength == 0)
             {
-                var range = textPositions.GetRange(descriptionElement?.StartTag.End ?? 0, descriptionElement?.EndTag.Start ?? 0);
+                var range = textPositions.GetRange(descriptionElement.StartTag.End, descriptionElement.EndTag.Start);
 
                 yield return new Diagnostic {
                     Message = "Description is required. See https://github.com/chocolatey/package-validator/wiki/DescriptionNotEmpty",
