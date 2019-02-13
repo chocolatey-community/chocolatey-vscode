@@ -23,3 +23,6 @@ branches:
 cache:
 - tools -> build.cake
 - node_modules -> package.json
+
+on_finish:
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
