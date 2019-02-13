@@ -38,6 +38,7 @@ namespace Chocolatey.Language.Server
             var diagnostics = new List<Diagnostic>();
 
             diagnostics.AddRange(NuspecDoesNotContainTemplatedValuesRequirement(syntaxTree, textPositions));
+            diagnostics.AddRange(NuspecDescriptionLengthRequirement(syntaxTree, textPositions));
 
             _router.Document.PublishDiagnostics(new PublishDiagnosticsParams
             {
@@ -59,6 +60,24 @@ namespace Chocolatey.Language.Server
 
                 yield return new Diagnostic {
                     Message = "Templated value which should be removed",
+                    Severity = DiagnosticSeverity.Error,
+                    Range = range
+                };
+            }
+        }
+
+        private IEnumerable<Diagnostic> NuspecDescriptionLengthRequirement(XmlDocumentSyntax syntaxTree, TextPositions textPositions)
+        {
+            var descriptionElement = syntaxTree.DescendantNodes().OfType<XmlElementSyntax>().FirstOrDefault(x => string.Equals(x.Name, "description", StringComparison.OrdinalIgnoreCase));
+
+            var descriptionLength = descriptionElement?.GetContentValue().Trim().Length ?? 0;
+
+            if (descriptionLength == 0)
+            {
+                var range = textPositions.GetRange(descriptionElement?.StartTag.End ?? 0, descriptionElement?.EndTag.Start ?? 0);
+
+                yield return new Diagnostic {
+                    Message = "Description is required.",
                     Severity = DiagnosticSeverity.Error,
                     Range = range
                 };
