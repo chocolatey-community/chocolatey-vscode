@@ -82,6 +82,16 @@ namespace Chocolatey.Language.Server
                     Range = range
                 };
             }
+            else if (descriptionLength <= 30)
+            {
+                var range = textPositions.GetRange(descriptionElement.StartTag.End, descriptionElement.EndTag.Start);
+
+                yield return new Diagnostic {
+                    Message = "Description should be sufficient to explain the software.",
+                    Severity = DiagnosticSeverity.Error,
+                    Range = range
+                };
+            }
         }
     }
 }
