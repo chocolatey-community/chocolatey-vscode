@@ -6,7 +6,7 @@
 #addin "nuget:?package=Cake.VsCode&version=0.8.0"
 #addin "nuget:?package=Cake.Npm&version=0.10.0"
 #addin "nuget:?package=Cake.AppVeyor&version=1.1.0.9"
-#addin "nuget:?package=Cake.Wyam&version=1.7.4"
+#addin "nuget:?package=Cake.Wyam&version=2.1.3"
 #addin "nuget:?package=Cake.Git&version=0.19.0"
 #addin "nuget:?package=Cake.Kudu&version=0.8.0"
 #addin "nuget:?package=Cake.Gitter&version=0.10.0"
@@ -18,7 +18,7 @@
 
 #tool "nuget:?package=gitreleasemanager&version=0.7.0"
 #tool "nuget:?package=GitVersion.CommandLine&version=3.6.5"
-#tool "nuget:?package=Wyam&version=1.7.4"
+#tool "nuget:?package=Wyam&version=2.1.3"
 #tool "nuget:?package=KuduSync.NET&version=1.4.0"
 
 // Load other scripts.
@@ -232,7 +232,7 @@ Task("Publish-Chocolatey-Package")
 .OnError(exception =>
 {
     Information("Publish-Chocolatey-Package Task failed, but continuing with next Task...");
-    
+
     // TODO: Don't fail build if failure to push package to Chocolatey, as this is known to cause
     // some errors at the minute.  An error can be returned, but the package is pushed correctly
     // publishingError = true;
