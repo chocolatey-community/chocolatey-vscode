@@ -27,10 +27,11 @@
 		"onCommand:chocolatey.pack",
 		"onCommand:chocolatey.delete",
 		"onCommand:chocolatey.push",
-		"onCommand:chocolatey.installTemplates"
+		"onCommand:chocolatey.installTemplates",
+		"workspaceContains:**/*.nuspec"
 	],
 	"engines": {
-		"vscode": "^1.24.0"
+		"vscode": "^1.30.0"
 	},
 	"categories": [
 		"Other"
@@ -127,7 +128,9 @@
 		"tslint": "^5.12.1",
 		"typemoq": "^2.1.0",
 		"typescript": "^3.3.3",
-		"vscode": "^1.1.29"
+		"vscode": "^1.1.29",
+		"vscode-languageclient": "^5.2.1",
+		"vscode-jsonrpc": "^4.0.0"
 	},
 	"dependencies": {
 		"xml2js": "^0.4.19"
