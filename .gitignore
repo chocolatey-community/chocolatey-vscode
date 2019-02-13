@@ -16,3 +16,4 @@ yarn.lock
 
 # License file copied to chocolatey directory
 chocolatey/tools/LICENSE.txt
+config.wyam.hash
