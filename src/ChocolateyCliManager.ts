@@ -251,16 +251,13 @@ export class ChocolateyCliManager {
     }
 
     public addapikey(): void {
-            
-            
 
-
-            window.showInputBox({
-                prompt: "API Key:"
-            }).then((apiKey) => {
-                if(!apiKey) {
-                return;
-            }
+        window.showInputBox({
+            prompt: "API Key:"
+        }).then((apiKey) => {
+            if(!apiKey) {
+            return;
+        }
 
             window.showInputBox({
                 prompt: "Source:"
@@ -269,16 +266,17 @@ export class ChocolateyCliManager {
                 return;
             }
 
-                let chocolateyArguments: string[] = [];
+            let chocolateyArguments: string[] = [];
                 
-                    chocolateyArguments.push("-k=\"'" + apiKey + "'\"");
-                    chocolateyArguments.push("-s=\"'" + Source + "'\"");
+            chocolateyArguments.push("-k=\"'" + apiKey + "'\"");
+            chocolateyArguments.push("-s=\"'" + Source + "'\"");
             
-                    let apiOp: ChocolateyOperation = new ChocolateyOperation(chocolateyArguments);
-                    apiOp.run()
+            let apiOp: ChocolateyOperation = new ChocolateyOperation(chocolateyArguments);
+            apiOp.run()
                 
-            });
-        });
+            }); //Source Window Promise
+            
+        });//API Key Window Promise
 
     }
 
