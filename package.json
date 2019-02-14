@@ -119,7 +119,7 @@
 		"@types/byline": "^4.2.31",
 		"@types/expect": "^1.20.4",
 		"@types/ini": "^1.3.30",
-		"@types/mocha": "^5.2.5",
+		"@types/mocha": "^5.2.6",
 		"@types/node": "^11.9.3",
 		"@types/node-fetch": "^2.1.6",
 		"@types/xml2js": "^0.4.3",
