@@ -16,7 +16,7 @@ export function activate(context: ExtensionContext): void {
     commands.registerCommand("chocolatey.delete", () => deleteNupkgs());
     commands.registerCommand("chocolatey.push", () => execute("push"));
     commands.registerCommand("chocolatey.installTemplates", () => execute("installTemplates"));
-    commands.registerCommand("chocolatey.apikey", () => execute("addapikey"));
+    commands.registerCommand("chocolatey.apikey", () => execute("apikey"));
 
     let serverExe = 'dotnet';
 

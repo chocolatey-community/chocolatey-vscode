@@ -20,6 +20,7 @@ export class ChocolateyCliManager {
 
                 };
             });
+
             if (availableTemplates.length > 0) {
                 availableTemplates.unshift({label: "Default Template" });
                 window.showQuickPick(availableTemplates, {
@@ -250,34 +251,30 @@ export class ChocolateyCliManager {
         installTemplatesOp.run();
     }
 
-    public addapikey(): void {
-
+    public apikey(): void {
         window.showInputBox({
-            prompt: "API Key:"
+            prompt: "API Key..."
         }).then((apiKey) => {
             if(!apiKey) {
-            return;
-        }
-
-            window.showInputBox({
-                prompt: "Source:"
-            }).then((Source) => {
-                if(!Source) {
                 return;
             }
 
-            let chocolateyArguments: string[] = [];
-                
-            chocolateyArguments.push("-k=\"'" + apiKey + "'\"");
-            chocolateyArguments.push("-s=\"'" + Source + "'\"");
-            
-            let apiOp: ChocolateyOperation = new ChocolateyOperation(chocolateyArguments);
-            apiOp.run()
-                
-            }); //Source Window Promise
-            
-        });//API Key Window Promise
+            window.showInputBox({
+                prompt: "Source..."
+            }).then((source) => {
+                if(!source) {
+                    return;
+                }
 
+                let chocolateyArguments: string[] = [];
+
+                chocolateyArguments.push("-k=\"'" + apiKey + "'\"");
+                chocolateyArguments.push("-s=\"'" + source + "'\"");
+
+                let apiOp: ChocolateyOperation = new ChocolateyOperation(chocolateyArguments);
+                apiOp.run()
+            });
+        });
     }
 
     private _findPackageTemplates(): string[] {
