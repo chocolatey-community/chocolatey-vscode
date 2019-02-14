@@ -28,6 +28,7 @@
 		"onCommand:chocolatey.delete",
 		"onCommand:chocolatey.push",
 		"onCommand:chocolatey.installTemplates",
+		"onCommand:chocolatey.apikey",
 		"workspaceContains:**/*.nuspec"
 	],
 	"engines": {
@@ -91,7 +92,12 @@
 			{
 				"command": "chocolatey.installTemplates",
 				"title": "Chocolatey: Install Template package(s)"
+			},
+			{
+				"command": "chocolatey.apikey",
+				"title": "Chocolatey: Add API Key"
 			}
+
 		],
 		"snippets": [
 			{

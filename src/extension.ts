@@ -16,6 +16,7 @@ export function activate(context: ExtensionContext): void {
     commands.registerCommand("chocolatey.delete", () => deleteNupkgs());
     commands.registerCommand("chocolatey.push", () => execute("push"));
     commands.registerCommand("chocolatey.installTemplates", () => execute("installTemplates"));
+    commands.registerCommand("chocolatey.apikey", () => execute("addapikey"));
 
     let serverExe = 'dotnet';
 
@@ -24,8 +25,8 @@ export function activate(context: ExtensionContext): void {
     let serverOptions: ServerOptions = {
         // TODO: For the time being, this path is hard-coded
         // A decision has to be made about how the Language Server is going to be placed on the file server for execution
-        run: { command: serverExe, args: ['/Users/gep13/github/gep13/chocolatey-vscode/src/Chocolatey.Language.Server/bin/Debug/netcoreapp2.1/Chocolatey.Language.Server.dll'] },
-        debug: { command: serverExe, args: ['/Users/gep13/github/gep13/chocolatey-vscode/src/Chocolatey.Language.Server/bin/Debug/netcoreapp2.1/Chocolatey.Language.Server.dll'] }
+        run: { command: serverExe, args: ['/Users/svalding/Documents/Git/chocolatey-vscode/src/Chocolatey.Language.Server/chocolatey-vscode/src/Chocolatey.Language.Server/bin/Debug/netcoreapp2.1/Chocolatey.Language.Server.dll'] },
+        debug: { command: serverExe, args: ['/Users/svalding/Documents/Git/chocolatey-vscode/src/Chocolatey.Language.Server/chocolatey-vscode/src/Chocolatey.Language.Server/bin/Debug/netcoreapp2.1/Chocolatey.Language.Server.dll'] }
     }
 
     // Options to control the language client

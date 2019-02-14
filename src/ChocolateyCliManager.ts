@@ -250,6 +250,38 @@ export class ChocolateyCliManager {
         installTemplatesOp.run();
     }
 
+    public addapikey(): void {
+            
+            
+
+
+            window.showInputBox({
+                prompt: "API Key:"
+            }).then((apiKey) => {
+                if(!apiKey) {
+                return;
+            }
+
+            window.showInputBox({
+                prompt: "Source:"
+            }).then((Source) => {
+                if(!Source) {
+                return;
+            }
+
+                let chocolateyArguments: string[] = [];
+                
+                    chocolateyArguments.push("-k=\"'" + apiKey + "'\"");
+                    chocolateyArguments.push("-s=\"'" + Source + "'\"");
+            
+                    let apiOp: ChocolateyOperation = new ChocolateyOperation(chocolateyArguments);
+                    apiOp.run()
+                
+            });
+        });
+
+    }
+
     private _findPackageTemplates(): string[] {
         let templateDir = getPathToChocolateyTemplates();
 
