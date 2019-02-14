@@ -14,7 +14,6 @@ namespace Chocolatey.Language.Server.Validations
     /// TODO: Add <seealso> elements once PR is merged
     public class UrlValidValidation : INuSpecRule
     {
-
         private static readonly IReadOnlyCollection<string> UrlElements = new []
         {
             "bugTrackerUrl",
@@ -37,10 +36,11 @@ namespace Chocolatey.Language.Server.Validations
                     Uri uri;
                     if(
                         !Uri.IsWellFormedUriString(uriString, UriKind.Absolute) ||
-                        !Uri.TryCreate(uriString, UriKind.Absolute, out uri) || 
-                        !Utility.Utility.url_is_valid(uri)
+                        !Uri.TryCreate(uriString, UriKind.Absolute, out uri) ||
+                        !uri.IsValid()
                     ) {
                         var range = textPositions.GetRange(element.StartTag.End, element.EndTag.Start);
+
                         yield return new Diagnostic {
                             Message = "Url in " + elementName + " is invalid. See https://github.com/chocolatey/package-validator/wiki/InvalidUrlProvided",
                             Severity = DiagnosticSeverity.Error,

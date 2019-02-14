@@ -3,21 +3,23 @@ using System.Net;
 
 namespace Chocolatey.Language.Server.Utility
 {
-
-    public class Utility
+    /// <summary>
+    ///   Extensions for Uri
+    /// </summary>
+    public static class UriExtensions
     {
-	    
         /// <summary>
         ///   Tries to validate an URL
         /// </summary>
         /// <param name="url">Uri object</param>
-        public static bool url_is_valid(Uri url)
+        public static bool IsValid(this Uri url)
         {
             var request = (HttpWebRequest)WebRequest.Create(url);
 
-            request.Timeout = 15000;
             //This would allow 301 and 302 to be valid as well
             request.AllowAutoRedirect = true;
+            request.Timeout = 15000;
+
             try
             {
                 using (var response = (HttpWebResponse)request.GetResponse())
@@ -29,6 +31,6 @@ namespace Chocolatey.Language.Server.Utility
             {
                 return false;
             }
-        }        
+        }
     }
 }
