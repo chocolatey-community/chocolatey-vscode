@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Chocolatey.Language.Server.Utility;
+using Chocolatey.Language.Server;
 using Microsoft.Language.Xml;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
 using DiagnosticSeverity = OmniSharp.Extensions.LanguageServer.Protocol.Models.DiagnosticSeverity;
@@ -34,7 +34,7 @@ namespace Chocolatey.Language.Server.Validations
                 if (element != null) {
                     var uriString = element.GetContentValue().Trim();
                     Uri uri;
-                    if(
+                    if (
                         !Uri.IsWellFormedUriString(uriString, UriKind.Absolute) ||
                         !Uri.TryCreate(uriString, UriKind.Absolute, out uri) ||
                         !uri.IsValid()
@@ -46,6 +46,19 @@ namespace Chocolatey.Language.Server.Validations
                             Severity = DiagnosticSeverity.Error,
                             Range = range
                         };
+                    }
+                    else
+                    {
+                        if (uri.SslCapable())
+                        {
+                            var range = textPositions.GetRange(element.StartTag.End, element.EndTag.Start);
+
+                            yield return new Diagnostic {
+                                Message = "Url in " + elementName + " is SSL capable, please switch to https.",
+                                Severity = DiagnosticSeverity.Warning,
+                                Range = range
+                            };
+                        }
                     }
                 }
             }
