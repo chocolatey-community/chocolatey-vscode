@@ -97,7 +97,6 @@
 				"command": "chocolatey.apikey",
 				"title": "Chocolatey: Add API Key"
 			}
-
 		],
 		"snippets": [
 			{
