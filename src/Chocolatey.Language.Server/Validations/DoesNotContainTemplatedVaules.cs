@@ -11,7 +11,7 @@ namespace Chocolatey.Language.Server.Validations
     ///   Handler to validate that no templated values remain in the nuspec.
     /// </summary>
     /// <seealso href="https://github.com/chocolatey/package-validator/blob/master/src/chocolatey.package.validator/infrastructure.app/rules/NuspecDoesNotContainTemplatedValuesRequirement.cs">Package validator requirement for templated values.</seealso>
-    public class DoesNotContainTemplatedValues : INuSpecRule
+    public class DoesNotContainTemplatedValues : NuspecRuleBase
     {
         private static readonly IReadOnlyCollection<string> TemplatedValues = new []
         {
@@ -20,7 +20,7 @@ namespace Chocolatey.Language.Server.Validations
             "tag1"
         };
 
-        public IEnumerable<Diagnostic> Validate(XmlDocumentSyntax syntaxTree, TextPositions textPositions)
+        public override IEnumerable<Diagnostic> Validate(XmlDocumentSyntax syntaxTree)
         {
             foreach (var node in syntaxTree.DescendantNodesAndSelf().OfType<XmlTextSyntax>())
             {
@@ -29,13 +29,10 @@ namespace Chocolatey.Language.Server.Validations
                     continue;
                 }
 
-                var range = textPositions.GetRange(node.Start, node.End);
-
-                yield return new Diagnostic {
-                    Message = "Templated value which should be removed.  See https://github.com/chocolatey/package-validator/wiki/NuspecDoesNotContainTemplatedValues",
-                    Severity = DiagnosticSeverity.Error,
-                    Range = range
-                };
+                yield return CreateRequirement(
+                    node,
+                    "Templated value which should be removed.",
+                    "https://github.com/chocolatey/package-validator/wiki/NuspecDoesNotContainTemplatedValues");
             }
         }
     }
