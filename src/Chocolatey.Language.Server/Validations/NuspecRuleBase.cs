@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Language.Xml;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
 using DiagnosticSeverity = OmniSharp.Extensions.LanguageServer.Protocol.Models.DiagnosticSeverity;
@@ -29,6 +31,17 @@ namespace Chocolatey.Language.Server.Validations
         /// <param name="syntaxTree">The syntax tree to use during validation.</param>
         /// <returns>An enumerable of failed checks</returns>
         public abstract IEnumerable<Diagnostic> Validate(XmlDocumentSyntax syntaxTree);
+
+        /// <summary>
+        /// Finds a single element in the specified <paramref name="syntaxTree"/> by the name.
+        /// </summary>
+        /// <param name="syntaxTree">The syntax tree to find the element in.</param>
+        /// <param name="name">The name of the element.</param>
+        /// <returns>The element syntax if one is found; otherwise returns <c>null</c>.</returns>
+        protected XmlElementSyntax FindElementByName(XmlDocumentSyntax syntaxTree, string name)
+            => syntaxTree.DescendantNodes()
+                         .OfType<XmlElementSyntax>()
+                         .FirstOrDefault(s => string.Equals(s.Name, name, StringComparison.OrdinalIgnoreCase));
 
         #region Diagnostic creation helpers
 
