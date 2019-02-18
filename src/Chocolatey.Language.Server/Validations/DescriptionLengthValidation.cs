@@ -17,7 +17,7 @@ namespace Chocolatey.Language.Server.Validations
     {
         public override IEnumerable<Diagnostic> Validate(XmlDocumentSyntax syntaxTree)
         {
-            var descriptionElement = syntaxTree.DescendantNodes().OfType<XmlElementSyntax>().FirstOrDefault(x => string.Equals(x.Name, "description", StringComparison.OrdinalIgnoreCase));
+            var descriptionElement = FindElementByName(syntaxTree, "description");
 
             if (descriptionElement == null)
             {

@@ -30,7 +30,7 @@ namespace Chocolatey.Language.Server.Validations
         public override IEnumerable<Diagnostic> Validate(XmlDocumentSyntax syntaxTree)
         {
             foreach (var elementName in UrlElements) {
-                var element = syntaxTree.DescendantNodes().OfType<XmlElementSyntax>().FirstOrDefault(x => string.Equals(x.Name, elementName, StringComparison.OrdinalIgnoreCase));
+                var element = FindElementByName(syntaxTree, elementName);
                 if (element != null) {
                     var uriString = element.GetContentValue().Trim();
                     if (
