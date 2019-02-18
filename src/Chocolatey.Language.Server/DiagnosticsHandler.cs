@@ -43,7 +43,8 @@ namespace Chocolatey.Language.Server
 
             foreach (var rule in _rules.OrEmptyListIfNull())
             {
-                diagnostics.AddRange(rule.Validate(syntaxTree, textPositions));
+                rule.SetTextPositions(textPositions);
+                diagnostics.AddRange(rule.Validate(syntaxTree));
             }
 
             _router.Document.PublishDiagnostics(new PublishDiagnosticsParams
