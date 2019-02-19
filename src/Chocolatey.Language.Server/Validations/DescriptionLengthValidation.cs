@@ -13,19 +13,20 @@ namespace Chocolatey.Language.Server.Validations
     /// <seealso href="https://github.com/chocolatey/package-validator/blob/master/src/chocolatey.package.validator/infrastructure.app/rules/DescriptionRequirement.cs">Package validator requirement for description.</seealso>
     /// <seealso href="https://github.com/chocolatey/package-validator/blob/master/src/chocolatey.package.validator/infrastructure.app/rules/DescriptionWordCountMaximum4000Requirement.cs">Package validator maximum length requirement for description.</seealso>
     /// <seealso href="https://github.com/chocolatey/package-validator/blob/master/src/chocolatey.package.validator/infrastructure.app/rules/DescriptionWordCountMinimum30Guideline.cs">Package validator minimum length guideline for description.</seealso>
-    public class DescriptionLengthValidation : INuSpecRule
+    public class DescriptionLengthValidation : NuspecRuleBase
     {
-        public IEnumerable<Diagnostic> Validate(XmlDocumentSyntax syntaxTree, TextPositions textPositions)
+        public override IEnumerable<Diagnostic> Validate(XmlDocumentSyntax syntaxTree)
         {
-            var descriptionElement = syntaxTree.DescendantNodes().OfType<XmlElementSyntax>().FirstOrDefault(x => string.Equals(x.Name, "description", StringComparison.OrdinalIgnoreCase));
+            var descriptionElement = FindElementByName(syntaxTree, "description");
 
             if (descriptionElement == null)
             {
-                yield return new Diagnostic {
-                    Message = "Description is required. See https://github.com/chocolatey/package-validator/wiki/DescriptionNotEmpty",
-                    Severity = DiagnosticSeverity.Error,
-                    Range = textPositions.GetRange(0, syntaxTree.End)
-                };
+                yield return CreateDiagnostic(
+                    0,
+                    syntaxTree.End,
+                    DiagnosticSeverity.Error,
+                    "Description is required.",
+                    "https://github.com/chocolatey/package-validator/wiki/DescriptionNotEmpty");
                 yield break;
             }
 
@@ -33,33 +34,24 @@ namespace Chocolatey.Language.Server.Validations
 
             if (descriptionLength == 0)
             {
-                var range = textPositions.GetRange(descriptionElement.StartTag.End, descriptionElement.EndTag.Start);
-
-                yield return new Diagnostic {
-                    Message = "Description is required. See https://github.com/chocolatey/package-validator/wiki/DescriptionNotEmpty",
-                    Severity = DiagnosticSeverity.Error,
-                    Range = range
-                };
+                yield return CreateRequirement(
+                    descriptionElement,
+                    "Description is required.",
+                    "https://github.com/chocolatey/package-validator/wiki/DescriptionNotEmpty");
             }
             else if (descriptionLength <= 30)
             {
-                var range = textPositions.GetRange(descriptionElement.StartTag.End, descriptionElement.EndTag.Start);
-
-                yield return new Diagnostic {
-                    Message = "Description should be sufficient to explain the software. See https://github.com/chocolatey/package-validator/wiki/DescriptionCharacterCountMinimum",
-                    Severity = DiagnosticSeverity.Warning,
-                    Range = range
-                };
+                yield return CreateGuideline(
+                    descriptionElement,
+                    "Description should be sufficient to explain the software.",
+                    "https://github.com/chocolatey/package-validator/wiki/DescriptionCharacterCountMinimum");
             }
             else if (descriptionLength > 4000)
             {
-                var range = textPositions.GetRange(descriptionElement.StartTag.End, descriptionElement.EndTag.Start);
-
-                yield return new Diagnostic {
-                    Message = "Description should not exceed 4000 characters. See https://github.com/chocolatey/package-validator/wiki/DescriptionCharacterCountMaximum",
-                    Severity = DiagnosticSeverity.Error,
-                    Range = range
-                };
+                yield return CreateRequirement(
+                    descriptionElement,
+                    "Description should not exceed 4000 characters.",
+                    "https://github.com/chocolatey/package-validator/wiki/DescriptionCharacterCountMaximum");
             }
         }
     }

@@ -12,7 +12,7 @@ namespace Chocolatey.Language.Server.Validations
     ///   Handler to validate the length of description in the package metadata.
     /// </summary>
     /// TODO: Add <seealso> elements once PR is merged
-    public class UrlValidValidation : INuSpecRule
+    public class UrlValidValidation : NuspecRuleBase
     {
         private static readonly IReadOnlyCollection<string> UrlElements = new []
         {
@@ -27,37 +27,30 @@ namespace Chocolatey.Language.Server.Validations
             "wikiUrl",
         };
 
-        public IEnumerable<Diagnostic> Validate(XmlDocumentSyntax syntaxTree, TextPositions textPositions)
+        public override IEnumerable<Diagnostic> Validate(XmlDocumentSyntax syntaxTree)
         {
             foreach (var elementName in UrlElements) {
-                var element = syntaxTree.DescendantNodes().OfType<XmlElementSyntax>().FirstOrDefault(x => string.Equals(x.Name, elementName, StringComparison.OrdinalIgnoreCase));
+                var element = FindElementByName(syntaxTree, elementName);
                 if (element != null) {
                     var uriString = element.GetContentValue().Trim();
-                    Uri uri;
                     if (
                         !Uri.IsWellFormedUriString(uriString, UriKind.Absolute) ||
-                        !Uri.TryCreate(uriString, UriKind.Absolute, out uri) ||
+                        !Uri.TryCreate(uriString, UriKind.Absolute, out Uri uri) ||
                         !uri.IsValid()
-                    ) {
-                        var range = textPositions.GetRange(element.StartTag.End, element.EndTag.Start);
-
-                        yield return new Diagnostic {
-                            Message = "Url in " + elementName + " is invalid. See https://github.com/chocolatey/package-validator/wiki/InvalidUrlProvided",
-                            Severity = DiagnosticSeverity.Error,
-                            Range = range
-                        };
+                    )
+                    {
+                        yield return CreateRequirement(
+                            element,
+                            $"Url in {elementName} is invalid.",
+                            "https://github.com/chocolatey/package-validator/wiki/InvalidUrlProvided");
                     }
                     else
                     {
                         if (uri.SslCapable())
                         {
-                            var range = textPositions.GetRange(element.StartTag.End, element.EndTag.Start);
-
-                            yield return new Diagnostic {
-                                Message = "Url in " + elementName + " is SSL capable, please switch to https.",
-                                Severity = DiagnosticSeverity.Warning,
-                                Range = range
-                            };
+                            yield return CreateGuideline(
+                                element,
+                                "Url in " + elementName + " is SSL capable, please switch to https.");
                         }
                     }
                 }
