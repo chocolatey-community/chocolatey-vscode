@@ -68,6 +68,12 @@
 							}
 						},
 						"description": "The Chocolatey Template Packages Configuration"
+					},
+					"chocolatey.new.properties": {
+						"type": "object",
+						"description": "A key value pair of properties to pass to Chocolatey when creating a new package.",
+						"uniqueItems": true,
+						"title": "New package properties"
 					}
 				}
 			}
