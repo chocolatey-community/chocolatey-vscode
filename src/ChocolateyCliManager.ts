@@ -32,6 +32,13 @@ export class ChocolateyCliManager {
                         chocoArguments.push(`--template-name="'${template.label}'"`);
                     }
 
+                    let chocoProperties = readChocoProperties();
+                    if (chocoProperties) {
+                        for (let property of chocoProperties) {
+                            chocoArguments.push(`"${property.key}=${property.value}"`);
+                        }
+                    }
+
                     let newOp: ChocolateyOperation = new ChocolateyOperation(chocoArguments);
                     newOp.run();
                 });
@@ -40,6 +47,22 @@ export class ChocolateyCliManager {
                 newOp.run();
             }
         });
+
+        function readChocoProperties() {
+            const config = workspace.getConfiguration("chocolatey.new");
+
+            let result = new Array<{key:string,value:string}>();
+            if (config === undefined) { return result;}
+
+            const properties = config.get("properties");
+            if (properties === undefined) { return result; }
+
+            for (const key in properties) {
+                result.push({key: key, value: properties[key] });
+            }
+
+            return result;
+        }
     }
 
     public pack(): void {
