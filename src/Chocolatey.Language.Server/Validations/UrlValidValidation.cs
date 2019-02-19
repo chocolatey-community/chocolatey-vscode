@@ -48,13 +48,9 @@ namespace Chocolatey.Language.Server.Validations
                     {
                         if (uri.SslCapable())
                         {
-                            var range = textPositions.GetRange(element.StartTag.End, element.EndTag.Start);
-
-                            yield return new Diagnostic {
-                                Message = "Url in " + elementName + " is SSL capable, please switch to https.",
-                                Severity = DiagnosticSeverity.Warning,
-                                Range = range
-                            };
+                            yield return CreateGuideline(
+                                element,
+                                "Url in " + elementName + " is SSL capable, please switch to https.");
                         }
                     }
                 }
