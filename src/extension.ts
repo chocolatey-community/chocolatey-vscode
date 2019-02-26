@@ -11,7 +11,7 @@ var installed : boolean = false;
 
 export function activate(context: ExtensionContext): void {
     // register Commands
-    commands.registerCommand("chocolatey.new", () => execute("new"));
+    commands.registerCommand("chocolatey.new", (arg: any) => execute("new", arg));
     commands.registerCommand("chocolatey.pack", () => execute("pack"));
     commands.registerCommand("chocolatey.delete", () => deleteNupkgs());
     commands.registerCommand("chocolatey.push", () => execute("push"));
@@ -135,7 +135,7 @@ function execute(cmd?: string | undefined, arg?: any[] | undefined): Thenable<st
     let ecmd: any = chocolateyManager[cmd];
     if (typeof ecmd === "function") {
         try {
-            ecmd.apply(chocolateyManager, arg);
+            ecmd.call(chocolateyManager, arg);
             return;
         } catch (e) {
             // well, clearly we didn't call a function
