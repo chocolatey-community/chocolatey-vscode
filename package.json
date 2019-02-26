@@ -147,7 +147,7 @@
 		"mocha": "^6.0.2",
 		"tslint": "^5.13.0",
 		"typemoq": "^2.1.0",
-		"typescript": "^3.3.3",
+		"typescript": "^3.3.3333",
 		"vscode": "^1.1.30",
 		"vscode-languageclient": "^5.2.1",
 		"vscode-jsonrpc": "^4.0.0"
