@@ -1,4 +1,4 @@
-import { window, QuickPickItem, workspace } from "vscode";
+import { window, QuickPickItem, workspace, Uri } from "vscode";
 import { ChocolateyOperation } from "./ChocolateyOperation";
 import * as path from "path";
 import * as xml2js from "xml2js";
