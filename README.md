@@ -21,7 +21,6 @@ Chocolatey is a Package Manager for Windows, which allows the automation of all 
 
 For more information about [Chocolatey](https://chocolatey.org/), please see the Chocolatey Website or the Chocolatey [source code repository](https://github.com/chocolatey/choco).
 
-
 ## Commands
 
 The Chocolatey Visual Studio Code Extension provides the following commands:
@@ -31,6 +30,10 @@ The Chocolatey Visual Studio Code Extension provides the following commands:
 * `Chocolatey: Delete Chocolatey package(s)` to search current workspace for nupkg files and delete them
 * `Chocolatey: Push Chocolatey package(s)` to search current workspace for nupkg files and push them
 * `Chocolatey: Install Template package(s)` to install a list of template packages from a specified source
+
+## Context Menus
+
+* `Chocolatey: Create new Chocolatey package` to create the default templated Chocolatey package in a directory of your choosing.
 
 ## Snippets
 
