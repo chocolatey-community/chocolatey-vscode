@@ -1,4 +1,4 @@
-import { window, QuickPickItem, workspace } from "vscode";
+import { window, QuickPickItem, workspace, Uri } from "vscode";
 import { ChocolateyOperation } from "./ChocolateyOperation";
 import * as path from "path";
 import * as xml2js from "xml2js";
@@ -6,7 +6,7 @@ import * as fs from "fs";
 import { getPathToChocolateyConfig, getPathToChocolateyTemplates } from "./config";
 
 export class ChocolateyCliManager {
-    public new(): void {
+    public new(uri: Uri | undefined): void {
         window.showInputBox({
             prompt: "Name for new Chocolatey Package?"
         }).then((result) => {
@@ -30,6 +30,10 @@ export class ChocolateyCliManager {
 
                     if (template && template.label !== "Default Template") {
                         chocoArguments.push(`--template-name="'${template.label}'"`);
+                    }
+
+                    if (uri && this._isDirectory(uri.fsPath)) {
+                        chocoArguments.push(`--output-directory="'${uri.fsPath}'"`)
                     }
 
                     let chocoProperties = readChocoProperties();
