@@ -51,9 +51,10 @@ namespace Chocolatey.Language.Server.Validations
         /// <param name="elementSyntax">The element syntax.</param>
         /// <param name="message">The message to show the user.</param>
         /// <param name="wikiUrl">The wiki URL for the current rule.</param>
+        /// <param name="code">The code for the current rule.</param>
         /// <returns>The requirement diagnostic.</returns>
-        protected Diagnostic CreateRequirement(XmlElementSyntax elementSyntax, string message, string wikiUrl = null)
-            => CreateDiagnostic(elementSyntax, DiagnosticSeverity.Error, message, wikiUrl);
+        protected Diagnostic CreateRequirement(XmlElementSyntax elementSyntax, string message, string wikiUrl = null, string code = null)
+            => CreateDiagnostic(elementSyntax, DiagnosticSeverity.Error, message, wikiUrl, code);
 
         /// <summary>
         ///   Creates a single requirement diagnostic using the specified <paramref name="syntaxNode" />.
@@ -61,9 +62,10 @@ namespace Chocolatey.Language.Server.Validations
         /// <param name="syntaxNode">The syntax node.</param>
         /// <param name="message">The message to show the user.</param>
         /// <param name="wikiUrl">The wiki URL for the current rule.</param>
+        /// <param name="code">The code for the current rule.</param>
         /// <returns>The requirement diagnostic.</returns>
-        protected Diagnostic CreateRequirement(SyntaxNode syntaxNode, string message, string wikiUrl = null)
-            => CreateDiagnostic(syntaxNode, DiagnosticSeverity.Error, message, wikiUrl);
+        protected Diagnostic CreateRequirement(SyntaxNode syntaxNode, string message, string wikiUrl = null, string code = null)
+            => CreateDiagnostic(syntaxNode, DiagnosticSeverity.Error, message, wikiUrl, code);
 
         /// <summary>
         ///   Creates a single guideline diagnostic using the specified <paramref name="syntaxTree" />.
@@ -71,9 +73,10 @@ namespace Chocolatey.Language.Server.Validations
         /// <param name="elementSyntax">The element syntax.</param>
         /// <param name="message">The message to show the user.</param>
         /// <param name="wikiUrl">The wiki URL for the current rule.</param>
+        /// <param name="code">The code for the current rule.</param>
         /// <returns>The requirement diagnostic.</returns>
-        protected Diagnostic CreateGuideline(XmlElementSyntax elementSyntax, string message, string wikiUrl = null)
-            => CreateDiagnostic(elementSyntax, DiagnosticSeverity.Warning, message, wikiUrl);
+        protected Diagnostic CreateGuideline(XmlElementSyntax elementSyntax, string message, string wikiUrl = null, string code = null)
+            => CreateDiagnostic(elementSyntax, DiagnosticSeverity.Warning, message, wikiUrl, code);
 
         /// <summary>
         ///   Creates a single guideline diagnostic using the specified <paramref name="syntaxNode" />.
@@ -81,9 +84,10 @@ namespace Chocolatey.Language.Server.Validations
         /// <param name="syntaxNode">The syntax node.</param>
         /// <param name="message">The message to show the user.</param>
         /// <param name="wikiUrl">The wiki URL for the current rule.</param>
+        /// <param name="code">The code for the current rule.</param>
         /// <returns>The requirement diagnostic.</returns>
-        protected Diagnostic CreateGuideline(SyntaxNode syntaxNode, string message, string wikiUrl = null)
-            => CreateDiagnostic(syntaxNode, DiagnosticSeverity.Warning, message, wikiUrl);
+        protected Diagnostic CreateGuideline(SyntaxNode syntaxNode, string message, string wikiUrl = null, string code = null)
+            => CreateDiagnostic(syntaxNode, DiagnosticSeverity.Warning, message, wikiUrl, code);
 
         /// <summary>
         ///   Creates a single suggestion diagnostic using the specified <paramref name="syntaxTree" />.
@@ -91,9 +95,10 @@ namespace Chocolatey.Language.Server.Validations
         /// <param name="elementSyntax">The element syntax.</param>
         /// <param name="message">The message to show the user.</param>
         /// <param name="wikiUrl">The wiki URL for the current rule.</param>
+        /// <param name="code">The code for the current rule.</param>
         /// <returns>The requirement diagnostic.</returns>
-        protected Diagnostic CreateSuggestion(XmlElementSyntax elementSyntax, string message, string wikiUrl = null)
-            => CreateDiagnostic(elementSyntax, DiagnosticSeverity.Information, message, wikiUrl);
+        protected Diagnostic CreateSuggestion(XmlElementSyntax elementSyntax, string message, string wikiUrl = null, string code = null)
+            => CreateDiagnostic(elementSyntax, DiagnosticSeverity.Information, message, wikiUrl, code);
 
         /// <summary>
         ///   Creates a single suggestion diagnostic using the specified <paramref name="syntaxNode" />.
@@ -101,9 +106,10 @@ namespace Chocolatey.Language.Server.Validations
         /// <param name="syntaxNode">The syntax node.</param>
         /// <param name="message">The message to show the user.</param>
         /// <param name="wikiUrl">The wiki URL for the current rule.</param>
+        /// <param name="code">The code for the current rule.</param>
         /// <returns>The requirement diagnostic.</returns>
-        protected Diagnostic CreateSuggestion(SyntaxNode syntaxNode, string message, string wikiUrl = null)
-            => CreateDiagnostic(syntaxNode, DiagnosticSeverity.Information, message, wikiUrl);
+        protected Diagnostic CreateSuggestion(SyntaxNode syntaxNode, string message, string wikiUrl = null, string code = null)
+            => CreateDiagnostic(syntaxNode, DiagnosticSeverity.Information, message, wikiUrl, code);
 
         /// <summary>
         ///   Creates a single note diagnostic using the specified <paramref name="syntaxTree" />.
@@ -111,9 +117,10 @@ namespace Chocolatey.Language.Server.Validations
         /// <param name="elementSyntax">The element syntax.</param>
         /// <param name="message">The message to show the user.</param>
         /// <param name="wikiUrl">The wiki URL for the current rule.</param>
+        /// <param name="code">The code for the current rule.</param>
         /// <returns>The requirement diagnostic.</returns>
-        protected Diagnostic CreateNote(XmlElementSyntax elementSyntax, string message, string wikiUrl = null)
-            => CreateDiagnostic(elementSyntax, DiagnosticSeverity.Hint, message, wikiUrl);
+        protected Diagnostic CreateNote(XmlElementSyntax elementSyntax, string message, string wikiUrl = null, string code = null)
+            => CreateDiagnostic(elementSyntax, DiagnosticSeverity.Hint, message, wikiUrl, code);
 
         /// <summary>
         ///   Creates a single note diagnostic using the specified <paramref name="syntaxNode" />.
@@ -121,9 +128,10 @@ namespace Chocolatey.Language.Server.Validations
         /// <param name="syntaxNode">The syntax node.</param>
         /// <param name="message">The message to show the user.</param>
         /// <param name="wikiUrl">The wiki URL for the current rule.</param>
+        /// <param name="code">The code for the current rule.</param>
         /// <returns>The requirement diagnostic.</returns>
-        protected Diagnostic CreateNote(SyntaxNode syntaxNode, string message, string wikiUrl = null)
-            => CreateDiagnostic(syntaxNode, DiagnosticSeverity.Hint, message, wikiUrl);
+        protected Diagnostic CreateNote(SyntaxNode syntaxNode, string message, string wikiUrl = null, string code = null)
+            => CreateDiagnostic(syntaxNode, DiagnosticSeverity.Hint, message, wikiUrl, code);
 
         /// <summary>
         ///   Creates a single diagnostic with the specified <paramref name="severity"/> using the specified <paramref name="syntaxNode" />.
@@ -132,9 +140,10 @@ namespace Chocolatey.Language.Server.Validations
         /// <param name="severity">The Diagnostic severity to show the user.</param>
         /// <param name="message">The message to show the user.</param>
         /// <param name="wikiUrl">The wiki URL for the current rule.</param>
+        /// <param name="code">The code for the current rule.</param>
         /// <returns>The the created diagnostic.</returns>
-        protected Diagnostic CreateDiagnostic(XmlElementSyntax elementSyntax, DiagnosticSeverity severity, string message, string wikiUrl)
-            => CreateDiagnostic(elementSyntax.StartTag.End, elementSyntax.EndTag.Start, severity, message, wikiUrl);
+        protected Diagnostic CreateDiagnostic(XmlElementSyntax elementSyntax, DiagnosticSeverity severity, string message, string wikiUrl, string code)
+            => CreateDiagnostic(elementSyntax.StartTag.End, elementSyntax.EndTag.Start, severity, message, wikiUrl, code);
 
         /// <summary>
         ///   Creates a single diagnostic with the specified <paramref name="severity"/> using the specified <paramref name="syntaxNode" />.
@@ -143,9 +152,10 @@ namespace Chocolatey.Language.Server.Validations
         /// <param name="severity">The Diagnostic severity to show the user.</param>
         /// <param name="message">The message to show the user.</param>
         /// <param name="wikiUrl">The wiki URL for the current rule.</param>
+        /// <param name="code">The code for the current rule.</param>
         /// <returns>The created diagnostic.</returns>
-        protected Diagnostic CreateDiagnostic(SyntaxNode syntaxNode, DiagnosticSeverity severity, string message, string wikiUrl)
-            => CreateDiagnostic(syntaxNode.Start, syntaxNode.End, severity, message, wikiUrl);
+        protected Diagnostic CreateDiagnostic(SyntaxNode syntaxNode, DiagnosticSeverity severity, string message, string wikiUrl, string code)
+            => CreateDiagnostic(syntaxNode.Start, syntaxNode.End, severity, message, wikiUrl, code);
 
         /// <summary>
         /// Creates a single diagnostic with the specified <paramref name="severity"/>.
@@ -155,18 +165,21 @@ namespace Chocolatey.Language.Server.Validations
         /// <param name="severity">The Diagnostic severity to show the user.</param>
         /// <param name="message">The message to show the user.</param>
         /// <param name="wikiUrl">The wiki URL for the current rule.</param>
+        /// <param name="code">The code for the current rule.</param>
         /// <returns>The created diagnostic.</returns>
-        protected virtual Diagnostic CreateDiagnostic(int start, int end, DiagnosticSeverity severity, string message, string wikiUrl)
+        protected virtual Diagnostic CreateDiagnostic(int start, int end, DiagnosticSeverity severity, string message, string wikiUrl, string code)
         {
             string errorMessage = string.IsNullOrEmpty(wikiUrl) ?
                                   message :
-                                  $"{message} See {wikiUrl}";
+                                  $"{message}\nSee: {wikiUrl}";
 
             return new Diagnostic
             {
                 Message = errorMessage,
                 Severity = severity,
-                Range = _textPositions.GetRange(start, end)
+                Range = _textPositions.GetRange(start, end),
+                Source = "chocolatey",
+                Code = code,
             };
         }
 
