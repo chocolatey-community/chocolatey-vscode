@@ -104,6 +104,15 @@
 				"title": "Chocolatey: Add API Key"
 			}
 		],
+		"menus": {
+			"explorer/context": [
+				{
+					"when": "explorerResourceIsFolder",
+					"command": "chocolatey.new",
+					"group": "2_workspace"
+				}
+			]
+		},
 		"snippets": [
 			{
 				"language": "powershell",
