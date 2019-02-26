@@ -1,4 +1,4 @@
-import { window, commands, workspace, QuickPickItem, ExtensionContext } from "vscode";
+import { window, commands, workspace, QuickPickItem, ExtensionContext, Uri } from "vscode";
 import { LanguageClient, LanguageClientOptions, ServerOptions } from 'vscode-languageclient';
 import { Trace } from 'vscode-jsonrpc';
 import * as chocolateyCli from "./ChocolateyCliManager";
@@ -18,12 +18,15 @@ const languageServerPaths = [
 
 export function activate(context: ExtensionContext): void {
     // register Commands
-    commands.registerCommand("chocolatey.new", (arg: any) => execute("new", arg));
-    commands.registerCommand("chocolatey.pack", () => execute("pack"));
-    commands.registerCommand("chocolatey.delete", () => deleteNupkgs());
-    commands.registerCommand("chocolatey.push", () => execute("push"));
-    commands.registerCommand("chocolatey.installTemplates", () => execute("installTemplates"));
-    commands.registerCommand("chocolatey.apikey", () => execute("apikey"));
+    context.subscriptions.push(
+        commands.registerCommand("chocolatey.new", (arg: any) => execute("new", arg)),
+        commands.registerCommand("chocolatey.pack", () => execute("pack")),
+        commands.registerCommand("chocolatey.delete", () => deleteNupkgs()),
+        commands.registerCommand("chocolatey.push", () => execute("push")),
+        commands.registerCommand("chocolatey.installTemplates", () => execute("installTemplates")),
+        commands.registerCommand("chocolatey.apikey", () => execute("apikey")),
+        commands.registerCommand("chocolatey.open", async (uri: string) => await commands.executeCommand('vscode.open', Uri.parse(uri)))
+    );
 
     let serverExe = 'dotnet';
     let serverModule: string | null = null;
