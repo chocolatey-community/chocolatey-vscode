@@ -9,6 +9,13 @@ import * as fs from "fs";
 var chocolateyManager : chocolateyCli.ChocolateyCliManager;
 var installed : boolean = false;
 
+const languageServerPaths = [
+    // TODO: Change path to the actually expected location of the language server
+    ".server/Chocolatey.Language.Server.dll",
+    "./src/Chocolatey.Language.Server/bin/Release/netcoreapp2.1/Chocolatey.Language.Server.dll",
+    "./src/Chocolatey.Language.Server/bin/Debug/netcoreapp2.1/Chocolatey.Language.Server.dll"
+];
+
 export function activate(context: ExtensionContext): void {
     // register Commands
     commands.registerCommand("chocolatey.new", () => execute("new"));
@@ -19,15 +26,31 @@ export function activate(context: ExtensionContext): void {
     commands.registerCommand("chocolatey.apikey", () => execute("apikey"));
 
     let serverExe = 'dotnet';
+    let serverModule: string | null = null;
+    for (let p of languageServerPaths) {
+        p = context.asAbsolutePath(p);
+        // console.log/p);
+        if (fs.existsSync(p)) {
+            serverModule = p;
+            break;
+        }
+    }
+
+    // TODO: Decision need to be made if the Language Server should
+    // be packed inside the vsix file, or downloaded during runtime.
+
+    if (!serverModule) { throw new URIError("Cannot find the language server module."); }
+    let workPath = path.dirname(serverModule);
+    console.log(`Use ${serverModule} as server module.`);
+    console.log(`Work path: ${workPath}`);
+
 
     // If the extension is launched in debug mode then the debug server options are used
     // Otherwise the run options are used
     let serverOptions: ServerOptions = {
-        // TODO: For the time being, this path is hard-coded
-        // A decision has to be made about how the Language Server is going to be placed on the file server for execution
-        run: { command: serverExe, args: ['/Users/gep13/github/gep13/chocolatey-vscode/src/Chocolatey.Language.Server/bin/Debug/netcoreapp2.1/Chocolatey.Language.Server.dll'] },
-        debug: { command: serverExe, args: ['/Users/gep13/github/gep13/chocolatey-vscode/src/Chocolatey.Language.Server/bin/Debug/netcoreapp2.1/Chocolatey.Language.Server.dll'] }
-    }
+        run: { command: serverExe, args: [serverModule], options: { cwd: workPath } },
+        debug: { command: serverExe, args: [serverModule, "--debug"], options: { cwd: workPath } }
+    };
 
     // Options to control the language client
     let clientOptions: LanguageClientOptions = {
@@ -44,7 +67,7 @@ export function activate(context: ExtensionContext): void {
     }
 
     // Create the language client and start the client.
-    const client = new LanguageClient('nuspec', 'nuspec', serverOptions, clientOptions);
+    const client = new LanguageClient('chocoLanguageServer', 'Chocolatey Language Server', serverOptions, clientOptions);
     client.trace = Trace.Verbose;
     let disposable = client.start();
 
