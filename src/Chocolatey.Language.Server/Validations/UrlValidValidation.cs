@@ -42,7 +42,8 @@ namespace Chocolatey.Language.Server.Validations
                         yield return CreateRequirement(
                             element,
                             $"Url in {elementName} is invalid.",
-                            "https://github.com/chocolatey/package-validator/wiki/InvalidUrlProvided");
+                            "https://github.com/chocolatey/package-validator/wiki/InvalidUrlProvided",
+                            "InvalidUrlProvided");
                     }
                     else
                     {
