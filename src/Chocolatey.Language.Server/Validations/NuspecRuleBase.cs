@@ -8,9 +8,9 @@ using DiagnosticSeverity = OmniSharp.Extensions.LanguageServer.Protocol.Models.D
 namespace Chocolatey.Language.Server.Validations
 {
     /// <summary>
-    /// The base class for making implemention of <see cref="INuSpecRule"/> easier.
+    /// The base class for making implemention of <see cref="INuspecRule"/> easier.
     /// </summary>
-    public abstract class NuspecRuleBase : INuSpecRule
+    public abstract class NuspecRuleBase : INuspecRule
     {
         private TextPositions _textPositions;
         private Dictionary<string, string> _ruleUrlMap = new Dictionary<string, string>()
