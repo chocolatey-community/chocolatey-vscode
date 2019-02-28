@@ -61,7 +61,7 @@ namespace Chocolatey.Language.Server.Validations
                         end,
                         DiagnosticSeverity.Error,
                         $"Email address should not be used in the {element.Name} field.",
-                        "https://github.com/chocolatey/package-validator/wiki/CopyrightAndAuthorFieldsShouldntContainEmail");
+                        "CHOCO0005");
                 });
         }
     }
