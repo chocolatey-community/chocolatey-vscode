@@ -16,7 +16,7 @@ namespace Chocolatey.Language.Server
     {
         private readonly ILanguageServer _router;
         private readonly BufferManager _bufferManager;
-        private IList<INuSpecRule> _rules = new List<INuSpecRule>();
+        private IList<INuspecRule> _rules = new List<INuspecRule>();
 
         public DiagnosticsHandler(ILanguageServer router, BufferManager bufferManager)
         {
@@ -24,9 +24,9 @@ namespace Chocolatey.Language.Server
             _bufferManager = bufferManager;
 
             var typeLocator = new TypeLocator();
-            foreach (var nuspecRule in typeLocator.GetTypesThatInheritOrImplement<INuSpecRule>().OrEmptyListIfNull())
+            foreach (var nuspecRule in typeLocator.GetTypesThatInheritOrImplement<INuspecRule>().OrEmptyListIfNull())
             {
-                var rule = Activator.CreateInstance(nuspecRule) as INuSpecRule;
+                var rule = Activator.CreateInstance(nuspecRule) as INuspecRule;
                 if (rule != null)
                 {
                     _rules.Add(rule);

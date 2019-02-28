@@ -32,7 +32,7 @@ namespace Chocolatey.Language.Server.Validations
                 yield return CreateRequirement(
                     node,
                     "Templated value which should be removed.",
-                    "https://github.com/chocolatey/package-validator/wiki/NuspecDoesNotContainTemplatedValues");
+                    "CHOCO0001");
             }
         }
     }

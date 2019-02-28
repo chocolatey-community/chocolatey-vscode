@@ -7,7 +7,7 @@ namespace Chocolatey.Language.Server
     /// <summary>
     /// Interface used to define common methods used when validation a nuspec file.
     /// </summary>
-    public interface INuSpecRule
+    public interface INuspecRule
     {
         /// <summary>
         /// Sets the position of the currently used nuspec text.
