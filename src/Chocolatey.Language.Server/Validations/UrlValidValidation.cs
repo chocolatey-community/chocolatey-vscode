@@ -42,8 +42,7 @@ namespace Chocolatey.Language.Server.Validations
                         yield return CreateRequirement(
                             element,
                             $"Url in {elementName} is invalid.",
-                            "https://github.com/chocolatey/package-validator/wiki/InvalidUrlProvided",
-                            "InvalidUrlProvided");
+                            "CHOCO0004");
                     }
                     else
                     {
@@ -51,7 +50,8 @@ namespace Chocolatey.Language.Server.Validations
                         {
                             yield return CreateGuideline(
                                 element,
-                                "Url in " + elementName + " is SSL capable, please switch to https.");
+                                "Url in " + elementName + " is SSL capable, please switch to https.",
+                                "CHOCO1002");
                         }
                     }
                 }

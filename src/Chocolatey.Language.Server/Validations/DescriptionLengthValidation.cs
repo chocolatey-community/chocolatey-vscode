@@ -21,12 +21,9 @@ namespace Chocolatey.Language.Server.Validations
 
             if (descriptionElement == null)
             {
-                yield return CreateDiagnostic(
-                    0,
-                    syntaxTree.End,
-                    DiagnosticSeverity.Error,
+                yield return CreateRequirement(
+                    descriptionElement,
                     "Description is required.",
-                    "https://github.com/chocolatey/package-validator/wiki/DescriptionNotEmpty",
                     "DescriptionNotEmpty");
                 yield break;
             }
@@ -38,24 +35,21 @@ namespace Chocolatey.Language.Server.Validations
                 yield return CreateRequirement(
                     descriptionElement,
                     "Description is required.",
-                    "https://github.com/chocolatey/package-validator/wiki/DescriptionNotEmpty",
-                    "DescriptionNotEmpty");
+                    "CHOCO0002");
             }
             else if (descriptionLength <= 30)
             {
                 yield return CreateGuideline(
                     descriptionElement,
                     "Description should be sufficient to explain the software.",
-                    "https://github.com/chocolatey/package-validator/wiki/DescriptionCharacterCountMinimum",
-                    "DescriptionCharacterCountMinimum");
+                    "CHOCO1001");
             }
             else if (descriptionLength > 4000)
             {
                 yield return CreateRequirement(
                     descriptionElement,
                     "Description should not exceed 4000 characters.",
-                    "https://github.com/chocolatey/package-validator/wiki/DescriptionCharacterCountMaximum",
-                    "DescriptionCharacterCountMaximum");
+                    "CHOCO0003");
             }
         }
     }

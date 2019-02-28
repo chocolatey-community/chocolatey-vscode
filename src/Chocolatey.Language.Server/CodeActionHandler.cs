@@ -28,7 +28,7 @@ namespace Chocolatey.Language.Server
                 .Where(diagnostic => diagnostic.Source.Equals("chocolatey", StringComparison.OrdinalIgnoreCase) &&
                                      diagnostic.Code.IsString && !string.IsNullOrWhiteSpace(diagnostic.Code.String))
                 .Select(diagnostic => {
-                    var url = $"https://github.com/chocolatey/package-validator/wiki/{diagnostic.Code.String}";
+                    var url = $"https://gep13.github.io/chocolatey-vscode/docs/rules/{diagnostic.Code.String}";
                     var title = $"Click for more information {url}";
                     return new CommandOrCodeAction(new CodeAction {
                         Title = title,
@@ -38,7 +38,7 @@ namespace Chocolatey.Language.Server
                             Name = "chocolatey.open",
                             Title = title,
                             Arguments = new JArray(url)
-                        } 
+                        }
                     });
                 }).ToArray() ?? Array.Empty<CommandOrCodeAction>();
 
