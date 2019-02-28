@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/chocolatey-vscode/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/chocolatey-vscode/assets/img/favicon.ico" type="image/x-icon">
-        <title>chocolatey-vscode - Commands</title>
+        <title>chocolatey-vscode - Description minimum character count</title>
         <link href="/chocolatey-vscode/assets/css/highlight.css" rel="stylesheet">
         <link href="/chocolatey-vscode/assets/css/bootstrap/bootstrap.css" rel="stylesheet" />
         <link href="/chocolatey-vscode/assets/css/adminlte/AdminLTE.css" rel="stylesheet" />
@@ -73,7 +73,7 @@
             <aside class="main-sidebar ">
                 <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
                     	
-        <div><p><a href="https://github.com/gep13/chocolatey-vscode/tree/develop/docs/input/docs/commands/index.cshtml"><i class="fa fa-pencil-square" aria-hidden="true"></i> Edit Content</a></p></div>
+        <div><p><a href="https://github.com/gep13/chocolatey-vscode/tree/develop/docs/input/docs/rules/choco1001.md"><i class="fa fa-pencil-square" aria-hidden="true"></i> Edit Content</a></p></div>
     <div id="infobar-headings"></div>
 
                 </section>
@@ -84,7 +84,7 @@
                     <ul class="sidebar-menu">
                         
 
-                <li class="treeview active selected">
+                <li class="treeview">
                     <a href="/chocolatey-vscode/docs/commands">Commands</a> <a href="#" class="expand"></a>
                     <ul class="treeview-menu">
                         
@@ -96,12 +96,12 @@
 
                     </ul>
                 </li>
-                <li class="treeview">
+                <li class="treeview active">
                     <a href="/chocolatey-vscode/docs/rules">Rules</a> <a href="#" class="expand"></a>
                     <ul class="treeview-menu">
                         
             <li class="header">Guidelines</li>
-                <li><a href="/chocolatey-vscode/docs/rules/choco1001">Description minimum character count</a></li>
+                <li class="selected"><a href="/chocolatey-vscode/docs/rules/choco1001">Description minimum character count</a></li>
                 <li><a href="/chocolatey-vscode/docs/rules/choco1002">SSL capable URL</a></li>
             <li class="header">Requirements</li>
                 <li><a href="/chocolatey-vscode/docs/rules/choco0002">Description Is Empty</a></li>
@@ -124,46 +124,24 @@
 
 
 		<section class="content-header">
-			<h1>Commands</h1>
+			<h1>Description minimum character count</h1>
 		</section>
 	<section class="content">
-		<p>How to use the Chocolatey VSCode Extension</p>
-
-			<div class="box">
-				<div class="box-body no-padding">
-					<table class="table table-striped table-hover two-cols-alt table-responsive">
-						
-						<tbody>
-								<tr>
-									<td><strong><a href="/chocolatey-vscode/docs/commands/create">Create new Chocolatey package</a></strong></td>
-									<td>
-Usage instructions for the create new package command									</td>
-								</tr>
-								<tr>
-									<td><strong><a href="/chocolatey-vscode/docs/commands/pack">Pack Chocolatey package(s)</a></strong></td>
-									<td>
-Usage instructions for the package Chocolatey package(s) command									</td>
-								</tr>
-								<tr>
-									<td><strong><a href="/chocolatey-vscode/docs/commands/delete">Delete Chocolatey package(s)</a></strong></td>
-									<td>
-Usage instructions for the delete Chocolatey package(s) command									</td>
-								</tr>
-								<tr>
-									<td><strong><a href="/chocolatey-vscode/docs/commands/push">Push Chocolatey package(s)</a></strong></td>
-									<td>
-Usage instructions for the push Chocolatey package(s) command									</td>
-								</tr>
-								<tr>
-									<td><strong><a href="/chocolatey-vscode/docs/commands/install">Install Template package(s)</a></strong></td>
-									<td>
-Usage instructions for the install Template package(s) command									</td>
-								</tr>
-						</tbody>				
-					</table>
-				</div>
-			</div> 
-
+		<div class="alert alert-warning"><p><strong>Preliminary Notice</strong>
+This rule is not yet available in chocolatey-vscode.
+It is a planned rule for 0.8.0.</p>
+</div>
+<h2 id="issue">Issue</h2>
+<p>In the nuspec, the description should be long enough to describe the packaged software.</p>
+<h2 id="recommended-solution">Recommended Solution</h2>
+<p>Add addition text to the description to fully explain what the software is.</p>
+<h2 id="reasoning">Reasoning</h2>
+<p>The description explains the underlying software. Without sufficient description, folks may not know what they are installing.</p>
+<h2 id="see-also">See also</h2>
+<ul>
+<li><a href="https://github.com/chocolatey/package-validator/wiki/DescriptionCharacterCountMinimum" target="_blank">Package validator rule</a></li>
+<li><a href="choco0003">Maximum Characters Requirement</a></li>
+</ul>
 
 	</section>
                 

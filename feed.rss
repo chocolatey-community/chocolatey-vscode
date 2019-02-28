@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0">
 	<channel>
-		<title>Choco VS Code</title>
+		<title>chocolatey-vscode</title>
 		<link>http://gep13.github.io/chocolatey-vscode</link>
 		<description />
 		<copyright>2019</copyright>
-		<pubDate>Wed, 13 Feb 2019 08:40:47 GMT</pubDate>
-		<lastBuildDate>Wed, 13 Feb 2019 08:40:47 GMT</lastBuildDate>
+		<pubDate>Thu, 28 Feb 2019 21:24:09 GMT</pubDate>
+		<lastBuildDate>Thu, 28 Feb 2019 21:24:09 GMT</lastBuildDate>
 	</channel>
 </rss>

@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/chocolatey-vscode/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/chocolatey-vscode/assets/img/favicon.ico" type="image/x-icon">
-        <title>chocolatey-vscode - Commands</title>
+        <title>chocolatey-vscode - Rules</title>
         <link href="/chocolatey-vscode/assets/css/highlight.css" rel="stylesheet">
         <link href="/chocolatey-vscode/assets/css/bootstrap/bootstrap.css" rel="stylesheet" />
         <link href="/chocolatey-vscode/assets/css/adminlte/AdminLTE.css" rel="stylesheet" />
@@ -73,7 +73,7 @@
             <aside class="main-sidebar ">
                 <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
                     	
-        <div><p><a href="https://github.com/gep13/chocolatey-vscode/tree/develop/docs/input/docs/commands/index.cshtml"><i class="fa fa-pencil-square" aria-hidden="true"></i> Edit Content</a></p></div>
+        <div><p><a href="https://github.com/gep13/chocolatey-vscode/tree/develop/docs/input/docs/rules/index.cshtml"><i class="fa fa-pencil-square" aria-hidden="true"></i> Edit Content</a></p></div>
     <div id="infobar-headings"></div>
 
                 </section>
@@ -84,7 +84,7 @@
                     <ul class="sidebar-menu">
                         
 
-                <li class="treeview active selected">
+                <li class="treeview">
                     <a href="/chocolatey-vscode/docs/commands">Commands</a> <a href="#" class="expand"></a>
                     <ul class="treeview-menu">
                         
@@ -96,7 +96,7 @@
 
                     </ul>
                 </li>
-                <li class="treeview">
+                <li class="treeview active selected">
                     <a href="/chocolatey-vscode/docs/rules">Rules</a> <a href="#" class="expand"></a>
                     <ul class="treeview-menu">
                         
@@ -124,40 +124,69 @@
 
 
 		<section class="content-header">
-			<h1>Commands</h1>
+			<h1>Rules</h1>
 		</section>
 	<section class="content">
-		<p>How to use the Chocolatey VSCode Extension</p>
+		
+<div class="alert alert-warning">
+  <p>
+    <strong>Preliminary Notice</strong> <br />
+    Rules is not yet available in the current version of chocolatey-vscode.
+    It is a planned feature for 0.8.0.
+  </p>
+</div>
+
+<p>Package validation rules</p>
 
 			<div class="box">
 				<div class="box-body no-padding">
 					<table class="table table-striped table-hover two-cols-alt table-responsive">
+							<thead>
+								<tr class="active"><th colspan="2">Guidelines</th></tr>
+							</thead>
 						
 						<tbody>
 								<tr>
-									<td><strong><a href="/chocolatey-vscode/docs/commands/create">Create new Chocolatey package</a></strong></td>
+									<td><strong><a href="/chocolatey-vscode/docs/rules/choco1001">Description minimum character count</a></strong></td>
 									<td>
-Usage instructions for the create new package command									</td>
+Description text should be longer than 4 characters.									</td>
 								</tr>
 								<tr>
-									<td><strong><a href="/chocolatey-vscode/docs/commands/pack">Pack Chocolatey package(s)</a></strong></td>
+									<td><strong><a href="/chocolatey-vscode/docs/rules/choco1002">SSL capable URL</a></strong></td>
 									<td>
-Usage instructions for the package Chocolatey package(s) command									</td>
+One of the urls provided can be changed to use SSL equivalent.									</td>
+								</tr>
+						</tbody>				
+					</table>
+				</div>
+			</div> 
+			<div class="box">
+				<div class="box-body no-padding">
+					<table class="table table-striped table-hover two-cols-alt table-responsive">
+							<thead>
+								<tr class="active"><th colspan="2">Requirements</th></tr>
+							</thead>
+						
+						<tbody>
+								<tr>
+									<td><strong><a href="/chocolatey-vscode/docs/rules/choco0002">Description Is Empty</a></strong></td>
+									<td>
+Description element can not be empty.									</td>
 								</tr>
 								<tr>
-									<td><strong><a href="/chocolatey-vscode/docs/commands/delete">Delete Chocolatey package(s)</a></strong></td>
+									<td><strong><a href="/chocolatey-vscode/docs/rules/choco0003">Description maximum character count</a></strong></td>
 									<td>
-Usage instructions for the delete Chocolatey package(s) command									</td>
+Description text can not be longer than 4000 characters.									</td>
 								</tr>
 								<tr>
-									<td><strong><a href="/chocolatey-vscode/docs/commands/push">Push Chocolatey package(s)</a></strong></td>
+									<td><strong><a href="/chocolatey-vscode/docs/rules/choco0004">Invalid URL Provided</a></strong></td>
 									<td>
-Usage instructions for the push Chocolatey package(s) command									</td>
+One of the urls in the nuspec file does not go to a valid webpage.									</td>
 								</tr>
 								<tr>
-									<td><strong><a href="/chocolatey-vscode/docs/commands/install">Install Template package(s)</a></strong></td>
+									<td><strong><a href="/chocolatey-vscode/docs/rules/choco0001">Nuspec does not contain templated values</a></strong></td>
 									<td>
-Usage instructions for the install Template package(s) command									</td>
+The nuspec file does not contain any values from running choco new.									</td>
 								</tr>
 						</tbody>				
 					</table>
