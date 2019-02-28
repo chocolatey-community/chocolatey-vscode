@@ -5,7 +5,7 @@ Category: Requirements
 ---
 
 :::{.alert .alert-warning}
-**Preliminary Notice**  
+**Preliminary Notice**
 This rule is not yet available in chocolatey-vscode.
 It is a planned rule for 0.8.0.
 :::
@@ -26,5 +26,5 @@ The description explains the underlying software. Without any information, folks
 ## See Also
 
 - [Package validator rule](https://github.com/chocolatey/package-validator/wiki/DescriptionNotEmpty){target = _blank}
-- [Maximum Characters Requirement](choco00003)
-- [Minimum Characters Guideline](choco10001)
+- [Maximum Characters Requirement](choco0003)
+- [Minimum Characters Guideline](choco1001)

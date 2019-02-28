@@ -5,7 +5,7 @@ Category: Requirements
 ---
 
 :::{.alert .alert-warning}
-**Preliminary Notice**  
+**Preliminary Notice**
 This rule is not yet available in chocolatey-vscode.
 It is a planned rule for 0.8.0.
 :::
@@ -30,4 +30,4 @@ Please update _so that_
 ## See also
 
 - [Package validator rule](https://github.com/chocolatey/package-validator/wiki/DescriptionCharacterCountMaximum){target = _blank}
-- [Minimum Characters Guideline](choco10001)
+- [Minimum Characters Guideline](choco1001)

@@ -5,7 +5,7 @@ Category: Requirements
 ---
 
 :::{.alert .alert-warning}
-**Preliminary Notice**  
+**Preliminary Notice**
 This rule is not yet available in chocolatey-vscode.
 It is a planned rule for 0.8.0.
 :::

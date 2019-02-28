@@ -5,7 +5,7 @@ Category: Requirements
 ---
 
 :::{.alert .alert-warning}
-**Preliminary Notice**  
+**Preliminary Notice**
 This rule is not yet available in chocolatey-vscode.
 It is a planned rule for 0.8.0.
 :::
@@ -26,4 +26,4 @@ We expect that URLs actually go to an existing URL.
 ## See also
 
 - [Package validator rule](https://github.com/chocolatey/package-validator/wiki/InvalidUrlProvided)
-- [SSL capable Guideline](choco10002)
+- [SSL capable Guideline](choco1002)

@@ -5,7 +5,7 @@ Category: Guidelines
 ---
 
 :::{.alert .alert-warning}
-**Preliminary Notice**  
+**Preliminary Notice**
 This rule is not yet available in chocolatey-vscode.
 It is a planned rule for 0.8.0.
 :::
@@ -22,4 +22,4 @@ Update URLs that support SSL to use `https`.
 
 ## See also
 
-- [Invalid URL Requirement](choco00004)
+- [Invalid URL Requirement](choco0004)
