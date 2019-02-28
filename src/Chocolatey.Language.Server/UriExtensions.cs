@@ -12,13 +12,15 @@ namespace Chocolatey.Language.Server
         ///   Tries to validate an URL
         /// </summary>
         /// <param name="url">Uri object</param>
-        public static bool IsValid(this Uri url)
+        /// <param name="useGetMethod">Bool Switch to GET request.</param>
+        public static bool IsValid(this Uri url, bool useGetMethod = false)
         {
             var request = (HttpWebRequest)WebRequest.Create(url);
 
             //This would allow 301 and 302 to be valid as well
             request.AllowAutoRedirect = true;
             request.Timeout = 15000;
+            if (!useGetMethod) request.Method = WebRequestMethods.Http.Head;
 
             try
             {
@@ -29,7 +31,7 @@ namespace Chocolatey.Language.Server
             }
             catch (WebException)
             {
-                return false;
+                return !useGetMethod && url.IsValid(true);
             }
         }
 
