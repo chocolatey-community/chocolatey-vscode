@@ -19,6 +19,7 @@ namespace Chocolatey.Language.Server
                 .WithServices(ConfigureServices)
                 .WithHandler<TextDocumentSyncHandler>()
                 .WithHandler<CodeActionHandler>()
+                .WithHandler<ConfigurationHandler>()
                 .OnInitialize((s, _) => {
                     var serviceProvider = (s as LanguageServer).Services;
                     var bufferManager = serviceProvider.GetService<BufferManager>();
