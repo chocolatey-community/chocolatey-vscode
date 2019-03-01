@@ -50,10 +50,23 @@ function import-rule() {
 
   $ruleMarkdown = gci -Recurse "$cloneTo\$chocoRuleName*" | select -First 1
 
-  $markdownContent = Get-Content -Encoding UTF8 $ruleMarkdown
+  if ($ruleMarkdown) {
 
-  # This will be the title of the new rule
-  $title = ($markdownContent | ? { $_ -match "^\s*\#" } | select -First 1).Trim('#', ' ')
+    $markdownContent = Get-Content -Encoding UTF8 $ruleMarkdown
+
+    # This will be the title of the new rule
+    $title = ($markdownContent | ? { $_ -match "^\s*\#" } | select -First 1).Trim('#', ' ')
+
+    if ($title -eq 'Stub') {
+      Write-Warning "$chocoRuleName is a Stub. Creating empty stub $ruleType rule..."
+      $title = $chocoRuleName
+    }
+  } else {
+    Write-Warning "No package validator rule matching $chocoRuleName* was found."
+    Write-Warning "Creating empty $ruleType rule..."
+    $markdownContent = ""
+    $title = $chocoRuleName
+  }
 
   $sb = New-Object System.Text.StringBuilder;
   $sb.AppendLine('---') | Out-Null
@@ -76,7 +89,7 @@ function import-rule() {
   $sb.AppendLine("") | Out-Null
   $sb.AppendLine("- [Package validator rule]($validatorLink){target = _blank}") | Out-Null
 
-  $namePrefix = "choco"
+  $namePrefix = "CHOCO"
   if ($ruleType -eq 'Requirement') {
     $namePrefix += "0"
   }
@@ -100,7 +113,7 @@ function import-rule() {
   }
   $prevRuleNum++
 
-  $newRuleNum = $prevRuleNum.ToString("d4")
+  $newRuleNum = $prevRuleNum.ToString("d3")
 
   $newRuleName = "$namePrefix$newRuleNum.md"
 
@@ -112,5 +125,5 @@ function import-rule() {
 }
 
 import-rule -chocoRuleName $chocoRuleName `
-            -ruleType $ruleType `
-            -Cleanup:$Cleanup
+  -ruleType $ruleType `
+  -Cleanup:$Cleanup
