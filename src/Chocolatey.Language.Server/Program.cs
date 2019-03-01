@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Chocolatey.Language.Server.Handlers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using OmniSharp.Extensions.LanguageServer.Server;
@@ -40,6 +41,7 @@ namespace Chocolatey.Language.Server
         {
             services.AddSingleton<BufferManager>();
             services.AddSingleton<DiagnosticsHandler>();
+            services.AddSingleton<Configuration>();
         }
     }
 }

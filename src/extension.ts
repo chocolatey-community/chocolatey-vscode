@@ -64,7 +64,7 @@ export function activate(context: ExtensionContext): void {
             }
         ],
         synchronize: {
-            configurationSection: 'nuspec',
+            configurationSection: 'chocoLanguageServer',
             fileEvents: workspace.createFileSystemWatcher('**/*.nuspec')
         },
     }

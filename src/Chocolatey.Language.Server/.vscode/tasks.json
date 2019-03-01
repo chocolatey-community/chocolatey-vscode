@@ -9,7 +9,7 @@
                 "build",
                 "${workspaceFolder}/Chocolatey.Language.Server.csproj"
             ],
-            "problemMatcher": "$tsc"
+            "problemMatcher": "$msCompile"
         }
     ]
 }
