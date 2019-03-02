@@ -11,3 +11,4 @@ tools/**
 build/**
 build-results/**
 chocolatey/**
+packages/**
