@@ -13,7 +13,7 @@ namespace Chocolatey.Language.Server.Validations
     ///   Handler to validate the length of description in the package metadata.
     /// </summary>
     /// TODO: Add <seealso> elements once PR is merged
-    public class UrlValidValidation : NuspecRuleBase
+    public class UrlSslCapable : NuspecRuleBase
     {
         private static readonly IReadOnlyCollection<string> UrlElements = new []
         {
@@ -35,7 +35,7 @@ namespace Chocolatey.Language.Server.Validations
         {
             get
             {
-                return "CHOCO0004";
+                return "CHOCO1002";
             }
         }
 
@@ -46,7 +46,7 @@ namespace Chocolatey.Language.Server.Validations
         {
             get
             {
-                return "https://gep13.github.io/chocolatey-vscode/docs/rules/CHOCO0004";
+                return "https://gep13.github.io/chocolatey-vscode/docs/rules/CHOCO1002";
             }
         }
 
@@ -57,14 +57,17 @@ namespace Chocolatey.Language.Server.Validations
                 if (element != null) {
                     var uriString = element.GetContentValue().Trim();
                     if (
-                        !Uri.IsWellFormedUriString(uriString, UriKind.Absolute) ||
-                        !Uri.TryCreate(uriString, UriKind.Absolute, out Uri uri) ||
-                        !uri.IsValid()
+                        Uri.IsWellFormedUriString(uriString, UriKind.Absolute) &&
+                        Uri.TryCreate(uriString, UriKind.Absolute, out Uri uri) &&
+                        uri.IsValid()
                     )
                     {
-                        yield return CreateRequirement(
-                            element,
-                            $"Url in {elementName} is invalid.");
+                        if (uri.SslCapable())
+                        {
+                            yield return CreateGuideline(
+                                element,
+                                "Url in " + elementName + " is SSL capable, please switch to https.");
+                        }
                     }
                 }
             }

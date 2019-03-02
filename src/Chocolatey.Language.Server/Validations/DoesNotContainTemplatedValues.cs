@@ -13,6 +13,28 @@ namespace Chocolatey.Language.Server.Validations
     /// <seealso href="https://github.com/chocolatey/package-validator/blob/master/src/chocolatey.package.validator/infrastructure.app/rules/NuspecDoesNotContainTemplatedValuesRequirement.cs">Package validator requirement for templated values.</seealso>
     public class DoesNotContainTemplatedValues : NuspecRuleBase
     {
+        /// <summary>
+        /// Gets the string Id for the rule, similar to CHOCO0001
+        /// </summary>
+        public override string Id
+        {
+            get
+            {
+                return "CHOCO0001";
+            }
+        }
+
+        /// <summary>
+        /// Gets the documentation Url for the rule
+        /// </summary>
+        public override string DocumentationUrl
+        {
+            get
+            {
+                return "https://gep13.github.io/chocolatey-vscode/docs/rules/CHOCO0001";
+            }
+        }
+
         private static readonly IReadOnlyCollection<string> TemplatedValues = new []
         {
             "__replace",
@@ -31,8 +53,7 @@ namespace Chocolatey.Language.Server.Validations
 
                 yield return CreateRequirement(
                     node,
-                    "Templated value which should be removed.",
-                    "CHOCO0001");
+                    "Templated value which should be removed.");
             }
         }
     }

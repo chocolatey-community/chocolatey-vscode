@@ -14,15 +14,6 @@ namespace Chocolatey.Language.Server.Validations
     public abstract class NuspecRuleBase : INuspecRule
     {
         private TextPositions _textPositions;
-        private Dictionary<string, string> _ruleUrlMap = new Dictionary<string, string>()
-        {
-            { "CHOCO0001", "https://gep13.github.io/chocolatey-vscode/docs/rules/CHOCO0001" },
-            { "CHOCO0002", "https://gep13.github.io/chocolatey-vscode/docs/rules/CHOCO0002" },
-            { "CHOCO0003", "https://gep13.github.io/chocolatey-vscode/docs/rules/CHOCO0003" },
-            { "CHOCO0004", "https://gep13.github.io/chocolatey-vscode/docs/rules/CHOCO0004" },
-            { "CHOCO1001", "https://gep13.github.io/chocolatey-vscode/docs/rules/CHOCO1001" },
-            { "CHOCO1002", "https://gep13.github.io/chocolatey-vscode/docs/rules/CHOCO1002" },
-        };
 
         /// <summary>
         /// Sets the position of the currently used nuspec text.
@@ -43,6 +34,16 @@ namespace Chocolatey.Language.Server.Validations
         public abstract IEnumerable<Diagnostic> Validate(XmlDocumentSyntax syntaxTree);
 
         /// <summary>
+        /// Gets the string Id for the rule, similar to CHOCO0001
+        /// </summary>
+        public abstract string Id { get ;}
+
+        /// <summary>
+        /// Gets the documentation Url for the rule
+        /// </summary>
+        public abstract string DocumentationUrl { get ;}
+
+        /// <summary>
         /// Finds a single element in the specified <paramref name="syntaxTree"/> by the name.
         /// </summary>
         /// <param name="syntaxTree">The syntax tree to find the element in.</param>
@@ -60,80 +61,72 @@ namespace Chocolatey.Language.Server.Validations
         /// </summary>
         /// <param name="elementSyntax">The element syntax.</param>
         /// <param name="message">The message to show the user.</param>
-        /// <param name="code">The code for the current rule.</param>
         /// <returns>The requirement diagnostic.</returns>
-        protected Diagnostic CreateRequirement(XmlElementSyntax elementSyntax, string message, string code = null)
-            => CreateDiagnostic(elementSyntax, DiagnosticSeverity.Error, message, code);
+        protected Diagnostic CreateRequirement(XmlElementSyntax elementSyntax, string message)
+            => CreateDiagnostic(elementSyntax, DiagnosticSeverity.Error, message);
 
         /// <summary>
         ///   Creates a single requirement diagnostic using the specified <paramref name="syntaxNode" />.
         /// </summary>
         /// <param name="syntaxNode">The syntax node.</param>
         /// <param name="message">The message to show the user.</param>
-        /// <param name="code">The code for the current rule.</param>
         /// <returns>The requirement diagnostic.</returns>
-        protected Diagnostic CreateRequirement(SyntaxNode syntaxNode, string message, string code = null)
-            => CreateDiagnostic(syntaxNode, DiagnosticSeverity.Error, message, code);
+        protected Diagnostic CreateRequirement(SyntaxNode syntaxNode, string message)
+            => CreateDiagnostic(syntaxNode, DiagnosticSeverity.Error, message);
 
         /// <summary>
         ///   Creates a single guideline diagnostic using the specified <paramref name="syntaxTree" />.
         /// </summary>
         /// <param name="elementSyntax">The element syntax.</param>
         /// <param name="message">The message to show the user.</param>
-        /// <param name="code">The code for the current rule.</param>
         /// <returns>The requirement diagnostic.</returns>
-        protected Diagnostic CreateGuideline(XmlElementSyntax elementSyntax, string message, string code = null)
-            => CreateDiagnostic(elementSyntax, DiagnosticSeverity.Warning, message, code);
+        protected Diagnostic CreateGuideline(XmlElementSyntax elementSyntax, string message)
+            => CreateDiagnostic(elementSyntax, DiagnosticSeverity.Warning, message);
 
         /// <summary>
         ///   Creates a single guideline diagnostic using the specified <paramref name="syntaxNode" />.
         /// </summary>
         /// <param name="syntaxNode">The syntax node.</param>
         /// <param name="message">The message to show the user.</param>
-        /// <param name="code">The code for the current rule.</param>
         /// <returns>The requirement diagnostic.</returns>
-        protected Diagnostic CreateGuideline(SyntaxNode syntaxNode, string message, string code = null)
-            => CreateDiagnostic(syntaxNode, DiagnosticSeverity.Warning, message, code);
+        protected Diagnostic CreateGuideline(SyntaxNode syntaxNode, string message)
+            => CreateDiagnostic(syntaxNode, DiagnosticSeverity.Warning, message);
 
         /// <summary>
         ///   Creates a single suggestion diagnostic using the specified <paramref name="syntaxTree" />.
         /// </summary>
         /// <param name="elementSyntax">The element syntax.</param>
         /// <param name="message">The message to show the user.</param>
-        /// <param name="code">The code for the current rule.</param>
         /// <returns>The requirement diagnostic.</returns>
-        protected Diagnostic CreateSuggestion(XmlElementSyntax elementSyntax, string message, string code = null)
-            => CreateDiagnostic(elementSyntax, DiagnosticSeverity.Information, message, code);
+        protected Diagnostic CreateSuggestion(XmlElementSyntax elementSyntax, string message)
+            => CreateDiagnostic(elementSyntax, DiagnosticSeverity.Information, message);
 
         /// <summary>
         ///   Creates a single suggestion diagnostic using the specified <paramref name="syntaxNode" />.
         /// </summary>
         /// <param name="syntaxNode">The syntax node.</param>
         /// <param name="message">The message to show the user.</param>
-        /// <param name="code">The code for the current rule.</param>
         /// <returns>The requirement diagnostic.</returns>
-        protected Diagnostic CreateSuggestion(SyntaxNode syntaxNode, string message, string code = null)
-            => CreateDiagnostic(syntaxNode, DiagnosticSeverity.Information, message, code);
+        protected Diagnostic CreateSuggestion(SyntaxNode syntaxNode, string message)
+            => CreateDiagnostic(syntaxNode, DiagnosticSeverity.Information, message);
 
         /// <summary>
         ///   Creates a single note diagnostic using the specified <paramref name="syntaxTree" />.
         /// </summary>
         /// <param name="elementSyntax">The element syntax.</param>
         /// <param name="message">The message to show the user.</param>
-        /// <param name="code">The code for the current rule.</param>
         /// <returns>The requirement diagnostic.</returns>
-        protected Diagnostic CreateNote(XmlElementSyntax elementSyntax, string message, string code = null)
-            => CreateDiagnostic(elementSyntax, DiagnosticSeverity.Hint, message, code);
+        protected Diagnostic CreateNote(XmlElementSyntax elementSyntax, string message)
+            => CreateDiagnostic(elementSyntax, DiagnosticSeverity.Hint, message);
 
         /// <summary>
         ///   Creates a single note diagnostic using the specified <paramref name="syntaxNode" />.
         /// </summary>
         /// <param name="syntaxNode">The syntax node.</param>
         /// <param name="message">The message to show the user.</param>
-        /// <param name="code">The code for the current rule.</param>
         /// <returns>The requirement diagnostic.</returns>
-        protected Diagnostic CreateNote(SyntaxNode syntaxNode, string message, string code = null)
-            => CreateDiagnostic(syntaxNode, DiagnosticSeverity.Hint, message, code);
+        protected Diagnostic CreateNote(SyntaxNode syntaxNode, string message)
+            => CreateDiagnostic(syntaxNode, DiagnosticSeverity.Hint, message);
 
         /// <summary>
         ///   Creates a single diagnostic with the specified <paramref name="severity"/> using the specified <paramref name="syntaxNode" />.
@@ -141,10 +134,9 @@ namespace Chocolatey.Language.Server.Validations
         /// <param name="elementSyntax">The element syntax.</param>
         /// <param name="severity">The Diagnostic severity to show the user.</param>
         /// <param name="message">The message to show the user.</param>
-        /// <param name="code">The code for the current rule.</param>
         /// <returns>The the created diagnostic.</returns>
-        protected Diagnostic CreateDiagnostic(XmlElementSyntax elementSyntax, DiagnosticSeverity severity, string message, string code)
-            => CreateDiagnostic(elementSyntax.StartTag.End, elementSyntax.EndTag.Start, severity, message, code);
+        protected Diagnostic CreateDiagnostic(XmlElementSyntax elementSyntax, DiagnosticSeverity severity, string message)
+            => CreateDiagnostic(elementSyntax.StartTag.End, elementSyntax.EndTag.Start, severity, message);
 
         /// <summary>
         ///   Creates a single diagnostic with the specified <paramref name="severity"/> using the specified <paramref name="syntaxNode" />.
@@ -152,10 +144,9 @@ namespace Chocolatey.Language.Server.Validations
         /// <param name="syntaxNode">The syntax node.</param>
         /// <param name="severity">The Diagnostic severity to show the user.</param>
         /// <param name="message">The message to show the user.</param>
-        /// <param name="code">The code for the current rule.</param>
         /// <returns>The created diagnostic.</returns>
-        protected Diagnostic CreateDiagnostic(SyntaxNode syntaxNode, DiagnosticSeverity severity, string message, string code)
-            => CreateDiagnostic(syntaxNode.Start, syntaxNode.End, severity, message, code);
+        protected Diagnostic CreateDiagnostic(SyntaxNode syntaxNode, DiagnosticSeverity severity, string message)
+            => CreateDiagnostic(syntaxNode.Start, syntaxNode.End, severity, message);
 
         /// <summary>
         /// Creates a single diagnostic with the specified <paramref name="severity"/>.
@@ -164,13 +155,12 @@ namespace Chocolatey.Language.Server.Validations
         /// <param name="end">The end of where the diagnostic should be displayed.</param>
         /// <param name="severity">The Diagnostic severity to show the user.</param>
         /// <param name="message">The message to show the user.</param>
-        /// <param name="code">The code for the current rule.</param>
         /// <returns>The created diagnostic.</returns>
-        protected virtual Diagnostic CreateDiagnostic(int start, int end, DiagnosticSeverity severity, string message, string code)
+        protected virtual Diagnostic CreateDiagnostic(int start, int end, DiagnosticSeverity severity, string message)
         {
-            string errorMessage = string.IsNullOrEmpty(_ruleUrlMap[code]) ?
+            string errorMessage = string.IsNullOrEmpty(DocumentationUrl) ?
                                   message :
-                                  $"{message}\nSee: {_ruleUrlMap[code]}";
+                                  $"{message}\nSee: {DocumentationUrl}";
 
             return new Diagnostic
             {
@@ -178,7 +168,7 @@ namespace Chocolatey.Language.Server.Validations
                 Severity = severity,
                 Range = _textPositions.GetRange(start, end),
                 Source = "chocolatey",
-                Code = code,
+                Code = Id,
             };
         }
 

@@ -23,6 +23,28 @@ namespace Chocolatey.Language.Server.Validations
         private static readonly Regex _emailRegex = new Regex(EmailRegexPattern, RegexOptions.Compiled | RegexOptions.CultureInvariant);
 
         /// <summary>
+        /// Gets the string Id for the rule, similar to CHOCO0001
+        /// </summary>
+        public override string Id
+        {
+            get
+            {
+                return "CHOCO0005";
+            }
+        }
+
+        /// <summary>
+        /// Gets the documentation Url for the rule
+        /// </summary>
+        public override string DocumentationUrl
+        {
+            get
+            {
+                return "https://gep13.github.io/chocolatey-vscode/docs/rules/CHOCO0005";
+            }
+        }
+
+        /// <summary>
         /// Runs validation of the current nuspec file by using the specified <paramref
         /// name="syntaxTree"/> to check if author or copyright contains an email address.
         /// </summary>
@@ -60,8 +82,7 @@ namespace Chocolatey.Language.Server.Validations
                         start,
                         end,
                         DiagnosticSeverity.Error,
-                        $"Email address should not be used in the {element.Name} field.",
-                        "CHOCO0005");
+                        $"Email address should not be used in the {element.Name} field.");
                 });
         }
     }

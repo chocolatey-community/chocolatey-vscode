@@ -25,5 +25,9 @@ namespace Chocolatey.Language.Server.Validations
         /// <param name="syntaxTree">The syntax tree to use during validation.</param>
         /// <returns>An enumerable of failed checks</returns>
         IEnumerable<Diagnostic> Validate(XmlDocumentSyntax syntaxTree);
+
+        string Id { get; }
+
+        string DocumentationUrl { get ;}
     }
 }
