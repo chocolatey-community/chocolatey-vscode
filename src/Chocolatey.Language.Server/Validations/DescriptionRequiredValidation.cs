@@ -42,7 +42,6 @@ namespace Chocolatey.Language.Server.Validations
             if (descriptionElement == null)
             {
                 yield return CreateRequirement(
-                    descriptionElement,
                     "Description is required.");
                 yield break;
             }

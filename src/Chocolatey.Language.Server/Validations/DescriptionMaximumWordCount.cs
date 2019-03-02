@@ -38,13 +38,17 @@ namespace Chocolatey.Language.Server.Validations
         public override IEnumerable<Diagnostic> Validate(XmlDocumentSyntax syntaxTree)
         {
             var descriptionElement = FindElementByName(syntaxTree, "description");
-            var descriptionLength = descriptionElement.GetContentValue().Trim().Length;
 
-            if (descriptionLength > 4000)
+            if (descriptionElement != null)
             {
-                yield return CreateRequirement(
-                    descriptionElement,
-                    "Description should not exceed 4000 characters.");
+                var descriptionLength = descriptionElement.GetContentValue().Trim().Length;
+
+                if (descriptionLength > 4000)
+                {
+                    yield return CreateRequirement(
+                        descriptionElement,
+                        "Description should not exceed 4000 characters.");
+                }
             }
         }
     }

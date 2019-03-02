@@ -39,8 +39,11 @@ namespace Chocolatey.Language.Server.Handlers
 
             foreach (var rule in _rules.OrEmptyListIfNull())
             {
-                rule.SetTextPositions(textPositions);
-                diagnostics.AddRange(rule.Validate(syntaxTree));
+                if(!_configurationProvider.Configuration.Language.SuppressedRules.Contains(rule.Id))
+                {
+                    rule.SetTextPositions(textPositions);
+                    diagnostics.AddRange(rule.Validate(syntaxTree));
+                }
             }
 
             _router.Document.PublishDiagnostics(new PublishDiagnosticsParams

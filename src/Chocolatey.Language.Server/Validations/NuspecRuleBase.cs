@@ -57,6 +57,14 @@ namespace Chocolatey.Language.Server.Validations
         #region Diagnostic creation helpers
 
         /// <summary>
+        ///   Creates a single requirement diagnostic at top of document
+        /// </summary>
+        /// <param name="message">The message to show the user.</param>
+        /// <returns>The requirement diagnostic.</returns>
+        protected Diagnostic CreateRequirement(string message)
+            => CreateDiagnostic(0, 0, DiagnosticSeverity.Error, message);
+
+        /// <summary>
         ///   Creates a single requirement diagnostic using the specified <paramref name="syntaxTree" />.
         /// </summary>
         /// <param name="elementSyntax">The element syntax.</param>
@@ -73,6 +81,14 @@ namespace Chocolatey.Language.Server.Validations
         /// <returns>The requirement diagnostic.</returns>
         protected Diagnostic CreateRequirement(SyntaxNode syntaxNode, string message)
             => CreateDiagnostic(syntaxNode, DiagnosticSeverity.Error, message);
+
+        /// <summary>
+        ///   Creates a single guideline diagnostic at top of document
+        /// </summary>
+        /// <param name="message">The message to show the user.</param>
+        /// <returns>The guideline diagnostic.</returns>
+        protected Diagnostic CreateGuideline(string message)
+            => CreateDiagnostic(0, 0, DiagnosticSeverity.Warning, message);
 
         /// <summary>
         ///   Creates a single guideline diagnostic using the specified <paramref name="syntaxTree" />.
@@ -93,6 +109,14 @@ namespace Chocolatey.Language.Server.Validations
             => CreateDiagnostic(syntaxNode, DiagnosticSeverity.Warning, message);
 
         /// <summary>
+        ///   Creates a single suggestion diagnostic at top of document
+        /// </summary>
+        /// <param name="message">The message to show the user.</param>
+        /// <returns>The suggestion diagnostic.</returns>
+        protected Diagnostic CreateSuggestion(string message)
+            => CreateDiagnostic(0, 0, DiagnosticSeverity.Information, message);
+
+        /// <summary>
         ///   Creates a single suggestion diagnostic using the specified <paramref name="syntaxTree" />.
         /// </summary>
         /// <param name="elementSyntax">The element syntax.</param>
@@ -109,6 +133,14 @@ namespace Chocolatey.Language.Server.Validations
         /// <returns>The requirement diagnostic.</returns>
         protected Diagnostic CreateSuggestion(SyntaxNode syntaxNode, string message)
             => CreateDiagnostic(syntaxNode, DiagnosticSeverity.Information, message);
+
+        /// <summary>
+        ///   Creates a single note diagnostic at top of document
+        /// </summary>
+        /// <param name="message">The message to show the user.</param>
+        /// <returns>The note diagnostic.</returns>
+        protected Diagnostic CreateNote(string message)
+            => CreateDiagnostic(0, 0, DiagnosticSeverity.Hint, message);
 
         /// <summary>
         ///   Creates a single note diagnostic using the specified <paramref name="syntaxTree" />.

@@ -38,13 +38,17 @@ namespace Chocolatey.Language.Server.Validations
         public override IEnumerable<Diagnostic> Validate(XmlDocumentSyntax syntaxTree)
         {
             var descriptionElement = FindElementByName(syntaxTree, "description");
-            var descriptionLength = descriptionElement.GetContentValue().Trim().Length;
 
-            if (descriptionLength <= 30)
+            if (descriptionElement != null)
             {
-                yield return CreateGuideline(
-                    descriptionElement,
-                    "Description should be sufficient to explain the software.");
+                var descriptionLength = descriptionElement.GetContentValue().Trim().Length;
+
+                if (descriptionLength <= 30)
+                {
+                    yield return CreateGuideline(
+                        descriptionElement,
+                        "Description should be sufficient to explain the software.");
+                }
             }
         }
     }
