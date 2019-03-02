@@ -17,10 +17,10 @@ using System.Threading.Tasks;
 
 namespace Chocolatey.Language.Server.Handlers
 {
-  /// <summary>
-  ///     Language Server message handler that tracks configuration.
-  /// </summary>
-  public sealed class ConfigurationHandler
+    /// <summary>
+    ///     Language Server message handler that tracks configuration.
+    /// </summary>
+    public sealed class ConfigurationHandler
         : IDidChangeConfigurationSettingsHandler, IConfigurationProvider
     {
         /// <summary>

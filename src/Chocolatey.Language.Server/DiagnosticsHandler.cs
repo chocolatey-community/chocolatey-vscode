@@ -17,7 +17,6 @@ namespace Chocolatey.Language.Server
         private readonly ILanguageServer _router;
         private readonly BufferManager _bufferManager;
         private IList<INuspecRule> _rules = new List<INuspecRule>();
-
         private IConfigurationProvider _configurationProvider;
 
         public DiagnosticsHandler(ILanguageServer router, BufferManager bufferManager, IEnumerable<INuspecRule> rules, IConfigurationProvider configurationProvider)
