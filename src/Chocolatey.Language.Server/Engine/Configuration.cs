@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Chocolatey.Language.Server
+namespace Chocolatey.Language.Server.Engine
 {
     public sealed class Configuration
     {

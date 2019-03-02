@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Chocolatey.Language.Server
+namespace Chocolatey.Language.Server.Extensions
 {
     /// <summary>
     ///   Extensions for IEnumerable

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Chocolatey.Language.Server.Engine;
 using Chocolatey.Language.Server.Handlers;
 using Chocolatey.Language.Server.Validations;
 using Microsoft.Extensions.DependencyInjection;

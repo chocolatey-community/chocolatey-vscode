@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using OmniSharp.Extensions.LanguageServer.Protocol.Server;
 using Buffer = Microsoft.Language.Xml.Buffer;
 
-namespace Chocolatey.Language.Server
+namespace Chocolatey.Language.Server.Engine
 {
     public class BufferManager
     {

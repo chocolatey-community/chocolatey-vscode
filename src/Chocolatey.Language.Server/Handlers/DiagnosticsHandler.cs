@@ -9,8 +9,11 @@ using Microsoft.Language.Xml;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
 using OmniSharp.Extensions.LanguageServer.Protocol.Server;
 using Buffer = Microsoft.Language.Xml.Buffer;
+using Chocolatey.Language.Server.Extensions;
+using Chocolatey.Language.Server.Engine;
+using Chocolatey.Language.Server.Validations;
 
-namespace Chocolatey.Language.Server
+namespace Chocolatey.Language.Server.Handlers
 {
     public class DiagnosticsHandler
     {

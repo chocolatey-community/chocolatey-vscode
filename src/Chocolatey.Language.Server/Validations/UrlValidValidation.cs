@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Chocolatey.Language.Server;
+using Chocolatey.Language.Server.Extensions;
 using Microsoft.Language.Xml;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
 using DiagnosticSeverity = OmniSharp.Extensions.LanguageServer.Protocol.Models.DiagnosticSeverity;

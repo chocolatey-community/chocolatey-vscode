@@ -1,4 +1,6 @@
 using Chocolatey.Language.Server.CustomProtocol;
+using Chocolatey.Language.Server.Engine;
+using Chocolatey.Language.Server.Extensions;
 using Chocolatey.Language.Server.Handlers;
 using OmniSharp.Extensions.Embedded.MediatR;
 using OmniSharp.Extensions.JsonRpc;

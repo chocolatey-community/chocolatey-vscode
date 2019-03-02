@@ -1,4 +1,4 @@
-namespace Chocolatey.Language.Server
+namespace Chocolatey.Language.Server.Engine
 {
     public interface IConfigurationProvider
     {

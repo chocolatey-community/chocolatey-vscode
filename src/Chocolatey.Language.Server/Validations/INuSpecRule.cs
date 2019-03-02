@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using Chocolatey.Language.Server.Engine;
 using Microsoft.Language.Xml;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
 
-namespace Chocolatey.Language.Server
+namespace Chocolatey.Language.Server.Validations
 {
     /// <summary>
     /// Interface used to define common methods used when validation a nuspec file.

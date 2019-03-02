@@ -1,7 +1,7 @@
 using System;
 using System.Net;
 
-namespace Chocolatey.Language.Server
+namespace Chocolatey.Language.Server.Extensions
 {
     /// <summary>
     ///   Extensions for Uri
@@ -36,7 +36,7 @@ namespace Chocolatey.Language.Server
         }
 
         /// <summary>
-        ///   Tries to validate if an URL is SSL capable. 
+        ///   Tries to validate if an URL is SSL capable.
         ///   HTTP: Will return true if the URL validates with SSL, otherwise false.
         ///   HTTPS: it returns false
         /// </summary>
@@ -52,7 +52,7 @@ namespace Chocolatey.Language.Server
             // Handle http: override the scheme and use the default https port
             uri.Scheme = Uri.UriSchemeHttps;
             uri.Port = -1;
-            return uri.Uri.IsValid();     
+            return uri.Uri.IsValid();
         }
     }
 }

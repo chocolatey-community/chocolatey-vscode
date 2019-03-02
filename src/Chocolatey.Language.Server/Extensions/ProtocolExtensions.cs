@@ -1,3 +1,5 @@
+using Chocolatey.Language.Server.Engine;
+using Chocolatey.Language.Server.CustomProtocol;
 using OmniSharp.Extensions.LanguageServer;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
 using OmniSharp.Extensions.LanguageServer.Server;
@@ -6,7 +8,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Linq;
 
-namespace Chocolatey.Language.Server.CustomProtocol
+namespace Chocolatey.Language.Server.Extensions
 {
     /// <summary>
     ///     Custom Language Server Protocol extensions.
