@@ -27,7 +27,7 @@ Setup<DotNetCoreMSBuildSettings>((context) => {
         .WithProperty("AssemblyVersion", BuildParameters.Version.Version)
         .WithProperty("FileVersion", BuildParameters.Version.Version)
         .WithProperty("AssemblyInformationalVersion", BuildParameters.Version.InformationalVersion);
-    
+
     if (!IsRunningOnWindows())
     {
         var frameworkPathOverride = new FilePath(typeof(object).Assembly.Location).GetDirectory().FullPath + "/";
