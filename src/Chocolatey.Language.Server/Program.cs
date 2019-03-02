@@ -45,9 +45,9 @@ namespace Chocolatey.Language.Server
             services.AddSingleton<BufferManager>();
             services.AddSingleton<DiagnosticsHandler>();
             services.AddSingleton<Configuration>();
-            services.AddSingleton<INuSpecRule, UrlValidValidation>();
-            services.AddSingleton<INuSpecRule, DescriptionLengthValidation>();
-            services.AddSingleton<INuSpecRule, DoesNotContainTemplatedValues>();
+            services.AddSingleton<INuspecRule, UrlValidValidation>();
+            services.AddSingleton<INuspecRule, DescriptionLengthValidation>();
+            services.AddSingleton<INuspecRule, DoesNotContainTemplatedValues>();
             services.AddTransient<IConfigurationProvider>(config => config.GetServices<IJsonRpcHandler>().OfType<ConfigurationHandler>().FirstOrDefault());
         }
     }

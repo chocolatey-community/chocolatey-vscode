@@ -20,11 +20,11 @@ namespace Chocolatey.Language.Server
 
         private IConfigurationProvider _configurationProvider;
 
-        public DiagnosticsHandler(ILanguageServer router, BufferManager bufferManager, IEnumerable<INuSpecRule> rules, IConfigurationProvider configurationProvider)
+        public DiagnosticsHandler(ILanguageServer router, BufferManager bufferManager, IEnumerable<INuspecRule> rules, IConfigurationProvider configurationProvider)
         {
             _router = router;
             _bufferManager = bufferManager;
-            _rules = new List<INuSpecRule>(rules);
+            _rules = new List<INuspecRule>(rules);
             _configurationProvider = configurationProvider;
         }
 
