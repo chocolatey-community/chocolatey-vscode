@@ -76,7 +76,7 @@ namespace Chocolatey.Language.Server.Handlers
         /// <returns>
         ///     A <see cref="Task"/> representing the operation.
         /// </returns>
-        Task OnDidChangeConfiguration(DidChangeConfigurationObjectParams parameters)
+        Task<Unit> OnDidChangeConfiguration(DidChangeConfigurationObjectParams parameters)
         {
             Configuration.UpdateFrom(parameters);
 
@@ -85,7 +85,7 @@ namespace Chocolatey.Language.Server.Handlers
                 ConfigurationChanged(this, EventArgs.Empty);
             }
 
-            return Task.CompletedTask;
+            return Unit.Task;
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Chocolatey.Language.Server.Handlers
             {
                 try
                 {
-                    return (Task<Unit>)OnDidChangeConfiguration(request);
+                    return OnDidChangeConfiguration(request);
                 }
                 catch (Exception unexpectedError)
                 {
