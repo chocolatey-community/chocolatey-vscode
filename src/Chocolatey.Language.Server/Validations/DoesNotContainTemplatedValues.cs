@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Chocolatey.Language.Server.Models;
 using Microsoft.Language.Xml;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
 using DiagnosticSeverity = OmniSharp.Extensions.LanguageServer.Protocol.Models.DiagnosticSeverity;
@@ -53,17 +54,15 @@ namespace Chocolatey.Language.Server.Validations
             "tag1"
         };
 
-        public override IEnumerable<Diagnostic> Validate(XmlDocumentSyntax syntaxTree)
+        public override IEnumerable<Diagnostic> Validate(Package package)
         {
-            foreach (var node in syntaxTree.DescendantNodesAndSelf().OfType<XmlTextSyntax>())
+            foreach (var element in package.AllElements
+                .Where(e => TemplatedValues.Any(t => 
+                    string.Equals(e.Value, t, StringComparison.OrdinalIgnoreCase))))
             {
-                if (!TemplatedValues.Any(x => node.Value.Contains(x, StringComparison.OrdinalIgnoreCase)))
-                {
-                    continue;
-                }
 
-                yield return CreateRequirement(
-                    node,
+                yield return CreateDiagnostic(
+                    element.Value,
                     "Templated value which should be removed.");
             }
         }

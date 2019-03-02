@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Chocolatey.Language.Server;
 using Chocolatey.Language.Server.Extensions;
+using Chocolatey.Language.Server.Models;
 using Microsoft.Language.Xml;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
-using DiagnosticSeverity = OmniSharp.Extensions.LanguageServer.Protocol.Models.DiagnosticSeverity;
 
 namespace Chocolatey.Language.Server.Validations
 {
@@ -15,7 +14,7 @@ namespace Chocolatey.Language.Server.Validations
     /// TODO: Add <seealso> elements once PR is merged
     public class UrlSslCapable : NuspecRuleBase
     {
-        private static readonly IReadOnlyCollection<string> UrlElements = new []
+        private static readonly IReadOnlyCollection<string> UrlElements = new[]
         {
             "bugTrackerUrl",
             "docsUrl",
@@ -61,24 +60,24 @@ namespace Chocolatey.Language.Server.Validations
             }
         }
 
-        public override IEnumerable<Diagnostic> Validate(XmlDocumentSyntax syntaxTree)
+        public override IEnumerable<Diagnostic> Validate(Package package)
         {
-            foreach (var elementName in UrlElements) {
-                var element = FindElementByName(syntaxTree, elementName);
-                if (element != null) {
-                    var uriString = element.GetContentValue().Trim();
-                    if (
-                        Uri.IsWellFormedUriString(uriString, UriKind.Absolute) &&
-                        Uri.TryCreate(uriString, UriKind.Absolute, out Uri uri) &&
-                        uri.IsValid()
-                    )
+            var elements = package.AllElements.Where(x => UrlElements.Any(u => string.Equals(x.Key, u, StringComparison.OrdinalIgnoreCase)));
+
+            foreach (var element in elements)
+            {
+                var uriString = element.Value;
+                if (
+                    Uri.IsWellFormedUriString(uriString, UriKind.Absolute) &&
+                    Uri.TryCreate(uriString, UriKind.Absolute, out Uri uri) &&
+                    uri.IsValid()
+                )
+                {
+                    if (uri.SslCapable())
                     {
-                        if (uri.SslCapable())
-                        {
-                            yield return CreateGuideline(
-                                element,
-                                "Url in " + elementName + " is SSL capable, please switch to https.");
-                        }
+                        yield return CreateDiagnostic(
+                            element.Value,
+                            $"Url in {element.Key} is SSL capable, please switch to https.");
                     }
                 }
             }

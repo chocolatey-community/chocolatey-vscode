@@ -1,9 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Language.Xml;
+using Chocolatey.Language.Server.Models;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
-using DiagnosticSeverity = OmniSharp.Extensions.LanguageServer.Protocol.Models.DiagnosticSeverity;
 
 namespace Chocolatey.Language.Server.Validations
 {
@@ -46,18 +43,16 @@ namespace Chocolatey.Language.Server.Validations
             }
         }
 
-        public override IEnumerable<Diagnostic> Validate(XmlDocumentSyntax syntaxTree)
+        public override IEnumerable<Diagnostic> Validate(Package package)
         {
-            var descriptionElement = FindElementByName(syntaxTree, "description");
-
-            if (descriptionElement != null)
+            if (!package.Description.IsMissing)
             {
-                var descriptionLength = descriptionElement.GetContentValue().Trim().Length;
+                var descriptionLength = package.Description.Value.Length;
 
                 if (descriptionLength > 4000)
                 {
-                    yield return CreateRequirement(
-                        descriptionElement,
+                    yield return CreateDiagnostic(
+                        package.Description,
                         "Description should not exceed 4000 characters.");
                 }
             }

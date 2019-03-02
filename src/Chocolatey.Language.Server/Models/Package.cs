@@ -17,9 +17,9 @@ namespace Chocolatey.Language.Server.Models
         public MetaValue<string> Id { get; set; } = new MetaValue<string>();
 
         /// <summary>
-        /// Gets or sets the version of the package.
+        /// Gets or sets a list of maintainers for the package.
         /// </summary>
-        public MetaValue<string> Version { get; set; } = new MetaValue<string>();
+        public IReadOnlyList<MetaValue<string>> Maintainers { get; set; } = new MetaValue<string>[0];
 
         /// <summary>
         /// Gets or sets the package source URL.
@@ -28,18 +28,13 @@ namespace Chocolatey.Language.Server.Models
         public MetaValue<string> PackageSourceUrl { get; set; } = new MetaValue<string>();
 
         /// <summary>
-        /// Gets or sets a list of maintainers for the package.
+        /// Gets or sets the version of the package.
         /// </summary>
-        public IReadOnlyList<MetaValue<string>> Maintainers { get; set; } = new MetaValue<string>[0];
+        public MetaValue<string> Version { get; set; } = new MetaValue<string>();
 
         #endregion Package Related Properties
 
         #region Software Related Properties
-
-        /// <summary>
-        /// Gets or sets the title of the software.
-        /// </summary>
-        public MetaValue<string> Title { get; set; } = new MetaValue<string>();
 
         /// <summary>
         /// Gets or sets a list authors for the software packaged.
@@ -47,14 +42,9 @@ namespace Chocolatey.Language.Server.Models
         public IReadOnlyList<MetaValue<string>> Authors { get; set; } = new MetaValue<string>[0];
 
         /// <summary>
-        /// Gets or sets the project URL for the packaged software.
+        /// Gets or sets the bug tracker URL for the packaged software.
         /// </summary>
-        public MetaValue<string> ProjectUrl { get; set; } = new MetaValue<string>();
-
-        /// <summary>
-        /// Gets or sets the icon URL for the packaged software.
-        /// </summary>
-        public MetaValue<string> IconUrl { get; set; } = new MetaValue<string>();
+        public MetaValue<string> BugTrackerUrl { get; set; } = new MetaValue<string>();
 
         /// <summary>
         /// Gets or sets the copyright for the packaged software.
@@ -62,19 +52,9 @@ namespace Chocolatey.Language.Server.Models
         public MetaValue<string> Copyright { get; set; } = new MetaValue<string>();
 
         /// <summary>
-        /// Gets or sets the license URL for the packaged software.
+        /// Gets or sets the description of the packaged software.
         /// </summary>
-        public MetaValue<string> LicenseUrl { get; set; } = new MetaValue<string>();
-
-        /// <summary>
-        /// Gets or sets wether the license needs to be accepted before it can be used.
-        /// </summary>
-        public MetaValue<bool> RequireLicenseAcceptance { get; set; } = new MetaValue<bool>();
-
-        /// <summary>
-        /// Gets or sets the project source URL for the packaged software.
-        /// </summary>
-        public MetaValue<string> ProjectSourceUrl { get; set; } = new MetaValue<string>();
+        public MetaValue<string> Description { get; set; } = new MetaValue<string>();
 
         /// <summary>
         /// Gets or sets the documentation URL for the packaged software.
@@ -82,14 +62,39 @@ namespace Chocolatey.Language.Server.Models
         public MetaValue<string> DocsUrl { get; set; } = new MetaValue<string>();
 
         /// <summary>
+        /// Gets or sets the icon URL for the packaged software.
+        /// </summary>
+        public MetaValue<string> IconUrl { get; set; } = new MetaValue<string>();
+
+        /// <summary>
+        /// Gets or sets the license URL for the packaged software.
+        /// </summary>
+        public MetaValue<string> LicenseUrl { get; set; } = new MetaValue<string>();
+
+        /// <summary>
         /// Gets or sets the mailing list or forum URL for the packaged software.
         /// </summary>
         public MetaValue<string> MailingListUrl { get; set; } = new MetaValue<string>();
 
         /// <summary>
-        /// Gets or sets the bug tracker URL for the packaged software.
+        /// Gets or sets the project source URL for the packaged software.
         /// </summary>
-        public MetaValue<string> BugTrackerUrl { get; set; } = new MetaValue<string>();
+        public MetaValue<string> ProjectSourceUrl { get; set; } = new MetaValue<string>();
+
+        /// <summary>
+        /// Gets or sets the project URL for the packaged software.
+        /// </summary>
+        public MetaValue<string> ProjectUrl { get; set; } = new MetaValue<string>();
+
+        /// <summary>
+        /// Gets or sets the release notes.
+        /// </summary>
+        public MetaValue<string> ReleaseNotes { get; set; } = new MetaValue<string>();
+
+        /// <summary>
+        /// Gets or sets wether the license needs to be accepted before it can be used.
+        /// </summary>
+        public MetaValue<bool> RequireLicenseAcceptance { get; set; } = new MetaValue<bool>();
 
         /// <summary>
         /// Gets or sets the short summary of what the packaged software do.
@@ -102,16 +107,16 @@ namespace Chocolatey.Language.Server.Models
         public IReadOnlyList<MetaValue<string>> Tags { get; set; } = new MetaValue<string>[0];
 
         /// <summary>
-        /// Gets or sets the description of the packaged software.
+        /// Gets or sets the title of the software.
         /// </summary>
-        public MetaValue<string> Description { get; set; } = new MetaValue<string>();
-
-        /// <summary>
-        /// Gets or sets the release notes.
-        /// </summary>
-        public MetaValue<string> ReleaseNotes { get; set; } = new MetaValue<string>();
+        public MetaValue<string> Title { get; set; } = new MetaValue<string>();
 
         #endregion Software Related Properties
+
+        /// <summary>
+        /// Gets or sets all elements specified in the nuspec xml that do not contain other xml elements.
+        /// </summary>
+        public IReadOnlyDictionary<string, MetaValue<string>> AllElements { get; set; }
 
         /// <summary>
         /// Gets the package dependencies.
@@ -119,21 +124,35 @@ namespace Chocolatey.Language.Server.Models
         public IReadOnlyList<MetaValue<Dependency>> Dependencies => _dependencies.AsReadOnly();
 
         /// <summary>
-        /// Gets the index of where the metadata element starts.
-        /// </summary>
-        public int StartsAt { get; internal set; }
-
-        /// <summary>
         /// Gets the index of where the metadata opening element ends.
         /// </summary>
         public int EndsAt { get; internal set; }
 
         /// <summary>
-        /// Gets or sets all elements specified in the nuspec xml that do not contain other xml elements.
+        /// Gets the index of where the metadata element starts.
         /// </summary>
-        public IReadOnlyDictionary<string, MetaValue<string>> AllElements { get; set; }
+        public int StartsAt { get; internal set; }
 
-        // Should files also be included?
+        /// <summary>
+        /// Performs an implicit conversion from <see
+        /// cref="T:Chocolatey.Language.Server.Models.Package"/>
+        /// to <see cref="M:Chocolatey.Language.Server.Models.MetaValue"/>.
+        /// </summary>
+        /// <param name="package">The package.</param>
+        /// <returns>The result of the conversion.</returns>
+        public static implicit operator MetaValue(Package package)
+        {
+            var result = new MetaValue<object>();
+            if (package != null)
+            {
+                result.ElementEnd = package.EndsAt;
+                result.ElementStart = package.StartsAt;
+                result.IsMissing = false;
+                result.Value = package;
+            }
+
+            return result;
+        }
 
         /// <summary>
         /// Adds a single dependency to the package dependency list.

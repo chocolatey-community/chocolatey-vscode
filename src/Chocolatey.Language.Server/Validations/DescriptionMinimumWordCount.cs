@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Chocolatey.Language.Server.Models;
 using Microsoft.Language.Xml;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
 using DiagnosticSeverity = OmniSharp.Extensions.LanguageServer.Protocol.Models.DiagnosticSeverity;
@@ -46,18 +47,16 @@ namespace Chocolatey.Language.Server.Validations
             }
         }
 
-        public override IEnumerable<Diagnostic> Validate(XmlDocumentSyntax syntaxTree)
+        public override IEnumerable<Diagnostic> Validate(Package package)
         {
-            var descriptionElement = FindElementByName(syntaxTree, "description");
-
-            if (descriptionElement != null)
+            if (!package.Description.IsMissing)
             {
-                var descriptionLength = descriptionElement.GetContentValue().Trim().Length;
+                var descriptionLength = package.Description.Value.Trim().Length;
 
                 if (descriptionLength <= 30)
                 {
-                    yield return CreateGuideline(
-                        descriptionElement,
+                    yield return CreateDiagnostic(
+                        package.Description,
                         "Description should be sufficient to explain the software.");
                 }
             }
