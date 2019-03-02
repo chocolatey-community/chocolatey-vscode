@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Chocolatey.Language.Server.Handlers;
+using Chocolatey.Language.Server.Validations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using OmniSharp.Extensions.JsonRpc;
 using OmniSharp.Extensions.LanguageServer.Server;
 
 namespace Chocolatey.Language.Server
@@ -42,6 +45,10 @@ namespace Chocolatey.Language.Server
             services.AddSingleton<BufferManager>();
             services.AddSingleton<DiagnosticsHandler>();
             services.AddSingleton<Configuration>();
+            services.AddSingleton<INuSpecRule, UrlValidValidation>();
+            services.AddSingleton<INuSpecRule, DescriptionLengthValidation>();
+            services.AddSingleton<INuSpecRule, DoesNotContainTemplatedValues>();
+            services.AddTransient<IConfigurationProvider>(config => config.GetServices<IJsonRpcHandler>().OfType<ConfigurationHandler>().FirstOrDefault());
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Chocolatey.Language.Server.Handlers
   ///     Language Server message handler that tracks configuration.
   /// </summary>
   public sealed class ConfigurationHandler
-        : IDidChangeConfigurationSettingsHandler
+        : IDidChangeConfigurationSettingsHandler, IConfigurationProvider
     {
         /// <summary>
         ///     The JSON serialiser used to read settings from LSP notifications.
