@@ -43,7 +43,7 @@
 				"type": "object",
 				"title": "Chocolatey Configuration",
 				"properties": {
-					"chocolatey.templatePackages": {
+					"chocolatey.templates": {
 						"type": "object",
 						"default": {
 							"names": [
@@ -69,11 +69,44 @@
 						},
 						"description": "The Chocolatey Template Packages Configuration"
 					},
-					"chocolatey.new.properties": {
+					"chocolatey.commands": {
+						"properties": {
+							"type": "object",
+							"new": {
+								"type": "object",
+								"properties": {
+									"properties": {
+										"type": "object",
+										"description": "A key value pair of properties to pass to Chocolatey when creating a new package.",
+										"uniqueItems": true,
+										"title": "New package properties"
+									}
+								}
+							}
+						}
+					},
+					"chocolatey.language": {
 						"type": "object",
-						"description": "A key value pair of properties to pass to Chocolatey when creating a new package.",
-						"uniqueItems": true,
-						"title": "New package properties"
+						"properties": {
+							"allowSuppressionOfRequirements": {
+								"title": "Allow requirements suppression",
+								"type": "boolean",
+								"default": false,
+								"description": "Allow the suppression of rules that are marked as requirements"
+							},
+							"disableLanguageService": {
+								"title": "Disable language service",
+								"type": "boolean",
+								"default": false,
+								"description": "Prevent the Chocolatey Language Service from starting up"
+							},
+							"suppressedRules": {
+								"title": "Suppress Rules",
+								"type": "array",
+								"description": "The codes for the Chocolatey Language Service rules that should be suppressed",
+								"default": []
+							}
+						}
 					}
 				}
 			}

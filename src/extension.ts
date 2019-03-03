@@ -28,55 +28,64 @@ export function activate(context: ExtensionContext): void {
         commands.registerCommand("chocolatey.open", async (uri: string) => await commands.executeCommand('vscode.open', Uri.parse(uri)))
     );
 
-    let serverExe = 'dotnet';
-    let serverModule: string | null = null;
-    for (let p of languageServerPaths) {
-        p = context.asAbsolutePath(p);
-        // console.log/p);
-        if (fs.existsSync(p)) {
-            serverModule = p;
-            break;
-        }
+    let config = workspace.getConfiguration("chocolatey.language");
+    let disableLanguageService: boolean | undefined = false;
+
+    if(config !== undefined) {
+        disableLanguageService = config.get("disableLanguageService")
     }
 
-    // TODO: Decision need to be made if the Language Server should
-    // be packed inside the vsix file, or downloaded during runtime.
-
-    if (!serverModule) { throw new URIError("Cannot find the language server module."); }
-    let workPath = path.dirname(serverModule);
-    console.log(`Use ${serverModule} as server module.`);
-    console.log(`Work path: ${workPath}`);
-
-
-    // If the extension is launched in debug mode then the debug server options are used
-    // Otherwise the run options are used
-    let serverOptions: ServerOptions = {
-        run: { command: serverExe, args: [serverModule], options: { cwd: workPath } },
-        debug: { command: serverExe, args: [serverModule, "--debug"], options: { cwd: workPath } }
-    };
-
-    // Options to control the language client
-    let clientOptions: LanguageClientOptions = {
-        // Register the server for plain text documents
-        documentSelector: [
-            {
-                pattern: '**/*.nuspec',
+    // Only start the Language Service if configured to do so
+    if(!disableLanguageService) {
+        let serverExe = 'dotnet';
+        let serverModule: string | null = null;
+        for (let p of languageServerPaths) {
+            p = context.asAbsolutePath(p);
+            // console.log/p);
+            if (fs.existsSync(p)) {
+                serverModule = p;
+                break;
             }
-        ],
-        synchronize: {
-            configurationSection: 'chocoLanguageServer',
-            fileEvents: workspace.createFileSystemWatcher('**/*.nuspec')
-        },
+        }
+
+        // TODO: Decision need to be made if the Language Server should
+        // be packed inside the vsix file, or downloaded during runtime.
+
+        if (!serverModule) { throw new URIError("Cannot find the language server module."); }
+        let workPath = path.dirname(serverModule);
+        console.log(`Use ${serverModule} as server module.`);
+        console.log(`Work path: ${workPath}`);
+
+        // If the extension is launched in debug mode then the debug server options are used
+        // Otherwise the run options are used
+        let serverOptions: ServerOptions = {
+            run: { command: serverExe, args: [serverModule], options: { cwd: workPath } },
+            debug: { command: serverExe, args: [serverModule, "--debug"], options: { cwd: workPath } }
+        };
+
+        // Options to control the language client
+        let clientOptions: LanguageClientOptions = {
+            // Register the server for plain text documents
+            documentSelector: [
+                {
+                    pattern: '**/*.nuspec',
+                }
+            ],
+            synchronize: {
+                configurationSection: 'chocolatey',
+                fileEvents: workspace.createFileSystemWatcher('**/*.nuspec')
+            },
+        }
+
+        // Create the language client and start the client.
+        const client = new LanguageClient('chocolatey', 'Chocolatey Language Server', serverOptions, clientOptions);
+        client.trace = Trace.Verbose;
+        let disposable = client.start();
+
+        // Push the disposable to the context's subscriptions so that the
+        // client can be deactivated on extension deactivation
+        context.subscriptions.push(disposable);
     }
-
-    // Create the language client and start the client.
-    const client = new LanguageClient('chocoLanguageServer', 'Chocolatey Language Server', serverOptions, clientOptions);
-    client.trace = Trace.Verbose;
-    let disposable = client.start();
-
-    // Push the disposable to the context's subscriptions so that the
-    // client can be deactivated on extension deactivation
-    context.subscriptions.push(disposable);
 }
 
 function deleteNupkgs():void {
