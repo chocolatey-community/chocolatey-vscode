@@ -11,7 +11,7 @@ var installed : boolean = false;
 
 const languageServerPaths = [
     // TODO: Change path to the actually expected location of the language server
-    ".server/Chocolatey.Language.Server.dll",
+    "out/.server/Chocolatey.Language.Server.dll",
     "./src/Chocolatey.Language.Server/bin/Release/netcoreapp2.1/Chocolatey.Language.Server.dll",
     "./src/Chocolatey.Language.Server/bin/Debug/netcoreapp2.1/Chocolatey.Language.Server.dll"
 ];
