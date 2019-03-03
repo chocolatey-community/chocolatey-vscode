@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Chocolatey.Language.Server.Engine;
 using Chocolatey.Language.Server.Handlers;
+using Chocolatey.Language.Server.Registration;
 using Chocolatey.Language.Server.Validations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -46,13 +47,13 @@ namespace Chocolatey.Language.Server
             services.AddSingleton<BufferManager>();
             services.AddSingleton<DiagnosticsHandler>();
             services.AddSingleton<Configuration>();
-            services.AddSingleton<INuspecRule, CopyrightAndAuthorFieldShouldntContainEmailRequirement>();
-            services.AddSingleton<INuspecRule, DescriptionMaximumWordCount>();
-            services.AddSingleton<INuspecRule, DescriptionMinimumWordCount>();
-            services.AddSingleton<INuspecRule, DescriptionRequiredValidation>();
-            services.AddSingleton<INuspecRule, DoesNotContainTemplatedValues>();
-            services.AddSingleton<INuspecRule, UrlSslCapable>();
-            services.AddSingleton<INuspecRule, UrlValidValidation>();
+
+            var typeLocator = new TypeLocator();
+            foreach (var nuspecRule in typeLocator.GetTypesThatInheritOrImplement<INuspecRule>())
+            {
+                services.AddSingleton(typeof(INuspecRule), nuspecRule);
+            }
+
             services.AddTransient<IConfigurationProvider>(config => config.GetServices<IJsonRpcHandler>().OfType<ConfigurationHandler>().FirstOrDefault());
         }
     }
