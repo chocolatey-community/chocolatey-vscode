@@ -35,6 +35,17 @@ namespace Chocolatey.Language.Server.Validations
             }
         }
 
+        /// <summary>
+        /// Gets the type of of validation
+        /// </summary>
+        public override ValidationType ValidationType
+        {
+            get
+            {
+                return ValidationType.Requirement;
+            }
+        }
+
         private static readonly IReadOnlyCollection<string> TemplatedValues = new []
         {
             "__replace",

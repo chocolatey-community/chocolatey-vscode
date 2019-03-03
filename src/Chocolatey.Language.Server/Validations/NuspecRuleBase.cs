@@ -44,6 +44,10 @@ namespace Chocolatey.Language.Server.Validations
         public abstract string DocumentationUrl { get ;}
 
         /// <summary>
+        /// Gets the type of of validation
+        /// </summary>
+        public abstract ValidationType ValidationType { get; }
+        /// <summary>
         /// Finds a single element in the specified <paramref name="syntaxTree"/> by the name.
         /// </summary>
         /// <param name="syntaxTree">The syntax tree to find the element in.</param>

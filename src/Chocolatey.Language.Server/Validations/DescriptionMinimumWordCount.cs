@@ -35,6 +35,17 @@ namespace Chocolatey.Language.Server.Validations
             }
         }
 
+        /// <summary>
+        /// Gets the type of of validation
+        /// </summary>
+        public override ValidationType ValidationType
+        {
+            get
+            {
+                return ValidationType.Guideline;
+            }
+        }
+
         public override IEnumerable<Diagnostic> Validate(XmlDocumentSyntax syntaxTree)
         {
             var descriptionElement = FindElementByName(syntaxTree, "description");

@@ -45,6 +45,17 @@ namespace Chocolatey.Language.Server.Validations
         }
 
         /// <summary>
+        /// Gets the type of of validation
+        /// </summary>
+        public override ValidationType ValidationType
+        {
+            get
+            {
+                return ValidationType.Requirement;
+            }
+        }
+
+        /// <summary>
         /// Runs validation of the current nuspec file by using the specified <paramref
         /// name="syntaxTree"/> to check if author or copyright contains an email address.
         /// </summary>

@@ -29,5 +29,7 @@ namespace Chocolatey.Language.Server.Validations
         string Id { get; }
 
         string DocumentationUrl { get ;}
+
+        ValidationType ValidationType { get; }
     }
 }
