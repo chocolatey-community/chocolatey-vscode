@@ -53,7 +53,7 @@ export class ChocolateyCliManager {
         });
 
         function readChocoProperties() {
-            const config = workspace.getConfiguration("chocolatey.new");
+            const config = workspace.getConfiguration("chocolatey.commands.new");
 
             let result = new Array<{key:string,value:string}>();
             if (config === undefined) { return result;}
@@ -264,7 +264,7 @@ export class ChocolateyCliManager {
     }
 
     public installTemplates(): void {
-        const config = workspace.getConfiguration("chocolatey").templatePackages;
+        const config = workspace.getConfiguration("chocolatey").templates;
 
         let chocoArguments: Array<string> = ["install"];
 

@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using Chocolatey.Language.Server.Engine;
 using Microsoft.Language.Xml;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
 
-namespace Chocolatey.Language.Server
+namespace Chocolatey.Language.Server.Validations
 {
     /// <summary>
     /// Interface used to define common methods used when validation a nuspec file.
@@ -24,5 +25,11 @@ namespace Chocolatey.Language.Server
         /// <param name="syntaxTree">The syntax tree to use during validation.</param>
         /// <returns>An enumerable of failed checks</returns>
         IEnumerable<Diagnostic> Validate(XmlDocumentSyntax syntaxTree);
+
+        string Id { get; }
+
+        string DocumentationUrl { get ;}
+
+        ValidationType ValidationType { get; }
     }
 }

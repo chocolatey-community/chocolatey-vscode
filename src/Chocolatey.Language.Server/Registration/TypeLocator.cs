@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Chocolatey.Language.Server.Extensions;
 
-namespace Chocolatey.Language.Server
+namespace Chocolatey.Language.Server.Registration
 {
     public class TypeLocator : ITypeLocator
     {

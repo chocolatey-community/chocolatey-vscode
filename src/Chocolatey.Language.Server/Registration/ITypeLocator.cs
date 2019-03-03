@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Chocolatey.Language.Server
+namespace Chocolatey.Language.Server.Registration
 {
     public interface ITypeLocator
     {

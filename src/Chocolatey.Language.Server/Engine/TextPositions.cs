@@ -28,7 +28,7 @@ using System;
 using System.Collections.Generic;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
 
-namespace Chocolatey.Language.Server
+namespace Chocolatey.Language.Server.Engine
 {
     /// <summary>
     ///     A quick-and-dirty calculator for text positions.

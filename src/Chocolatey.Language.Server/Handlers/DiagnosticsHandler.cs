@@ -9,29 +9,25 @@ using Microsoft.Language.Xml;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
 using OmniSharp.Extensions.LanguageServer.Protocol.Server;
 using Buffer = Microsoft.Language.Xml.Buffer;
+using Chocolatey.Language.Server.Extensions;
+using Chocolatey.Language.Server.Engine;
+using Chocolatey.Language.Server.Validations;
 
-namespace Chocolatey.Language.Server
+namespace Chocolatey.Language.Server.Handlers
 {
     public class DiagnosticsHandler
     {
         private readonly ILanguageServer _router;
         private readonly BufferManager _bufferManager;
         private IList<INuspecRule> _rules = new List<INuspecRule>();
+        private IConfigurationProvider _configurationProvider;
 
-        public DiagnosticsHandler(ILanguageServer router, BufferManager bufferManager)
+        public DiagnosticsHandler(ILanguageServer router, BufferManager bufferManager, IEnumerable<INuspecRule> rules, IConfigurationProvider configurationProvider)
         {
             _router = router;
             _bufferManager = bufferManager;
-
-            var typeLocator = new TypeLocator();
-            foreach (var nuspecRule in typeLocator.GetTypesThatInheritOrImplement<INuspecRule>().OrEmptyListIfNull())
-            {
-                var rule = Activator.CreateInstance(nuspecRule) as INuspecRule;
-                if (rule != null)
-                {
-                    _rules.Add(rule);
-                }
-            }
+            _rules = new List<INuspecRule>(rules);
+            _configurationProvider = configurationProvider;
         }
 
         public void PublishDiagnostics(Uri uri, Buffer buffer)
@@ -43,8 +39,11 @@ namespace Chocolatey.Language.Server
 
             foreach (var rule in _rules.OrEmptyListIfNull())
             {
-                rule.SetTextPositions(textPositions);
-                diagnostics.AddRange(rule.Validate(syntaxTree));
+                if(!_configurationProvider.Configuration.Language.SuppressedRules.Contains(rule.Id))
+                {
+                    rule.SetTextPositions(textPositions);
+                    diagnostics.AddRange(rule.Validate(syntaxTree));
+                }
             }
 
             _router.Document.PublishDiagnostics(new PublishDiagnosticsParams

@@ -8,10 +8,10 @@ using DiagnosticSeverity = OmniSharp.Extensions.LanguageServer.Protocol.Models.D
 namespace Chocolatey.Language.Server.Validations
 {
     /// <summary>
-    ///   Handler to validate that no templated values remain in the nuspec.
+    ///   Handler to validate the length of description in the package metadata.
     /// </summary>
-    /// <seealso href="https://github.com/chocolatey/package-validator/blob/master/src/chocolatey.package.validator/infrastructure.app/rules/NuspecDoesNotContainTemplatedValuesRequirement.cs">Package validator requirement for templated values.</seealso>
-    public class DoesNotContainTemplatedValues : NuspecRuleBase
+    /// <seealso href="https://github.com/chocolatey/package-validator/blob/master/src/chocolatey.package.validator/infrastructure.app/rules/DescriptionWordCountMaximum4000Requirement.cs">Package validator maximum length requirement for description.</seealso>
+    public class DescriptionMaximumWordCount : NuspecRuleBase
     {
         /// <summary>
         /// Gets the string Id for the rule, similar to CHOCO0001
@@ -20,7 +20,7 @@ namespace Chocolatey.Language.Server.Validations
         {
             get
             {
-                return "CHOCO0001";
+                return "CHOCO0003";
             }
         }
 
@@ -31,7 +31,7 @@ namespace Chocolatey.Language.Server.Validations
         {
             get
             {
-                return "https://gep13.github.io/chocolatey-vscode/docs/rules/CHOCO0001";
+                return "https://gep13.github.io/chocolatey-vscode/docs/rules/CHOCO0003";
             }
         }
 
@@ -46,25 +46,20 @@ namespace Chocolatey.Language.Server.Validations
             }
         }
 
-        private static readonly IReadOnlyCollection<string> TemplatedValues = new []
-        {
-            "__replace",
-            "space_separated",
-            "tag1"
-        };
-
         public override IEnumerable<Diagnostic> Validate(XmlDocumentSyntax syntaxTree)
         {
-            foreach (var node in syntaxTree.DescendantNodesAndSelf().OfType<XmlTextSyntax>())
-            {
-                if (!TemplatedValues.Any(x => node.Value.Contains(x, StringComparison.OrdinalIgnoreCase)))
-                {
-                    continue;
-                }
+            var descriptionElement = FindElementByName(syntaxTree, "description");
 
-                yield return CreateRequirement(
-                    node,
-                    "Templated value which should be removed.");
+            if (descriptionElement != null)
+            {
+                var descriptionLength = descriptionElement.GetContentValue().Trim().Length;
+
+                if (descriptionLength > 4000)
+                {
+                    yield return CreateRequirement(
+                        descriptionElement,
+                        "Description should not exceed 4000 characters.");
+                }
             }
         }
     }

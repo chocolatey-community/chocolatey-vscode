@@ -8,7 +8,7 @@ using OmniSharp.Extensions.LanguageServer.Protocol.Client.Capabilities;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
 using OmniSharp.Extensions.LanguageServer.Protocol.Server;
 
-namespace Chocolatey.Language.Server
+namespace Chocolatey.Language.Server.Handlers
 {
     public class CodeActionHandler : ICodeActionHandler
     {
