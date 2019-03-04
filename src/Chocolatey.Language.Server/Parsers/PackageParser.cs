@@ -12,7 +12,6 @@ namespace Chocolatey.Language.Server.Parsers
     /// </summary>
     public static class PackageParser
     {
-
         /// <summary>
         /// Responsible for parsing the passed in nuspec xml document. This will then result in a
         /// parsed package from that xml.
