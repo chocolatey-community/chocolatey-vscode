@@ -40,6 +40,7 @@ namespace Chocolatey.Language.Server.Handlers
             Validations.NuspecRuleBase.TextPositions = textPositions;
 
             var diagnostics = _rules.OrEmptyListIfNull()
+                .Where(r => !IsSuppressedRule(r.Id))
                 .SelectMany(r => r.Validate(package));
 
             _router.Document.PublishDiagnostics(new PublishDiagnosticsParams
@@ -47,6 +48,11 @@ namespace Chocolatey.Language.Server.Handlers
                 Uri = uri,
                 Diagnostics = diagnostics.ToList()
             });
+        }
+
+        private bool IsSuppressedRule(string ruleId)
+        {
+            return _configurationProvider.Configuration.Language.SuppressedRules.Contains(ruleId);
         }
     }
 }
