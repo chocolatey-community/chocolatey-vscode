@@ -1,4 +1,5 @@
 # Chocolatey Visual Studio Code Extension
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 
 This extension brings support for [Chocolatey](https://chocolatey.org/) to Visual Studio Code.
 
@@ -87,3 +88,15 @@ You can also join in the Gitter Chat [![Join the chat at https://gitter.im/gep13
 ## Releases
 
 To find out what was released in each version of this extension, check out the [releases](https://github.com/gep13/chocolatey-vscode/releases) page.
+
+## Contributors
+
+Thanks goes to these wonderful people ([emoji key](https://github.com/all-contributors/all-contributors#emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore -->
+| [<img src="https://avatars0.githubusercontent.com/u/834643?v=4" width="100px;" alt="Maurice Kevenaar"/><br /><sub><b>Maurice Kevenaar</b></sub>](https://github.com/mkevenaar)<br />[💻](https://github.com/gep13/chocolatey-vscode/commits?author=mkevenaar "Code") [📖](https://github.com/gep13/chocolatey-vscode/commits?author=mkevenaar "Documentation") [🎨](#design-mkevenaar "Design") [🤔](#ideas-mkevenaar "Ideas, Planning, & Feedback") [🚧](#maintenance-mkevenaar "Maintenance") [📦](#platform-mkevenaar "Packaging/porting to new platform") [👀](#review-mkevenaar "Reviewed Pull Requests") |
+| :---: |
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
