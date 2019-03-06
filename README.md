@@ -1,5 +1,6 @@
 # Chocolatey Visual Studio Code Extension
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors)
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=gep13/chocolatey-vscode)](https://dependabot.com)
 
 This extension brings support for [Chocolatey](https://chocolatey.org/) to Visual Studio Code.
 
