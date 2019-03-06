@@ -38,6 +38,17 @@
         "platform",
         "review"
       ]
+    },
+    {
+      "login": "steviecoaster",
+      "name": "Stephen Valdinger",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/8674240?v=4",
+      "profile": "http://chocolatey.org",
+      "contributions": [
+        "code",
+        "doc",
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7
