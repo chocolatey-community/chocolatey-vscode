@@ -23,6 +23,21 @@
         "platform",
         "review"
       ]
+    },
+    {
+      "login": "mkevenaar",
+      "name": "Maurice Kevenaar",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/834643?v=4",
+      "profile": "https://github.com/mkevenaar",
+      "contributions": [
+        "code",
+        "doc",
+        "design",
+        "ideas",
+        "maintenance",
+        "platform",
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7
