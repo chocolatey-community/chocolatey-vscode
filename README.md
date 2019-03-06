@@ -1,4 +1,5 @@
-# Chocolatey Visual Studio Code Extension
+# Chocolatey Visual Studio Code Extension [![VS Marketplace](https://vsmarketplacebadge.apphb.com/version-short/gep13.chocolatey-vscode.svg)](https://marketplace.visualstudio.com/items?itemName=gep13.chocolatey-vscode) [![Installs(short)](https://vsmarketplacebadge.apphb.com/installs-short/gep13.chocolatey-vscode.svg)](https://marketplace.visualstudio.com/items?itemName=gep13.chocolatey-vscode) [![Downloads(short)](https://vsmarketplacebadge.apphb.com/downloads-short/gep13.chocolatey-vscode.svg)](https://marketplace.visualstudio.com/items?itemName=gep13.chocolatey-vscode) [![Ratings(short)](https://vsmarketplacebadge.apphb.com/rating-short/gep13.chocolatey-vscode.svg)](https://marketplace.visualstudio.com/items?itemName=gep13.chocolatey-vscode)
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=gep13/chocolatey-vscode)](https://dependabot.com)
 
