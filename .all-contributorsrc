@@ -60,6 +60,16 @@
         "ideas",
         "review"
       ]
+    },
+    {
+      "login": "tintoy",
+      "name": "Adam Friedman",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/1646284?v=4",
+      "profile": "https://blog.tintoy.io/",
+      "contributions": [
+        "ideas",
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7
