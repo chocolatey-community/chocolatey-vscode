@@ -49,6 +49,17 @@
         "doc",
         "ideas"
       ]
+    },
+    {
+      "login": "mholo65",
+      "name": "Martin Björkström",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/7863439?v=4",
+      "profile": "https://twitter.com/mholo65",
+      "contributions": [
+        "code",
+        "ideas",
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7
