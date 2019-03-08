@@ -46,14 +46,17 @@ namespace Chocolatey.Language.Server.Validations
         /// <exception cref="ArgumentNullException">
         /// Thrown when <paramref name="metaValue"/> is <c>null</c>.
         /// </exception>
-        protected Diagnostic CreateDiagnostic(MetaValue metaValue, string message)
+        protected Diagnostic CreateDiagnostic(MetaValue metaValue, string message, bool useTextIndex = false)
         {
             if (metaValue == null)
             {
                 throw new ArgumentNullException(nameof(metaValue));
             }
 
-            return CreateDiagnostic(metaValue.ElementStart, metaValue.ElementEnd, message);
+            int start = useTextIndex ? metaValue.TextStart : metaValue.ElementStart;
+            int end = useTextIndex ? metaValue.TextEnd : metaValue.ElementEnd;
+
+            return CreateDiagnostic(start, end, message);
         }
 
         /// <summary>

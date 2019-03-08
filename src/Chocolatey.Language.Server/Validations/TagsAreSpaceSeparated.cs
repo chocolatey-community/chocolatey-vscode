@@ -31,7 +31,7 @@ namespace Chocolatey.Language.Server.Validations
             {
                 if (tag.Value.Contains(',', StringComparison.OrdinalIgnoreCase))
                 {
-                    yield return CreateDiagnostic(tag, VALIDATION_MESSAGE);
+                    yield return CreateDiagnostic(tag, VALIDATION_MESSAGE, true);
                 }
             }
         }
