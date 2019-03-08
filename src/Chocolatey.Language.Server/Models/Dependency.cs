@@ -8,11 +8,11 @@
         /// <summary>
         /// Gets or sets the identifier of the dependency.
         /// </summary>
-        public MetaValue<string> Id { get; set; }
+        public MetaValue<string> Id { get; set; } = new MetaValue<string>();
 
         /// <summary>
         /// Gets or sets the version range of the dependency.
         /// </summary>
-        public MetaValue<string> VersionRange { get; set; }
+        public MetaValue<string> VersionRange { get; set; } = new MetaValue<string>();
     }
 }
