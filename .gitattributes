@@ -1,5 +1,6 @@
 # Set the default behavior, in case people don't have core.autocrlf set.
-* text=auto eol=crlf
+# text=auto can't be used when setting end of line.
+* text eol=crlf
 
 # Declare files that will always have CRLF line endings on checkout.
 *.sln text eol=crlf

@@ -35,22 +35,24 @@ namespace Chocolatey.Language.Server.Handlers
             var text = buffer.GetText(0, buffer.Length);
             var syntaxTree = Parser.Parse(buffer);
             var textPositions = new TextPositions(text);
-            var diagnostics = new List<Diagnostic>();
 
-            foreach (var rule in _rules.OrEmptyListIfNull())
-            {
-                if(!_configurationProvider.Configuration.Language.SuppressedRules.Contains(rule.Id))
-                {
-                    rule.SetTextPositions(textPositions);
-                    diagnostics.AddRange(rule.Validate(syntaxTree));
-                }
-            }
+            var package = Parsers.PackageParser.ParseXmlDocument(syntaxTree);
+            Validations.NuspecRuleBase.TextPositions = textPositions;
+
+            var diagnostics = _rules.OrEmptyListIfNull()
+                .Where(r => !IsSuppressedRule(r.Id))
+                .SelectMany(r => r.Validate(package));
 
             _router.Document.PublishDiagnostics(new PublishDiagnosticsParams
             {
                 Uri = uri,
-                Diagnostics = diagnostics
+                Diagnostics = diagnostics.ToList()
             });
+        }
+
+        private bool IsSuppressedRule(string ruleId)
+        {
+            return _configurationProvider.Configuration.Language.SuppressedRules.Contains(ruleId);
         }
     }
 }
