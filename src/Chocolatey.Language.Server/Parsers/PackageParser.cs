@@ -44,8 +44,9 @@ namespace Chocolatey.Language.Server.Parsers
                         package.EndsAt = element.StartTag.End;
                         break;
 
-                    case "dependency":
-                        package.AddDependency(ParseDependency(element));
+                    case "dependencies":
+                        var descendants = element.DescendantNodes().OfType<XmlEmptyElementSyntax>();
+                        AddDependencies(descendants, package);
                         break;
 
                     case "package":
@@ -65,6 +66,21 @@ namespace Chocolatey.Language.Server.Parsers
             return package;
         }
 
+        private static void AddDependencies(IEnumerable<XmlEmptyElementSyntax> dependencyElements, Package package)
+        {
+            foreach (var element in dependencyElements)
+            {
+                if (string.Compare(element.Name, "dependency", StringComparison.OrdinalIgnoreCase) == 0)
+                {
+                    var dependency = ParseDependency(element);
+                    if (!string.IsNullOrEmpty(dependency.Value.Id))
+                    {
+                        package.AddDependency(ParseDependency(element));
+                    }
+                }
+            }
+        }
+
         private static void AppendElementToDictionary(SortedDictionary<string, MetaValue<string>> allElements, XmlElementSyntax element)
         {
             if (!element.Elements.Any())
@@ -81,7 +97,7 @@ namespace Chocolatey.Language.Server.Parsers
             }
         }
 
-        private static MetaValue<Dependency> ParseDependency(XmlElementSyntax element)
+        private static MetaValue<Dependency> ParseDependency(XmlEmptyElementSyntax element)
         {
             var dependency = new Dependency();
 
@@ -122,7 +138,7 @@ namespace Chocolatey.Language.Server.Parsers
             return listResult.AsReadOnly();
         }
 
-        private static void SetAttributeMetaValue(MetaValue<string> metaValue, XmlElementSyntax element, string attributeName)
+        private static void SetAttributeMetaValue(MetaValue<string> metaValue, XmlEmptyElementSyntax element, string attributeName)
         {
             var attribute = element.GetAttribute(attributeName);
             if (attribute != null)
