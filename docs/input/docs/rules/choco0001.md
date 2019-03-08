@@ -1,4 +1,5 @@
 ---
+Order: 10
 Title: Nuspec does not contain templated values
 Description: The nuspec file does not contain any values from running choco new.
 Category: Requirements

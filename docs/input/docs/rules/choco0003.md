@@ -1,4 +1,5 @@
 ---
+Order: 30
 Title: Description maximum character count
 Description: Description text can not be longer than 4000 characters.
 Category: Requirements

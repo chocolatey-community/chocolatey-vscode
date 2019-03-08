@@ -1,4 +1,5 @@
 ---
+Order: 10
 Title: Description minimum character count
 Description: Description text should be longer than 4 characters.
 Category: Guidelines

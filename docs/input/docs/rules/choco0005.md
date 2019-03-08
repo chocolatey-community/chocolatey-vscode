@@ -1,7 +1,8 @@
 ﻿---
+Order: 50
 Title: Nuspec contains email address
 Description: One of the fields contains an email address.
-Category: Requirement
+Category: Requirements
 ---
 
 :::{.alert .alert-warning}

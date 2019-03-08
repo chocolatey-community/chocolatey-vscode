@@ -1,4 +1,5 @@
 ---
+Order: 40
 Title: Invalid URL Provided
 Description: One of the urls in the nuspec file does not go to a valid webpage.
 Category: Requirements

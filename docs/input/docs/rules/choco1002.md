@@ -1,4 +1,5 @@
 ---
+Order: 20
 Title: SSL capable URL
 Description: One of the urls provided can be changed to use SSL equivalent.
 Category: Guidelines
