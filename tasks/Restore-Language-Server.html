@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/chocolatey-vscode/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/chocolatey-vscode/assets/img/favicon.ico" type="image/x-icon">
-        <title>chocolatey-vscode - Preview</title>
+        <title>chocolatey-vscode - Restore Language Server</title>
         <link href="/chocolatey-vscode/assets/css/highlight.css" rel="stylesheet">
         <link href="/chocolatey-vscode/assets/css/bootstrap/bootstrap.css" rel="stylesheet" />
         <link href="/chocolatey-vscode/assets/css/adminlte/AdminLTE.css" rel="stylesheet" />
@@ -73,7 +73,7 @@
             <aside class="main-sidebar ">
                 <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
                     	
-        <div><p><a href="https://github.com/gep13/chocolatey-vscode/tree/develop/docs/input/tasks/Preview.md"><i class="fa fa-pencil-square" aria-hidden="true"></i> Edit Content</a></p></div>
+        <div><p><a href="https://github.com/gep13/chocolatey-vscode/tree/develop/docs/input/tasks/Restore-Language-Server.md"><i class="fa fa-pencil-square" aria-hidden="true"></i> Edit Content</a></p></div>
     <div id="infobar-headings"></div>
 
                 </section>
@@ -102,7 +102,7 @@
                 <li><a href="/chocolatey-vscode/tasks/Labels">Labels</a></li>
                 <li><a href="/chocolatey-vscode/tasks/Npm-Install">Npm Install</a></li>
                 <li><a href="/chocolatey-vscode/tasks/Package-Extension">Package Extension</a></li>
-                <li class="selected"><a href="/chocolatey-vscode/tasks/Preview">Preview</a></li>
+                <li><a href="/chocolatey-vscode/tasks/Preview">Preview</a></li>
                 <li><a href="/chocolatey-vscode/tasks/Preview-Documentation">Preview Documentation</a></li>
                 <li><a href="/chocolatey-vscode/tasks/Print-AppVeyor-Environment-Variables">Print Appveyor Environment Variables</a></li>
                 <li><a href="/chocolatey-vscode/tasks/Publish-Chocolatey-Package">Publish Chocolatey Package</a></li>
@@ -112,7 +112,7 @@
                 <li><a href="/chocolatey-vscode/tasks/Publish-Language-Server">Publish Language Server</a></li>
                 <li><a href="/chocolatey-vscode/tasks/PublishDocs">Publishdocs</a></li>
                 <li><a href="/chocolatey-vscode/tasks/ReleaseNotes">Releasenotes</a></li>
-                <li><a href="/chocolatey-vscode/tasks/Restore-Language-Server">Restore Language Server</a></li>
+                <li class="selected"><a href="/chocolatey-vscode/tasks/Restore-Language-Server">Restore Language Server</a></li>
                 <li><a href="/chocolatey-vscode/tasks/Show-Info">Show Info</a></li>
                 <li><a href="/chocolatey-vscode/tasks/Update-Project-Json-Version">Update Project Json Version</a></li>
                 <li><a href="/chocolatey-vscode/tasks/Upload-AppVeyor-Artifacts">Upload Appveyor Artifacts</a></li>
@@ -129,13 +129,14 @@
 
 
 		<section class="content-header">
-			<h1>Preview</h1>
+			<h1>Restore Language Server</h1>
 		</section>
 	<section class="content">
 		<div class="mermaid">
 graph TD;
-Preview-->Preview-Documentation;
-Preview-Documentation-->Deploy-Graph-Documentation;
+Restore-Language-Server-->Clean;
+Clean-->Show-Info;
+Clean-->Print-AppVeyor-Environment-Variables;
 </div>
 
 	</section>
