@@ -23,8 +23,8 @@ param(
   [Parameter(Mandatory = $true)]
   [ValidateNotNullOrEmpty()]
   [string]$chocoRuleName,
-  [ValidateSet('Requirement', 'Guideline', 'Suggestion', 'Note')]
-  [string]$ruleType = 'Requirement',
+  [ValidateSet('Requirements', 'Guidelines', 'Suggestions', 'Notes')]
+  [string]$ruleType = 'Requirements',
   [switch]$Cleanup
 )
 
@@ -90,13 +90,13 @@ function import-rule() {
   $sb.AppendLine("- [Package validator rule]($validatorLink){target = _blank}") | Out-Null
 
   $namePrefix = "CHOCO"
-  if ($ruleType -eq 'Requirement') {
+  if ($ruleType -eq 'Requirements') {
     $namePrefix += "0"
   }
-  elseif ($ruleType -eq "Guideline") {
+  elseif ($ruleType -eq "Guidelines") {
     $namePrefix += "1"
   }
-  elseif ($ruleType -eq "Suggestion") {
+  elseif ($ruleType -eq "Suggestions") {
     $namePrefix += "2"
   }
   else {
