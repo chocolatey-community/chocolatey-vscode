@@ -19,7 +19,7 @@ namespace Chocolatey.Language.Server.Validations
         {
             get
             {
-                return "CHOCO2001";
+                return "choco2001";
             }
         }
 
@@ -30,7 +30,7 @@ namespace Chocolatey.Language.Server.Validations
         {
             get
             {
-                return "https://gep13.github.io/chocolatey-vscode/docs/rules/CHOCO2001";
+                return "https://gep13.github.io/chocolatey-vscode/docs/rules/choco2001";
             }
         }
 
