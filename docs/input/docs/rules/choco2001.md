@@ -1,4 +1,5 @@
 ﻿---
+Order: 10
 Title: Nuspec Enhancements Missing
 Description:
 Category: Suggestions
@@ -15,7 +16,7 @@ The nuspec is missing the recent enhancements that give consumers information re
 
 ## Recommended Solution
 
-Please update the nuspec to contain one or more of the following: 
+Please update the nuspec to contain one or more of the following:
 
   * `docsUrl` - points to the location of the wiki or docs of the software
   * `mailingListUrl` - points to the forum or email list group for the software

@@ -1,4 +1,5 @@
 ﻿---
+Order: 100
 Title: PrereleaseVersionAsPartOfPackageId
 Description:
 Category: Requirements

@@ -1,4 +1,5 @@
 ﻿---
+Order: 80
 Title: LicenseUrl Is Empty When Requiring License Acceptance
 Description:
 Category: Requirements

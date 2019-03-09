@@ -1,4 +1,5 @@
 ﻿---
+Order: 120
 Title: Tags Found With Commas
 Description: Tags have been incorrectly separated with commas
 Category: Requirements

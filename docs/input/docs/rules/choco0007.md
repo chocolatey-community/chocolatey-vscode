@@ -1,4 +1,5 @@
 ﻿---
+Order: 70
 Title: DeprecatedPackagesMustHaveADependency
 Description:
 Category: Requirements

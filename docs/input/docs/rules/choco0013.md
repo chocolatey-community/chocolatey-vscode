@@ -1,4 +1,5 @@
 ﻿---
+Order: 130
 Title: Tags Are Missing
 Description:
 Category: Requirements
@@ -12,7 +13,7 @@ It is a planned rule for 0.8.0.
 
 ## Issue
 
-In the nuspec, there is a `<tags />` element. It was found to be missing or empty in the package. 
+In the nuspec, there is a `<tags />` element. It was found to be missing or empty in the package.
 
 ## Recommended Solution
 

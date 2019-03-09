@@ -1,4 +1,5 @@
 ﻿---
+Order: 60
 Title: Copyright Character Count Minimum
 Description:
 Category: Requirements

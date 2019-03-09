@@ -1,4 +1,5 @@
 ﻿---
+Order: 90
 Title: PackageIdDoesNotEndWithConfig
 Description:
 Category: Requirements
