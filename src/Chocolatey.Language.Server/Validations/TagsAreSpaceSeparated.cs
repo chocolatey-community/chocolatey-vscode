@@ -14,7 +14,7 @@ namespace Chocolatey.Language.Server.Validations
     {
         private const string VALIDATION_MESSAGE = "Tags (tags) are space separated values for referencing categories for software. Please don't use comma to separate tags.";
 
-        public override string Id => "CHOCO0012";
+        public override string Id => "choco0012";
 
         public override string DocumentationUrl => $"https://gep13.github.io/chocolatey-vscode/docs/rules/{Id}";
 
