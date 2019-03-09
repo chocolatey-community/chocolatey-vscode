@@ -26,17 +26,6 @@ namespace Chocolatey.Language.Server.Validations
         }
 
         /// <summary>
-        /// Gets the documentation Url for the rule
-        /// </summary>
-        public override string DocumentationUrl
-        {
-            get
-            {
-                return "https://gep13.github.io/chocolatey-vscode/docs/rules/choco1001";
-            }
-        }
-
-        /// <summary>
         /// Gets the type of of validation
         /// </summary>
         public override ValidationType ValidationType
