@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/chocolatey-vscode/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/chocolatey-vscode/assets/img/favicon.ico" type="image/x-icon">
-        <title>chocolatey-vscode - Nuspec contains email address</title>
+        <title>chocolatey-vscode - Copyright Character Count Minimum</title>
         <link href="/chocolatey-vscode/assets/css/highlight.css" rel="stylesheet">
         <link href="/chocolatey-vscode/assets/css/bootstrap/bootstrap.css" rel="stylesheet" />
         <link href="/chocolatey-vscode/assets/css/adminlte/AdminLTE.css" rel="stylesheet" />
@@ -73,7 +73,7 @@
             <aside class="main-sidebar ">
                 <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
                     	
-        <div><p><a href="https://github.com/gep13/chocolatey-vscode/tree/develop/docs/input/docs/rules/choco0005.md"><i class="fa fa-pencil-square" aria-hidden="true"></i> Edit Content</a></p></div>
+        <div><p><a href="https://github.com/gep13/chocolatey-vscode/tree/develop/docs/input/docs/rules/choco0006.md"><i class="fa fa-pencil-square" aria-hidden="true"></i> Edit Content</a></p></div>
     <div id="infobar-headings"></div>
 
                 </section>
@@ -108,8 +108,8 @@
                 <li><a href="/chocolatey-vscode/docs/rules/choco0002">Description Is Empty</a></li>
                 <li><a href="/chocolatey-vscode/docs/rules/choco0003">Description maximum character count</a></li>
                 <li><a href="/chocolatey-vscode/docs/rules/choco0004">Invalid URL Provided</a></li>
-                <li class="selected"><a href="/chocolatey-vscode/docs/rules/choco0005">Nuspec contains email address</a></li>
-                <li><a href="/chocolatey-vscode/docs/rules/choco0006">Copyright Character Count Minimum</a></li>
+                <li><a href="/chocolatey-vscode/docs/rules/choco0005">Nuspec contains email address</a></li>
+                <li class="selected"><a href="/chocolatey-vscode/docs/rules/choco0006">Copyright Character Count Minimum</a></li>
             <li class="header">Suggestions</li>
                 <li><a href="/chocolatey-vscode/docs/rules/choco2001">Nuspec Enhancements Missing</a></li>
 
@@ -128,23 +128,24 @@
 
 
 		<section class="content-header">
-			<h1>Nuspec contains email address</h1>
+			<h1>Copyright Character Count Minimum</h1>
 		</section>
 	<section class="content">
-		<div class="alert alert-warning"><p><strong>Preliminary Notice</strong>
+		<html><head></head><body><div class="alert alert-warning"><p><strong>Preliminary Notice</strong>
 This rule is not yet available in chocolatey-vscode.
 It is a planned rule for 0.8.0.</p>
 </div>
 <h2 id="issue">Issue</h2>
-<p>In the nuspec, the copyright and/or author fields contains an email address.</p>
+<p>In the nuspec, there is a <code>&lt;copyright&gt;</code> field. Usually a copyright contains year (or range of years) and a company. Since a year takes up four characters by itself, the validator has detected that you are not using the copyright field correctly.</p>
 <h2 id="recommended-solution">Recommended Solution</h2>
-<p>Please update so that any email addresses is not inside the nuspec file.</p>
+<p>Please update the copyright field so that it is using at least 4 characters.</p>
 <h2 id="reasoning">Reasoning</h2>
+<p>Usually the year alone takes up four characters, so properly setting a copyright would include years and name of company.</p>
 <h2 id="see-also">See also</h2>
 <ul>
-<li><a href="https://github.com/chocolatey/package-validator/wiki/NuspecDoesNotContainEmail" target="_blank">Package validator rule</a></li>
+<li><a href="https://github.com/chocolatey/package-validator/wiki/CopyrightCharacterCountMinimum" target="_blank">Package validator rule</a></li>
 </ul>
-
+</body></html>
 	</section>
                 
             </div>           
