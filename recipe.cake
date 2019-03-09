@@ -20,6 +20,7 @@ BuildParameters.Tasks.CleanTask.Does(() => {
 });
 
 const string projectFile = "./src/Chocolatey.Language.Server/Chocolatey.Language.Server.csproj";
+string compileConfiguration = Argument("configuration", "Release");
 
 Setup<DotNetCoreMSBuildSettings>((context) => {
     var msBuildSettings = new DotNetCoreMSBuildSettings()
@@ -54,7 +55,7 @@ Task("Build-Language-Server")
     .Does<DotNetCoreMSBuildSettings>(buildSettings =>
 {
     DotNetCoreBuild(projectFile, new DotNetCoreBuildSettings {
-        Configuration = "Release",
+        Configuration = compileConfiguration,
         NoIncremental = true,
         NoRestore = true,
         MSBuildSettings = buildSettings
@@ -66,7 +67,7 @@ Task("Publish-Language-Server")
     .Does<DotNetCoreMSBuildSettings>(buildSettings =>
 {
     DotNetCorePublish(projectFile, new DotNetCorePublishSettings {
-        Configuration = "Release",
+        Configuration = compileConfiguration,
         NoBuild = true,
         NoRestore = true,
         //SelfContained = true,
