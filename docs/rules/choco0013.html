@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/chocolatey-vscode/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/chocolatey-vscode/assets/img/favicon.ico" type="image/x-icon">
-        <title>chocolatey-vscode - Push Chocolatey package(s)</title>
+        <title>chocolatey-vscode - Tags Are Missing</title>
         <link href="/chocolatey-vscode/assets/css/highlight.css" rel="stylesheet">
         <link href="/chocolatey-vscode/assets/css/bootstrap/bootstrap.css" rel="stylesheet" />
         <link href="/chocolatey-vscode/assets/css/adminlte/AdminLTE.css" rel="stylesheet" />
@@ -73,7 +73,7 @@
             <aside class="main-sidebar ">
                 <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
                     	
-        <div><p><a href="https://github.com/gep13/chocolatey-vscode/tree/develop/docs/input/docs/commands/push.md"><i class="fa fa-pencil-square" aria-hidden="true"></i> Edit Content</a></p></div>
+        <div><p><a href="https://github.com/gep13/chocolatey-vscode/tree/develop/docs/input/docs/rules/choco0013.md"><i class="fa fa-pencil-square" aria-hidden="true"></i> Edit Content</a></p></div>
     <div id="infobar-headings"></div>
 
                 </section>
@@ -84,19 +84,19 @@
                     <ul class="sidebar-menu">
                         
 
-                <li class="treeview active">
+                <li class="treeview">
                     <a href="/chocolatey-vscode/docs/commands">Commands</a> <a href="#" class="expand"></a>
                     <ul class="treeview-menu">
                         
                 <li><a href="/chocolatey-vscode/docs/commands/create">Create new Chocolatey package</a></li>
                 <li><a href="/chocolatey-vscode/docs/commands/pack">Pack Chocolatey package(s)</a></li>
                 <li><a href="/chocolatey-vscode/docs/commands/delete">Delete Chocolatey package(s)</a></li>
-                <li class="selected"><a href="/chocolatey-vscode/docs/commands/push">Push Chocolatey package(s)</a></li>
+                <li><a href="/chocolatey-vscode/docs/commands/push">Push Chocolatey package(s)</a></li>
                 <li><a href="/chocolatey-vscode/docs/commands/install">Install Template package(s)</a></li>
 
                     </ul>
                 </li>
-                <li class="treeview">
+                <li class="treeview active">
                     <a href="/chocolatey-vscode/docs/rules">Rules</a> <a href="#" class="expand"></a>
                     <ul class="treeview-menu">
                         
@@ -115,7 +115,7 @@
                 <li><a href="/chocolatey-vscode/docs/rules/choco0009">PackageIdDoesNotEndWithConfig</a></li>
                 <li><a href="/chocolatey-vscode/docs/rules/choco0010">PrereleaseVersionAsPartOfPackageId</a></li>
                 <li><a href="/chocolatey-vscode/docs/rules/choco0011">ProjectUrl Is Empty</a></li>
-                <li><a href="/chocolatey-vscode/docs/rules/choco0013">Tags Are Missing</a></li>
+                <li class="selected"><a href="/chocolatey-vscode/docs/rules/choco0013">Tags Are Missing</a></li>
                 <li><a href="/chocolatey-vscode/docs/rules/choco0012">Tags Found With Commas</a></li>
             <li class="header">Suggestions</li>
                 <li><a href="/chocolatey-vscode/docs/rules/choco2001">Nuspec Enhancements Missing</a></li>
@@ -135,15 +135,23 @@
 
 
 		<section class="content-header">
-			<h1>Push Chocolatey package(s)</h1>
+			<h1>Tags Are Missing</h1>
 		</section>
 	<section class="content">
-		<html><head></head><body><p>Pushing a package to the Community Repository requires the use of an API Key. You can head over to the <a href="%27https://chocolatey.org/packages%27">Community Repository</a> and create an account. Once you have your account, you will see the API listed in your Profile.</p>
-<p><em>Add your API key to your local chocolatey installation</em></p>
-<p>Run the following command to add your api key for the community repository to your Chocolatey installation:</p>
-<p><code>choco apikey -k &lt;your key here&gt; -s https://push.chocolatey.org/</code></p>
-<p>Note that we have covered the Community Repository here. For other sources, information for pushing to them can be found <a href="%27https://github.com/chocolatey/choco/wiki/CommandsPush%27">here</a>.</p>
-<p>When you are ready to push a package press <code>Ctrl+Shift+P</code> to bring up the Command Pallete and type <code>Chocolatey: Push Package(s)</code>. This will add your new package to the repository.</p>
+		<html><head></head><body><div class="alert alert-warning"><p><strong>Preliminary Notice</strong>
+This rule is not yet available in chocolatey-vscode.
+It is a planned rule for 0.8.0.</p>
+</div>
+<h2 id="issue">Issue</h2>
+<p>In the nuspec, there is a <code>&lt;tags /&gt;</code> element. It was found to be missing or empty in the package.</p>
+<h2 id="recommended-solution">Recommended Solution</h2>
+<p>Please update the nuspec to include a <code>&lt;tags /&gt;</code> element that is non-empty. If your nuspec file is missing this field, you should run the <code>Chocolatey: Create new Chocolatey package</code> with the default template and look at the output from that (ensure you have the <a href="https://chocolatey.org/packages?q=id%3Achocolatey">latest version of Chocolatey</a>).</p>
+<h2 id="reasoning">Reasoning</h2>
+<p>Tags aid in categorization of packages and underlying software. Tags should be relevant to the software that is being installed. It will give folks more options when searching for particular software on the site and may turn up in results it may have not otherwise came up in.</p>
+<h2 id="see-also">See also</h2>
+<ul>
+<li><a href="https://github.com/chocolatey/package-validator/wiki/TagsNotEmpty" target="_blank">Package validator rule</a></li>
+</ul>
 </body></html>
 	</section>
                 
