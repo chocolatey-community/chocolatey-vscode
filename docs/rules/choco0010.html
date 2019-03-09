@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/chocolatey-vscode/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/chocolatey-vscode/assets/img/favicon.ico" type="image/x-icon">
-        <title>chocolatey-vscode - Delete Chocolatey package(s)</title>
+        <title>chocolatey-vscode - PrereleaseVersionAsPartOfPackageId</title>
         <link href="/chocolatey-vscode/assets/css/highlight.css" rel="stylesheet">
         <link href="/chocolatey-vscode/assets/css/bootstrap/bootstrap.css" rel="stylesheet" />
         <link href="/chocolatey-vscode/assets/css/adminlte/AdminLTE.css" rel="stylesheet" />
@@ -73,7 +73,7 @@
             <aside class="main-sidebar ">
                 <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
                     	
-        <div><p><a href="https://github.com/gep13/chocolatey-vscode/tree/develop/docs/input/docs/commands/delete.md"><i class="fa fa-pencil-square" aria-hidden="true"></i> Edit Content</a></p></div>
+        <div><p><a href="https://github.com/gep13/chocolatey-vscode/tree/develop/docs/input/docs/rules/choco0010.md"><i class="fa fa-pencil-square" aria-hidden="true"></i> Edit Content</a></p></div>
     <div id="infobar-headings"></div>
 
                 </section>
@@ -84,19 +84,19 @@
                     <ul class="sidebar-menu">
                         
 
-                <li class="treeview active">
+                <li class="treeview">
                     <a href="/chocolatey-vscode/docs/commands">Commands</a> <a href="#" class="expand"></a>
                     <ul class="treeview-menu">
                         
                 <li><a href="/chocolatey-vscode/docs/commands/create">Create new Chocolatey package</a></li>
                 <li><a href="/chocolatey-vscode/docs/commands/pack">Pack Chocolatey package(s)</a></li>
-                <li class="selected"><a href="/chocolatey-vscode/docs/commands/delete">Delete Chocolatey package(s)</a></li>
+                <li><a href="/chocolatey-vscode/docs/commands/delete">Delete Chocolatey package(s)</a></li>
                 <li><a href="/chocolatey-vscode/docs/commands/push">Push Chocolatey package(s)</a></li>
                 <li><a href="/chocolatey-vscode/docs/commands/install">Install Template package(s)</a></li>
 
                     </ul>
                 </li>
-                <li class="treeview">
+                <li class="treeview active">
                     <a href="/chocolatey-vscode/docs/rules">Rules</a> <a href="#" class="expand"></a>
                     <ul class="treeview-menu">
                         
@@ -113,7 +113,7 @@
                 <li><a href="/chocolatey-vscode/docs/rules/choco0007">DeprecatedPackagesMustHaveADependency</a></li>
                 <li><a href="/chocolatey-vscode/docs/rules/choco0008">LicenseUrl Is Empty When Requiring License Acceptance</a></li>
                 <li><a href="/chocolatey-vscode/docs/rules/choco0009">PackageIdDoesNotEndWithConfig</a></li>
-                <li><a href="/chocolatey-vscode/docs/rules/choco0010">PrereleaseVersionAsPartOfPackageId</a></li>
+                <li class="selected"><a href="/chocolatey-vscode/docs/rules/choco0010">PrereleaseVersionAsPartOfPackageId</a></li>
             <li class="header">Suggestions</li>
                 <li><a href="/chocolatey-vscode/docs/rules/choco2001">Nuspec Enhancements Missing</a></li>
 
@@ -132,12 +132,24 @@
 
 
 		<section class="content-header">
-			<h1>Delete Chocolatey package(s)</h1>
+			<h1>PrereleaseVersionAsPartOfPackageId</h1>
 		</section>
 	<section class="content">
-		<html><head></head><body><p>Sometimes, you no longer need a package, or an older version of a package. <code>choco delete</code> makes it easy to remove those unnecessary packages. The extension has this capability built in</p>
-<p>Press <code>Ctrl+Shift+P</code> to bring up the Command Pallete and type <code>Chocolatey: Delete Package</code>. Select the Chocolatey package nupkg to remove and it will be deleted from disk.</p>
-</body></html>
+		<div class="alert alert-warning"><p><strong>Preliminary Notice</strong>
+This rule is not yet available in chocolatey-vscode.
+It is a planned rule for 0.8.0.</p>
+</div>
+<p><strong>NOTE</strong>: This page is a stub that has not yet been filled out. If you have questions about this issue, please ask in the review or reach out on <a href="https://gitter.im/chocolatey/chocolatey.org">Gitter</a></p>
+<h2 id="issue">Issue</h2>
+<p>In the nuspec,</p>
+<h2 id="recommended-solution">Recommended Solution</h2>
+<p>Please update _ so that _</p>
+<h2 id="reasoning">Reasoning</h2>
+<h2 id="see-also">See also</h2>
+<ul>
+<li><a href="https://github.com/chocolatey/package-validator/wiki/PrereleaseVersionAsPartOfPackageId" target="_blank">Package validator rule</a></li>
+</ul>
+
 	</section>
                 
             </div>           
