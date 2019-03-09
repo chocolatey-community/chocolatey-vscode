@@ -30,5 +30,10 @@ namespace Chocolatey.Language.Server.Extensions
         {
             return !source.IsMissing && source.Value.EndsWith(text, StringComparison.OrdinalIgnoreCase);
         }
+
+        public static bool IsNullOrWhitespace(this MetaValue<string> source)
+        {
+            return source.IsMissing || string.IsNullOrWhiteSpace(source);
+        }
     }
 }
