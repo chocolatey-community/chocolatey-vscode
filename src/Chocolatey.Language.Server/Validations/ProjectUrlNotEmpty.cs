@@ -14,7 +14,7 @@ namespace Chocolatey.Language.Server.Validations
     {
         private const string VALIDATION_MESSAGE = "ProjectUrl (projectUrl) in the nuspec file is required. Please add it to the nuspec.";
 
-        public override string Id => "CHOCO0011";
+        public override string Id => "choco0011";
 
         public override string DocumentationUrl => $"https://gep13.github.io/chocolatey-vscode/docs/rules/{Id}";
 
