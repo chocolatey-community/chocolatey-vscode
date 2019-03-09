@@ -14,7 +14,7 @@ namespace Chocolatey.Language.Server.Validations
     {
         private const string VALIDATION_MESSAGE = "The package id ends with .config, this is a reserved file extension, and should not be used.";
 
-        public override string Id => "CHOCO0009";
+        public override string Id => "choco0009";
 
         public override string DocumentationUrl => $"https://gep13.github.io/chocolatey-vscode/docs/rules/{Id}";
 
