@@ -9,7 +9,7 @@ namespace Chocolatey.Language.Server.Validations
     public sealed class DeprecatedPackagesShouldHaveDependency : NuspecRuleBase
     {
         private const string VALIDATION_MESSAGE = "Deprecated Packages must contain a dependency to the package(s) which the package is deprecating for.";
-        public override string Id => "CHOCO0007";
+        public override string Id => "choco0007";
 
         public override string DocumentationUrl => $"https://gep13.github.io/chocolatey-vscode/docs/rules/{Id}";
 
