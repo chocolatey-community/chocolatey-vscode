@@ -13,7 +13,7 @@ namespace Chocolatey.Language.Server.Validations
     public class NuspecEnhancementsValidation : NuspecRuleBase
     {
         /// <summary>
-        /// Gets the string Id for the rule, similar to CHOCO0001
+        /// Gets the string Id for the rule, similar to choco0001
         /// </summary>
         public override string Id
         {
