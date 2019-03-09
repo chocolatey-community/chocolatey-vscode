@@ -15,13 +15,13 @@ namespace Chocolatey.Language.Server.Validations
     public class DoesNotContainTemplatedValues : NuspecRuleBase
     {
         /// <summary>
-        /// Gets the string Id for the rule, similar to CHOCO0001
+        /// Gets the string Id for the rule, similar to choco0001
         /// </summary>
         public override string Id
         {
             get
             {
-                return "CHOCO0001";
+                return "choco0001";
             }
         }
 
@@ -32,7 +32,7 @@ namespace Chocolatey.Language.Server.Validations
         {
             get
             {
-                return "https://gep13.github.io/chocolatey-vscode/docs/rules/CHOCO0001";
+                return "https://gep13.github.io/chocolatey-vscode/docs/rules/choco0001";
             }
         }
 
@@ -57,7 +57,7 @@ namespace Chocolatey.Language.Server.Validations
         public override IEnumerable<Diagnostic> Validate(Package package)
         {
             foreach (var element in package.AllElements
-                .Where(e => TemplatedValues.Any(t => 
+                .Where(e => TemplatedValues.Any(t =>
                     string.Equals(e.Value, t, StringComparison.OrdinalIgnoreCase))))
             {
 

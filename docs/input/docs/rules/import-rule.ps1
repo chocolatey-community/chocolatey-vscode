@@ -89,7 +89,7 @@ function import-rule() {
   $sb.AppendLine("") | Out-Null
   $sb.AppendLine("- [Package validator rule]($validatorLink){target = _blank}") | Out-Null
 
-  $namePrefix = "CHOCO"
+  $namePrefix = "choco"
   if ($ruleType -eq 'Requirements') {
     $namePrefix += "0"
   }

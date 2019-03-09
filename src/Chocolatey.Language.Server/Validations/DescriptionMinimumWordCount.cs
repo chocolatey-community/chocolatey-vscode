@@ -15,13 +15,13 @@ namespace Chocolatey.Language.Server.Validations
     public class DescriptionMinimumWordCount : NuspecRuleBase
     {
         /// <summary>
-        /// Gets the string Id for the rule, similar to CHOCO0001
+        /// Gets the string Id for the rule, similar to choco0001
         /// </summary>
         public override string Id
         {
             get
             {
-                return "CHOCO1001";
+                return "choco1001";
             }
         }
 
@@ -32,7 +32,7 @@ namespace Chocolatey.Language.Server.Validations
         {
             get
             {
-                return "https://gep13.github.io/chocolatey-vscode/docs/rules/CHOCO1001";
+                return "https://gep13.github.io/chocolatey-vscode/docs/rules/choco1001";
             }
         }
 

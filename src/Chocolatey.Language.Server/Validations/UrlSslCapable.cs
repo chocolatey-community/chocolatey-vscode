@@ -28,13 +28,13 @@ namespace Chocolatey.Language.Server.Validations
         };
 
         /// <summary>
-        /// Gets the string Id for the rule, similar to CHOCO0001
+        /// Gets the string Id for the rule, similar to choco0001
         /// </summary>
         public override string Id
         {
             get
             {
-                return "CHOCO1002";
+                return "choco1002";
             }
         }
 
@@ -45,7 +45,7 @@ namespace Chocolatey.Language.Server.Validations
         {
             get
             {
-                return "https://gep13.github.io/chocolatey-vscode/docs/rules/CHOCO1002";
+                return "https://gep13.github.io/chocolatey-vscode/docs/rules/choco1002";
             }
         }
 

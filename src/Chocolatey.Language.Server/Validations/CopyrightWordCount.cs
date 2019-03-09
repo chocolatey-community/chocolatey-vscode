@@ -14,7 +14,7 @@ namespace Chocolatey.Language.Server.Validations
     {
         private const string VALIDATION_MESSAGE = "If you are going to use copyright in nuspec, please use more than 4 characters.";
 
-        public override string Id => "CHOCO0006";
+        public override string Id => "choco0006";
 
         public override string DocumentationUrl => $"https://gep13.github.io/chocolatey-vscode/docs/rules/{Id}";
 

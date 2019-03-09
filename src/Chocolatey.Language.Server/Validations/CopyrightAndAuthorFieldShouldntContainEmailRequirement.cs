@@ -15,13 +15,13 @@ namespace Chocolatey.Language.Server.Validations
         private static readonly Regex _emailRegex = new Regex(EmailRegexPattern, RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
         /// <summary>
-        /// Gets the string Id for the rule, similar to CHOCO0001
+        /// Gets the string Id for the rule, similar to choco0001
         /// </summary>
         public override string Id
         {
             get
             {
-                return "CHOCO0005";
+                return "choco0005";
             }
         }
 
@@ -32,7 +32,7 @@ namespace Chocolatey.Language.Server.Validations
         {
             get
             {
-                return "https://gep13.github.io/chocolatey-vscode/docs/rules/CHOCO0005";
+                return "https://gep13.github.io/chocolatey-vscode/docs/rules/choco0005";
             }
         }
 

@@ -12,7 +12,7 @@ namespace Chocolatey.Language.Server.Validations
     public abstract class NuspecRuleBase : INuspecRule
     {
         /// <summary>
-        /// Gets the string Id for the rule, similar to CHOCO0001
+        /// Gets the string Id for the rule, similar to choco0001
         /// </summary>
         public abstract string Id { get; }
 
