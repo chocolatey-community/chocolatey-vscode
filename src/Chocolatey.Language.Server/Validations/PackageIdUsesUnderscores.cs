@@ -15,8 +15,6 @@ namespace Chocolatey.Language.Server.Validations
 
         public override string Id => "choco3001";
 
-        public override string DocumentationUrl => "Should be removed after PR #174";
-
         public override ValidationType ValidationType => ValidationType.Note;
 
         public override IEnumerable<Diagnostic> Validate(Package package)
