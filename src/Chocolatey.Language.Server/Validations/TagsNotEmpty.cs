@@ -18,8 +18,6 @@ namespace Chocolatey.Language.Server.Validations
 
         public override string Id => "choco0013";
 
-        public override string DocumentationUrl => $"https://gep13.github.io/chocolatey-vscode/docs/rules/{Id}";
-
         public override ValidationType ValidationType => ValidationType.Requirement;
 
         public override IEnumerable<Diagnostic> Validate(Package package)
