@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -36,10 +37,15 @@ namespace Chocolatey.Language.Server.Handlers
             var syntaxTree = Parser.Parse(buffer);
             var textPositions = new TextPositions(text);
 
+            var stopwatch = new Stopwatch();
+
+            stopwatch.Start();
+
             var package = Parsers.PackageParser.ParseXmlDocument(syntaxTree);
             Validations.NuspecRuleBase.TextPositions = textPositions;
 
             var diagnostics = _rules.OrEmptyListIfNull()
+                .AsParallel().WithExecutionMode(ParallelExecutionMode.ForceParallelism)
                 .Where(r => !IsSuppressedRule(r.Id))
                 .SelectMany(r => r.Validate(package));
 
@@ -48,6 +54,10 @@ namespace Chocolatey.Language.Server.Handlers
                 Uri = uri,
                 Diagnostics = diagnostics.ToList()
             });
+
+            stopwatch.Stop();
+
+            _router.Window.LogInfo("Rules processing in: " + stopwatch.ElapsedMilliseconds + " milliseconds");
         }
 
         private bool IsSuppressedRule(string ruleId)
