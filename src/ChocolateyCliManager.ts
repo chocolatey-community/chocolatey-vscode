@@ -1,4 +1,4 @@
-import { window, QuickPickItem, workspace } from "vscode";
+import { window, QuickPickItem, workspace, Uri } from "vscode";
 import { ChocolateyOperation } from "./ChocolateyOperation";
 import * as path from "path";
 import * as xml2js from "xml2js";
@@ -6,7 +6,7 @@ import * as fs from "fs";
 import { getPathToChocolateyConfig, getPathToChocolateyTemplates } from "./config";
 
 export class ChocolateyCliManager {
-    public new(): void {
+    public new(uri: Uri | undefined): void {
         window.showInputBox({
             prompt: "Name for new Chocolatey Package?"
         }).then((result) => {
@@ -20,6 +20,7 @@ export class ChocolateyCliManager {
 
                 };
             });
+
             if (availableTemplates.length > 0) {
                 availableTemplates.unshift({label: "Default Template" });
                 window.showQuickPick(availableTemplates, {
@@ -31,6 +32,17 @@ export class ChocolateyCliManager {
                         chocoArguments.push(`--template-name="'${template.label}'"`);
                     }
 
+                    if (uri && this._isDirectory(uri.fsPath)) {
+                        chocoArguments.push(`--output-directory="'${uri.fsPath}'"`)
+                    }
+
+                    let chocoProperties = readChocoProperties();
+                    if (chocoProperties) {
+                        for (let property of chocoProperties) {
+                            chocoArguments.push(`"${property.key}=${property.value}"`);
+                        }
+                    }
+
                     let newOp: ChocolateyOperation = new ChocolateyOperation(chocoArguments);
                     newOp.run();
                 });
@@ -39,6 +51,22 @@ export class ChocolateyCliManager {
                 newOp.run();
             }
         });
+
+        function readChocoProperties() {
+            const config = workspace.getConfiguration("chocolatey.commands.new");
+
+            let result = new Array<{key:string,value:string}>();
+            if (config === undefined) { return result;}
+
+            const properties = config.get("properties");
+            if (properties === undefined) { return result; }
+
+            for (const key in properties) {
+                result.push({key: key, value: properties[key] });
+            }
+
+            return result;
+        }
     }
 
     public pack(): void {
@@ -236,7 +264,7 @@ export class ChocolateyCliManager {
     }
 
     public installTemplates(): void {
-        const config = workspace.getConfiguration("chocolatey").templatePackages;
+        const config = workspace.getConfiguration("chocolatey").templates;
 
         let chocoArguments: Array<string> = ["install"];
 
@@ -248,6 +276,32 @@ export class ChocolateyCliManager {
 
         let installTemplatesOp: ChocolateyOperation = new ChocolateyOperation(chocoArguments);
         installTemplatesOp.run();
+    }
+
+    public apikey(): void {
+        window.showInputBox({
+            prompt: "API Key..."
+        }).then((apiKey) => {
+            if(!apiKey) {
+                return;
+            }
+
+            window.showInputBox({
+                prompt: "Source..."
+            }).then((source) => {
+                if(!source) {
+                    return;
+                }
+
+                let chocolateyArguments: string[] = [];
+
+                chocolateyArguments.push("-k=\"'" + apiKey + "'\"");
+                chocolateyArguments.push("-s=\"'" + source + "'\"");
+
+                let apiOp: ChocolateyOperation = new ChocolateyOperation(chocolateyArguments);
+                apiOp.run()
+            });
+        });
     }
 
     private _findPackageTemplates(): string[] {

@@ -28,6 +28,7 @@
 		"onCommand:chocolatey.delete",
 		"onCommand:chocolatey.push",
 		"onCommand:chocolatey.installTemplates",
+		"onCommand:chocolatey.apikey",
 		"workspaceContains:**/*.nuspec"
 	],
 	"engines": {
@@ -42,7 +43,7 @@
 				"type": "object",
 				"title": "Chocolatey Configuration",
 				"properties": {
-					"chocolatey.templatePackages": {
+					"chocolatey.templates": {
 						"type": "object",
 						"default": {
 							"names": [
@@ -67,6 +68,45 @@
 							}
 						},
 						"description": "The Chocolatey Template Packages Configuration"
+					},
+					"chocolatey.commands": {
+						"properties": {
+							"type": "object",
+							"new": {
+								"type": "object",
+								"properties": {
+									"properties": {
+										"type": "object",
+										"description": "A key value pair of properties to pass to Chocolatey when creating a new package.",
+										"uniqueItems": true,
+										"title": "New package properties"
+									}
+								}
+							}
+						}
+					},
+					"chocolatey.language": {
+						"type": "object",
+						"properties": {
+							"allowSuppressionOfRequirements": {
+								"title": "Allow requirements suppression",
+								"type": "boolean",
+								"default": false,
+								"description": "Allow the suppression of rules that are marked as requirements"
+							},
+							"disableLanguageService": {
+								"title": "Disable language service",
+								"type": "boolean",
+								"default": false,
+								"description": "Prevent the Chocolatey Language Service from starting up"
+							},
+							"suppressedRules": {
+								"title": "Suppress Rules",
+								"type": "array",
+								"description": "The codes for the Chocolatey Language Service rules that should be suppressed",
+								"default": []
+							}
+						}
 					}
 				}
 			}
@@ -91,8 +131,21 @@
 			{
 				"command": "chocolatey.installTemplates",
 				"title": "Chocolatey: Install Template package(s)"
+			},
+			{
+				"command": "chocolatey.apikey",
+				"title": "Chocolatey: Add API Key"
 			}
 		],
+		"menus": {
+			"explorer/context": [
+				{
+					"when": "explorerResourceIsFolder",
+					"command": "chocolatey.new",
+					"group": "2_workspace"
+				}
+			]
+		},
 		"snippets": [
 			{
 				"language": "powershell",
@@ -117,22 +170,21 @@
 	},
 	"devDependencies": {
 		"@types/byline": "^4.2.31",
-		"@types/expect": "^1.20.3",
+		"@types/expect": "^1.20.4",
 		"@types/ini": "^1.3.30",
-		"@types/mocha": "^5.2.5",
-		"@types/node": "^11.9.3",
-		"@types/node-fetch": "^2.1.6",
-		"@types/xml2js": "^0.4.3",
-		"expect": "^24.1.0",
-		"mocha": "^5.2.0",
-		"tslint": "^5.12.1",
-		"typemoq": "^2.1.0",
-		"typescript": "^3.3.3",
-		"vscode": "^1.1.29",
-		"vscode-languageclient": "^5.2.1",
+		"@types/mocha": "^5.2.6",
+		"@types/node": "^12.0.2",
+		"@types/node-fetch": "^2.3.4",
+		"@types/xml2js": "^0.4.4",
+		"expect": "^24.8.0",
+		"mocha": "^6.1.4",
+		"tslint": "^5.16.0",
+		"typescript": "^3.4.5",
+		"vscode": "^1.1.34",
 		"vscode-jsonrpc": "^4.0.0"
 	},
 	"dependencies": {
+		"vscode-languageclient": "^5.2.1",
 		"xml2js": "^0.4.19"
 	},
 	"extensionPack": [

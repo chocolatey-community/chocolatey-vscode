@@ -83,27 +83,31 @@ export class ChocolateyOperation {
                 this._oc.show();
             }
 
-            this._process.stdout.on("data", (data) => {
-                let out: string = data.toString();
+            if (this._process.stdout) {
+                this._process.stdout.on("data", (data) => {
+                    let out: string = data.toString();
 
-                if (lastOut && out && (lastOut + "." === out)
-                    || (lastOut.slice(0, lastOut.length - 1)) === out
-                    || (lastOut.slice(0, lastOut.length - 2)) === out
-                    || (lastOut.slice(0, lastOut.length - 3)) === out) {
+                    if (lastOut && out && (lastOut + "." === out)
+                        || (lastOut.slice(0, lastOut.length - 1)) === out
+                        || (lastOut.slice(0, lastOut.length - 2)) === out
+                        || (lastOut.slice(0, lastOut.length - 3)) === out) {
+                        lastOut = out;
+                        return this._oc.append(".");
+                    }
+
+                    this._oc.appendLine(out);
+                    this._stdout.push(out);
                     lastOut = out;
-                    return this._oc.append(".");
-                }
+                });
+            }
 
-                this._oc.appendLine(out);
-                this._stdout.push(out);
-                lastOut = out;
-            });
-
-            this._process.stderr.on("data", (data) => {
-				let out: string = data.toString();
-                this._oc.appendLine(out);
-                this._stderr.push(out);
-            });
+            if (this._process.stderr) {
+                this._process.stderr.on("data", (data) => {
+                    let out: string = data.toString();
+                    this._oc.appendLine(out);
+                    this._stderr.push(out);
+                });
+            }
 
             this._process.on("close", (code) => {
                 this._oc.appendLine(`Chocolatey ${this.cmd[0]} process exited with code ${code}`);
@@ -118,7 +122,7 @@ export class ChocolateyOperation {
     }
 
     // tslint:disable-next-line:max-line-length
-    constructor (cmd: string | Array<string>, options: { isOutputChannelVisible: boolean; currentWorkingDirectory: string } = { isOutputChannelVisible: true, currentWorkingDirectory: getFullAppPath() }) {
+    constructor(cmd: string | Array<string>, options: { isOutputChannelVisible: boolean; currentWorkingDirectory: string } = { isOutputChannelVisible: true, currentWorkingDirectory: getFullAppPath() }) {
         this._isOutputChannelVisible = options.isOutputChannelVisible;
         this.cmd = (Array.isArray(cmd)) ? cmd : [cmd];
         this._currentWorkingDirectory = options.currentWorkingDirectory;

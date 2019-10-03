@@ -5,8 +5,11 @@ node_modules
 
 # Build related
 build-results/
+BuildArtifacts/
+docs/input/tasks
 tools/**
 !tools/packages.config
+packages/**
 
 # until we move to Yarn
 yarn.lock

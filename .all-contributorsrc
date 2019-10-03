@@ -1,0 +1,102 @@
+{
+  "projectName": "chocolatey-vscode",
+  "projectOwner": "gep13",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "AdmiringWorm",
+      "name": "Kim J. Nordmo",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/1474648?v=4",
+      "profile": "https://github.com/AdmiringWorm",
+      "contributions": [
+        "code",
+        "doc",
+        "design",
+        "ideas",
+        "maintenance",
+        "platform",
+        "review",
+        "bug"
+      ]
+    },
+    {
+      "login": "mkevenaar",
+      "name": "Maurice Kevenaar",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/834643?v=4",
+      "profile": "https://github.com/mkevenaar",
+      "contributions": [
+        "code",
+        "doc",
+        "design",
+        "ideas",
+        "maintenance",
+        "platform",
+        "review"
+      ]
+    },
+    {
+      "login": "steviecoaster",
+      "name": "Stephen Valdinger",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/8674240?v=4",
+      "profile": "http://chocolatey.org",
+      "contributions": [
+        "code",
+        "doc",
+        "ideas"
+      ]
+    },
+    {
+      "login": "mholo65",
+      "name": "Martin Björkström",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/7863439?v=4",
+      "profile": "https://twitter.com/mholo65",
+      "contributions": [
+        "code",
+        "ideas",
+        "review"
+      ]
+    },
+    {
+      "login": "tintoy",
+      "name": "Adam Friedman",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/1646284?v=4",
+      "profile": "https://blog.tintoy.io/",
+      "contributions": [
+        "ideas",
+        "review"
+      ]
+    },
+    {
+      "login": "mwallner",
+      "name": "Manfred Wallner",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/5354972?v=4",
+      "profile": "https://www.mwallner.net",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "gep13",
+      "name": "Gary Ewan Park",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/1271146?v=4",
+      "profile": "http://www.gep13.co.uk/blog",
+      "contributions": [
+        "code",
+        "doc",
+        "design",
+        "ideas",
+        "maintenance",
+        "platform",
+        "review",
+        "bug"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}

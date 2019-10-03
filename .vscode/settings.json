@@ -8,5 +8,8 @@
         "**/bower_components": true,
         "logs/": true,
         "out/": true
-    }
+    },
+    "cSpell.words": [
+        "apikey"
+    ]
 }

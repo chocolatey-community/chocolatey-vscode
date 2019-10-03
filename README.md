@@ -1,4 +1,7 @@
-# Chocolatey Visual Studio Code Extension
+# Chocolatey Visual Studio Code Extension [![VS Marketplace](https://vsmarketplacebadge.apphb.com/version-short/gep13.chocolatey-vscode.svg)](https://marketplace.visualstudio.com/items?itemName=gep13.chocolatey-vscode) [![Installs(short)](https://vsmarketplacebadge.apphb.com/installs-short/gep13.chocolatey-vscode.svg)](https://marketplace.visualstudio.com/items?itemName=gep13.chocolatey-vscode) [![Downloads(short)](https://vsmarketplacebadge.apphb.com/downloads-short/gep13.chocolatey-vscode.svg)](https://marketplace.visualstudio.com/items?itemName=gep13.chocolatey-vscode) [![Ratings(short)](https://vsmarketplacebadge.apphb.com/rating-short/gep13.chocolatey-vscode.svg)](https://marketplace.visualstudio.com/items?itemName=gep13.chocolatey-vscode)
+
+[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors)
+[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=gep13/chocolatey-vscode)](https://dependabot.com)
 
 This extension brings support for [Chocolatey](https://chocolatey.org/) to Visual Studio Code.
 
@@ -21,7 +24,6 @@ Chocolatey is a Package Manager for Windows, which allows the automation of all 
 
 For more information about [Chocolatey](https://chocolatey.org/), please see the Chocolatey Website or the Chocolatey [source code repository](https://github.com/chocolatey/choco).
 
-
 ## Commands
 
 The Chocolatey Visual Studio Code Extension provides the following commands:
@@ -31,6 +33,10 @@ The Chocolatey Visual Studio Code Extension provides the following commands:
 * `Chocolatey: Delete Chocolatey package(s)` to search current workspace for nupkg files and delete them
 * `Chocolatey: Push Chocolatey package(s)` to search current workspace for nupkg files and push them
 * `Chocolatey: Install Template package(s)` to install a list of template packages from a specified source
+
+## Context Menus
+
+* `Chocolatey: Create new Chocolatey package` to create the default templated Chocolatey package in a directory of your choosing.
 
 ## Snippets
 
@@ -84,3 +90,15 @@ You can also join in the Gitter Chat [![Join the chat at https://gitter.im/gep13
 ## Releases
 
 To find out what was released in each version of this extension, check out the [releases](https://github.com/gep13/chocolatey-vscode/releases) page.
+
+## Contributors
+
+Thanks goes to these wonderful people ([emoji key](https://github.com/all-contributors/all-contributors#emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore -->
+| [<img src="https://avatars3.githubusercontent.com/u/1474648?v=4" width="100px;" alt="Kim J. Nordmo"/><br /><sub><b>Kim J. Nordmo</b></sub>](https://github.com/AdmiringWorm)<br />[💻](https://github.com/gep13/chocolatey-vscode/commits?author=AdmiringWorm "Code") [📖](https://github.com/gep13/chocolatey-vscode/commits?author=AdmiringWorm "Documentation") [🎨](#design-AdmiringWorm "Design") [🤔](#ideas-AdmiringWorm "Ideas, Planning, & Feedback") [🚧](#maintenance-AdmiringWorm "Maintenance") [📦](#platform-AdmiringWorm "Packaging/porting to new platform") [👀](#review-AdmiringWorm "Reviewed Pull Requests") [🐛](https://github.com/gep13/chocolatey-vscode/issues?q=author%3AAdmiringWorm "Bug reports") | [<img src="https://avatars0.githubusercontent.com/u/834643?v=4" width="100px;" alt="Maurice Kevenaar"/><br /><sub><b>Maurice Kevenaar</b></sub>](https://github.com/mkevenaar)<br />[💻](https://github.com/gep13/chocolatey-vscode/commits?author=mkevenaar "Code") [📖](https://github.com/gep13/chocolatey-vscode/commits?author=mkevenaar "Documentation") [🎨](#design-mkevenaar "Design") [🤔](#ideas-mkevenaar "Ideas, Planning, & Feedback") [🚧](#maintenance-mkevenaar "Maintenance") [📦](#platform-mkevenaar "Packaging/porting to new platform") [👀](#review-mkevenaar "Reviewed Pull Requests") | [<img src="https://avatars1.githubusercontent.com/u/8674240?v=4" width="100px;" alt="Stephen Valdinger"/><br /><sub><b>Stephen Valdinger</b></sub>](http://chocolatey.org)<br />[💻](https://github.com/gep13/chocolatey-vscode/commits?author=steviecoaster "Code") [📖](https://github.com/gep13/chocolatey-vscode/commits?author=steviecoaster "Documentation") [🤔](#ideas-steviecoaster "Ideas, Planning, & Feedback") | [<img src="https://avatars1.githubusercontent.com/u/7863439?v=4" width="100px;" alt="Martin Björkström"/><br /><sub><b>Martin Björkström</b></sub>](https://twitter.com/mholo65)<br />[💻](https://github.com/gep13/chocolatey-vscode/commits?author=mholo65 "Code") [🤔](#ideas-mholo65 "Ideas, Planning, & Feedback") [👀](#review-mholo65 "Reviewed Pull Requests") | [<img src="https://avatars3.githubusercontent.com/u/1646284?v=4" width="100px;" alt="Adam Friedman"/><br /><sub><b>Adam Friedman</b></sub>](https://blog.tintoy.io/)<br />[🤔](#ideas-tintoy "Ideas, Planning, & Feedback") [👀](#review-tintoy "Reviewed Pull Requests") | [<img src="https://avatars0.githubusercontent.com/u/5354972?v=4" width="100px;" alt="Manfred Wallner"/><br /><sub><b>Manfred Wallner</b></sub>](https://www.mwallner.net)<br />[📖](https://github.com/gep13/chocolatey-vscode/commits?author=mwallner "Documentation") | [<img src="https://avatars3.githubusercontent.com/u/1271146?v=4" width="100px;" alt="Gary Ewan Park"/><br /><sub><b>Gary Ewan Park</b></sub>](http://www.gep13.co.uk/blog)<br />[💻](https://github.com/gep13/chocolatey-vscode/commits?author=gep13 "Code") [📖](https://github.com/gep13/chocolatey-vscode/commits?author=gep13 "Documentation") [🎨](#design-gep13 "Design") [🤔](#ideas-gep13 "Ideas, Planning, & Feedback") [🚧](#maintenance-gep13 "Maintenance") [📦](#platform-gep13 "Packaging/porting to new platform") [👀](#review-gep13 "Reviewed Pull Requests") [🐛](https://github.com/gep13/chocolatey-vscode/issues?q=author%3Agep13 "Bug reports") |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

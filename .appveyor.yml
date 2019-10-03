@@ -22,5 +22,6 @@ branches:
 
 # Build cache
 cache:
-- tools -> build.cake
+- tools -> recipe.cake
 - node_modules -> package.json
+- packages -> '**/*.csproj'
