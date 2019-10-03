@@ -143,8 +143,14 @@
 					"when": "explorerResourceIsFolder",
 					"command": "chocolatey.new",
 					"group": "2_workspace"
+				},
+				{
+					"when": "!explorerResourceIsFolder",
+					"command": "chocolatey.push",
+					"group": "2_workspace"
 				}
 			]
+
 		},
 		"snippets": [
 			{
