@@ -148,6 +148,11 @@
 					"when": "resourceFilename =~ /(?<=\\.)nupkg/",
 					"command": "chocolatey.push",
 					"group": "2_workspace"
+				},
+				{
+					"when": "resourceFilename =~ /(?<=\\.)nuspec/",
+					"command": "chocolatey.pack",
+					"group": "2_workspace"
 				}
 			]
 
