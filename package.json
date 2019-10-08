@@ -145,7 +145,7 @@
 					"group": "2_workspace"
 				},
 				{
-					"when": "!explorerResourceIsFolder",
+					"when": "resourceFilename =~ /(?<=\\.)nupkg/",
 					"command": "chocolatey.push",
 					"group": "2_workspace"
 				}
