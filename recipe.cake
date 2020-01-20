@@ -1,4 +1,4 @@
-#load nuget:?package=Cake.VsCode.Recipe
+#load nuget:?package=Cake.VsCode.Recipe&version=0.1.0
 
 Environment.SetVariableNames();
 
@@ -9,7 +9,7 @@ BuildParameters.SetParameters(context: Context,
                             repositoryName: "chocolatey-vscode",
                             appVeyorAccountName: "chocolateycommunity",
                             shouldRunGitVersion: true);
-
+                            
 BuildParameters.PrintParameters(Context);
 
 Build.Run();
