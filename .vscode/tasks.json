@@ -18,7 +18,7 @@
             "args": ["run", "compile"],
             "problemMatcher": "$tsc-watch",
             "group": "build",
-            "dependsOn": ["Restore-NPM-Packages", "Compile-Language-Server"]
+            "dependsOn": ["Restore-NPM-Packages"]
         },
         {
             "label": "Restore-NPM-Packages",
@@ -26,21 +26,6 @@
             "type": "shell",
             "args": ["install", "--loglevel","silent"],
             "problemMatcher": [ ]
-        },
-        {
-            "label": "Compile-Language-Server",
-            "type": "shell",
-            "command": "dotnet",
-            "args": [
-                "publish",
-                "--output",
-                "${workspaceFolder}/out/.server",
-                "--configuration",
-                "Debug",
-                "${workspaceFolder}/src/Chocolatey.Language.Server"
-            ],
-            "group": "build",
-            "problemMatcher": "$msCompile"
         }
     ]
 }
