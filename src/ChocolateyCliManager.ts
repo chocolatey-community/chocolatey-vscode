@@ -58,7 +58,7 @@ export class ChocolateyCliManager {
             let result = new Array<{key:string,value:string}>();
             if (config === undefined) { return result;}
 
-            const properties = config.get("properties");
+            const properties = config.get<any>("properties");
             if (properties === undefined) { return result; }
 
             for (const key in properties) {
