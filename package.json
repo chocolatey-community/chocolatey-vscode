@@ -180,7 +180,7 @@
 		"mocha": "^6.1.4",
 		"tslint": "^5.16.0",
 		"typescript": "^3.4.5",
-		"vscode": "^1.1.34",
+		"vscode": "^1.1.36",
 		"vscode-jsonrpc": "^4.0.0"
 	},
 	"dependencies": {
