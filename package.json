@@ -179,7 +179,7 @@
 		"expect": "^24.9.0",
 		"mocha": "^7.0.0",
 		"tslint": "^5.20.1",
-		"typescript": "^3.4.5",
+		"typescript": "^3.7.5",
 		"vscode": "^1.1.36",
 		"vscode-jsonrpc": "^4.0.0"
 	},
