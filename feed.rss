@@ -2,10 +2,10 @@
 <rss version="2.0">
 	<channel>
 		<title>chocolatey-vscode</title>
-		<link>http://gep13.github.io/chocolatey-vscode</link>
+		<link>http://chocolatey-community.github.io/chocolatey-vscode</link>
 		<description />
-		<copyright>2019</copyright>
-		<pubDate>Sat, 16 Mar 2019 07:04:07 GMT</pubDate>
-		<lastBuildDate>Sat, 16 Mar 2019 07:04:07 GMT</lastBuildDate>
+		<copyright>2020</copyright>
+		<pubDate>Mon, 27 Jan 2020 21:12:11 GMT</pubDate>
+		<lastBuildDate>Mon, 27 Jan 2020 21:12:11 GMT</lastBuildDate>
 	</channel>
 </rss>

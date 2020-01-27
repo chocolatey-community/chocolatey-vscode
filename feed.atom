@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-	<id>http://gep13.github.io/chocolatey-vscode</id>
+	<id>http://chocolatey-community.github.io/chocolatey-vscode</id>
 	<title>chocolatey-vscode</title>
-	<link rel="self" href="http://gep13.github.io/chocolatey-vscode" />
-	<rights>2019</rights>
-	<updated>2019-03-16T07:04:07Z</updated>
+	<link rel="self" href="http://chocolatey-community.github.io/chocolatey-vscode" />
+	<rights>2020</rights>
+	<updated>2020-01-27T21:12:11Z</updated>
 </feed>
