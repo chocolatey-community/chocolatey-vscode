@@ -8,7 +8,8 @@ BuildParameters.SetParameters(context: Context,
                             repositoryOwner: "chocolatey-community",
                             repositoryName: "chocolatey-vscode",
                             appVeyorAccountName: "chocolateycommunity",
-                            shouldRunGitVersion: true);
+                            shouldRunGitVersion: true,
+                            shouldDeployGraphDocumentation: false);
 
 // We remove the installation of typescript
 // as it conflicts with the version used
