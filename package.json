@@ -185,7 +185,7 @@
 	},
 	"dependencies": {
 		"vscode-languageclient": "^5.2.1",
-		"xml2js": "^0.4.19"
+		"xml2js": "^0.4.23"
 	},
 	"extensionPack": [
 		"ms-vscode.PowerShell",
