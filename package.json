@@ -184,7 +184,7 @@
 		"vscode-jsonrpc": "^5.0.1"
 	},
 	"dependencies": {
-		"vscode-languageclient": "^5.2.1",
+		"vscode-languageclient": "^6.1.0",
 		"xml2js": "^0.4.23"
 	},
 	"extensionPack": [
