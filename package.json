@@ -175,7 +175,7 @@
 		"@types/node": "^13.7.7",
 		"@types/node-fetch": "^2.5.5",
 		"@types/xml2js": "^0.4.5",
-		"@types/vscode": "^1.30.0",
+		"@types/vscode": "^1.43.0",
 		"expect": "^25.1.0",
 		"mocha": "^7.1.0",
 		"tslint": "^6.0.0",
