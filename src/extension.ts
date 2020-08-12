@@ -89,9 +89,10 @@ export function activate(context: ExtensionContext): void {
 }
 
 function deleteNupkgs():void {
-    // Check if there is an open folder in workspace
+    // check if there is an open folder in workspace
     if (workspace.rootPath === undefined) {
         window.showErrorMessage("You have not yet opened a folder.");
+        return;
     }
 
     workspace.findFiles("**/*.nupkg").then((nupkgFiles) => {
@@ -140,9 +141,9 @@ function deleteNupkgs():void {
 }
 
 function execute(cmd?: string | undefined, arg?: any[] | undefined): Thenable<string | undefined> | undefined {
-    // Check if there is an open folder in workspace
+    // check if there is an open folder in workspace
     if (workspace.rootPath === undefined) {
-        window.showErrorMessage("You have not yet opened a folder.");
+        return window.showErrorMessage("You have not yet opened a folder.");
     }
 
     if (!chocolateyManager) {

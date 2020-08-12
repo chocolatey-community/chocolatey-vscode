@@ -10,12 +10,12 @@
 		"name": "gep13"
 	},
 	"bugs": {
-		"url": "https://github.com/gep13/chocolatey-vscode/issues"
+		"url": "https://github.com/chocolatey-community/chocolatey-vscode/issues"
 	},
-	"homepage": "https://github.com/gep13/chocolatey-vscode",
+	"homepage": "https://github.com/chocolatey-community/chocolatey-vscode",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/gep13/chocolatey-vscode"
+		"url": "https://github.com/chocolatey-community/chocolatey-vscode"
 	},
 	"main": "./out/extension",
 	"galleryBanner": {
