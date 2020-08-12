@@ -236,7 +236,7 @@ export class ChocolateyCliManager {
     }
 
     public installTemplates(): void {
-        const config = workspace.getConfiguration("chocolatey").templatePackages;
+        const config: any = workspace.getConfiguration("chocolatey").templatePackages;
 
         let chocoArguments: Array<string> = ["install"];
 
@@ -251,7 +251,7 @@ export class ChocolateyCliManager {
     }
 
     private _findPackageTemplates(): string[] {
-        let templateDir = getPathToChocolateyTemplates();
+        let templateDir: string = getPathToChocolateyTemplates();
 
         if (!templateDir || !fs.existsSync(templateDir) || !this._isDirectory(templateDir)) {
             return [];
@@ -260,7 +260,7 @@ export class ChocolateyCliManager {
         return fs.readdirSync(templateDir).map(name => path.join(templateDir, name)).filter(this._isDirectory);
     }
 
-    private _isDirectory(path: string) {
+    private _isDirectory(path: string):boolean {
         return fs.lstatSync(path).isDirectory();
     }
 }
