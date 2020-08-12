@@ -119,7 +119,7 @@ Task("Install-Vsce")
 Task("Create-Release-Notes")
     .Does(() =>
 {
-    GitReleaseManagerCreate(parameters.GitHub.UserName, parameters.GitHub.Password, "gep13", "chocolatey-vscode", new GitReleaseManagerCreateSettings {
+    GitReleaseManagerCreate(parameters.GitHub.UserName, parameters.GitHub.Password, "chocolatey-community", "chocolatey-vscode", new GitReleaseManagerCreateSettings {
         Milestone         = parameters.Version.Milestone,
         Name              = parameters.Version.Milestone,
         Prerelease        = true,
@@ -205,10 +205,10 @@ Task("Publish-GitHub-Release")
 
     foreach (var package in packageFiles.Select(f => MakeAbsolute(f)))
     {
-        GitReleaseManagerAddAssets(parameters.GitHub.UserName, parameters.GitHub.Password, "gep13", "chocolatey-vscode", parameters.Version.Milestone, package.ToString());
+        GitReleaseManagerAddAssets(parameters.GitHub.UserName, parameters.GitHub.Password, "chocolatey-community", "chocolatey-vscode", parameters.Version.Milestone, package.ToString());
     }
 
-    GitReleaseManagerClose(parameters.GitHub.UserName, parameters.GitHub.Password, "gep13", "chocolatey-vscode", parameters.Version.Milestone);
+    GitReleaseManagerClose(parameters.GitHub.UserName, parameters.GitHub.Password, "chocolatey-community", "chocolatey-vscode", parameters.Version.Milestone);
 })
 .OnError(exception =>
 {
@@ -232,7 +232,7 @@ Task("Publish-Chocolatey-Package")
 .OnError(exception =>
 {
     Information("Publish-Chocolatey-Package Task failed, but continuing with next Task...");
-    
+
     // TODO: Don't fail build if failure to push package to Chocolatey, as this is known to cause
     // some errors at the minute.  An error can be returned, but the package is pushed correctly
     // publishingError = true;

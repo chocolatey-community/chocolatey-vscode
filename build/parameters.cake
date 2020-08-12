@@ -146,7 +146,7 @@ public class BuildParameters
             IsRunningOnWindows = context.IsRunningOnWindows(),
             IsRunningOnAppVeyor = buildSystem.AppVeyor.IsRunningOnAppVeyor,
             IsPullRequest = buildSystem.AppVeyor.Environment.PullRequest.IsPullRequest,
-            IsMasterRepo = StringComparer.OrdinalIgnoreCase.Equals("gep13/chocolatey-vscode", buildSystem.AppVeyor.Environment.Repository.Name),
+            IsMasterRepo = StringComparer.OrdinalIgnoreCase.Equals("chocolatey-community/chocolatey-vscode", buildSystem.AppVeyor.Environment.Repository.Name),
             IsMasterBranch = StringComparer.OrdinalIgnoreCase.Equals("master", buildSystem.AppVeyor.Environment.Repository.Branch),
             IsDevelopBranch = StringComparer.OrdinalIgnoreCase.Equals("develop", buildSystem.AppVeyor.Environment.Repository.Branch),
             IsReleaseBranch = buildSystem.AppVeyor.Environment.Repository.Branch.StartsWith("release", StringComparison.OrdinalIgnoreCase),
@@ -198,9 +198,9 @@ public class BuildParameters
             WyamConfigurationFile = context.MakeAbsolute((FilePath)"config.wyam"),
             WyamRecipe = "Docs",
             WyamTheme = "Samson",
-            WebHost = "gep13.github.io",
+            WebHost = "chocolatey-community.github.io",
             WebLinkRoot = "chocolatey-vscode",
-            WebBaseEditUrl = "https://github.com/gep13/chocolatey-vscode/tree/master/input/"
+            WebBaseEditUrl = "https://github.com/chocolatey-community/chocolatey-vscode/tree/master/input/"
         };
     }
 }

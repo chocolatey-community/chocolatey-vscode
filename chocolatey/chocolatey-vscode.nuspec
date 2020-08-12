@@ -8,14 +8,14 @@
     <title>Chocolatey VSCode extension</title>
     <authors>Gary Ewan Park</authors>
     <!-- projectUrl is required for the community feed -->
-    <projectUrl>https://github.com/gep13/chocolatey-vscode</projectUrl>
-    <iconUrl>https://cdn.jsdelivr.net/gh/gep13/chocolatey-vscode@19e4cf675a962d39e0840907e041c21879f48d3b/images/chocolatey.png</iconUrl>
+    <projectUrl>https://github.com/chocolatey-community/chocolatey-vscode</projectUrl>
+    <iconUrl>https://cdn.jsdelivr.net/gh/chocolatey-community/chocolatey-vscode@19e4cf675a962d39e0840907e041c21879f48d3b/images/chocolatey.png</iconUrl>
     <copyright>Copyright (c) 2016 Gary Ewan Park</copyright>
-    <licenseUrl>https://github.com/gep13/chocolatey-vscode/blob/develop/LICENSE</licenseUrl>
+    <licenseUrl>https://github.com/chocolatey-community/chocolatey-vscode/blob/develop/LICENSE</licenseUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-    <projectSourceUrl>https://github.com/gep13/chocolatey-vscode</projectSourceUrl>
+    <projectSourceUrl>https://github.com/chocolatey-community/chocolatey-vscode</projectSourceUrl>
     <!-- <docsUrl>https://github.com/gep13/chocolatey-vscode/wiki</docsUrl> Commented until a wiki is available -->
-    <bugTrackerUrl>https://github.com/gep13/chocolatey-vscode/issues</bugTrackerUrl>
+    <bugTrackerUrl>https://github.com/chocolatey-community/chocolatey-vscode/issues</bugTrackerUrl>
     <tags>chocolatey-vscode vscode extension</tags>
     <summary>Chocolatey Extension for Visual Studio Code</summary>
     <description>
@@ -35,12 +35,12 @@ Snippets are provided for the following Chocolatey Helper Functions:
 - Install-ChocolateyPackage
 - Uninstall-ChocolateyPackage
 To use them, simply open your powershell file, and then type choco followed by ctrl-space. This will then show the available snippets...
-![Available Chocolatey Snippets](https://cdn.jsdelivr.net/gh/gep13/chocolatey-vscode@19e4cf675a962d39e0840907e041c21879f48d3b/images/Choco-Snippets.png)
+![Available Chocolatey Snippets](https://cdn.jsdelivr.net/gh/chocolatey-community/chocolatey-vscode@19e4cf675a962d39e0840907e041c21879f48d3b/images/Choco-Snippets.png)
 
 and then simply arrow up/down to the one you want and press enter, or left mouse click. From there the PowerShell for the helper function will be generated, and the cursor will be placed ready for you to start filling in the content of function...
     </description>
     <releaseNotes>
-Full release notes found on [GitHub Release Page](https://github.com/gep13/chocolatey-vscode/releases)</releaseNotes>
+Full release notes found on [GitHub Release Page](https://github.com/chocolatey-community/chocolatey-vscode/releases)</releaseNotes>
     <dependencies>
       <dependency id="vscode" version="1.24.0" /> <!-- Should be set to the minimum version the extension supports -->
     </dependencies>

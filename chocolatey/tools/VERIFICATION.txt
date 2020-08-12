@@ -5,9 +5,9 @@ in verifying that this package's contents are trustworthy.
 This package is being officially supplied by the software author of these scripts (Gary Ewan Park, thanks to contributions from Kim J. Nordmo)
 
 The included binary file can be downloaded from our releases page located at
-<https://github.com/gep13/chocolatey-vscode/releases>
+<https://github.com/chocolatey-community/chocolatey-vscode/releases>
 
 and should match the checksum of the included vsix file.
 
 The file 'LICENSE.md' is also available in the repository at
-<https://github.com/gep13/chocolatey-vscode/blob/develop/LICENSE>
+<https://github.com/chocolatey-community/chocolatey-vscode/blob/develop/LICENSE>
