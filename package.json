@@ -170,7 +170,7 @@
 	"devDependencies": {
 		"@types/node": "^13.13.2",
 		"@types/node-fetch": "^2.5.7",
-		"@types/vscode": "^1.44.0",
+		"@types/vscode": "^1.71.0",
 		"@types/xml2js": "^0.4.5",
 		"tslint": "^6.1.1",
 		"typescript": "^3.8.3"
