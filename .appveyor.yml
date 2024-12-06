@@ -2,10 +2,11 @@
 init:
   - git config --global core.autocrlf true
 
+image: Visual Studio 2022
+
 # Build script
 build_script:
-  - ps: Get-ChildItem -Path "C:\Program Files (x86)\Microsoft SDKs\TypeScript\*" -Include tsc.exe,tsc.js -Recurse | Rename-Item -NewName {$_.name -replace "tsc","tsc1"}
-  - ps: .\build.ps1 -Target "AppVeyor"
+  - ps: .\build.ps1 -Target "AppVeyor" --verbosity=diagnostic
 
 # Tests
 test: off
