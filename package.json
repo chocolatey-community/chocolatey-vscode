@@ -145,7 +145,7 @@
 		"test": "npm run compile && node ./node_modules/vscode/bin/test"
 	},
 	"devDependencies": {
-		"@types/node": "^13.13.2",
+		"@types/node": "^22.10.7",
 		"@types/node-fetch": "^2.6.12",
 		"@types/vscode": "^1.44.0",
 		"@types/xml2js": "^0.4.5",
