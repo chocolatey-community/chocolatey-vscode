@@ -261,3 +261,72 @@ describe("ChocolateyCliManager.push URI routing (GH-132)", () => {
         expect(findFilesStub.firstCall.args[0]).to.equal("**/*.nupkg");
     });
 });
+
+describe("ChocolateyCliManager.new template quick-pick (GH-626)", () => {
+    let sandbox: sinon.SinonSandbox;
+    let showQuickPickStub: sinon.SinonStub;
+
+    beforeEach(() => {
+        sandbox = sinon.createSandbox();
+        // Stub ChocolateyOperation.run so we don't actually spawn choco.exe.
+        sandbox.stub(ChocolateyOperation.prototype, "run").resolves({
+            code: 0,
+            stdout: [],
+            stderr: []
+        });
+
+        showQuickPickStub = sandbox.stub(window, "showQuickPick");
+        // Stub showInputBox so new() gets a deterministic package name.
+        sandbox.stub(window, "showInputBox").resolves("my-package");
+    });
+
+    afterEach(() => {
+        sandbox.restore();
+    });
+
+    it("tags each template quick-pick item with a description so 'Default Template' explains itself", async () => {
+        const mgr = new ChocolateyCliManager();
+        // Stub _findPackageTemplates (private) so we don't need a real
+        // ChocolateyInstall folder to exist on disk.  Returns two faux
+        // installed templates.
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        sandbox.stub(mgr as any, "_findPackageTemplates").returns([
+            "/fake/msi.template",
+            "/fake/zip.template"
+        ]);
+        // Pick 'Default Template' from the first quick-pick (the templates one).
+        showQuickPickStub.resolves({ label: "Default Template" } as QuickPickItem);
+
+        await mgr.new(undefined);
+
+        expect(showQuickPickStub.calledOnce).to.equal(true);
+        const items = showQuickPickStub.firstCall.args[0] as QuickPickItem[];
+        expect(items, "three items: 'Default Template' + 2 installed").to.have.lengthOf(3);
+
+        // The 'Default Template' meta-option is always first; its description
+        // should mention Chocolatey's defaultTemplateName so the user knows
+        // picking it defers to their CLI-level config.
+        expect(items[0].label).to.equal("Default Template");
+        expect(items[0].description).to.be.a("string").and.match(/defaultTemplateName|Chocolatey/i);
+
+        // Each installed template gets a generic 'Installed template' tag.
+        expect(items[1]).to.deep.include({ label: "msi.template", description: "Installed template" });
+        expect(items[2]).to.deep.include({ label: "zip.template", description: "Installed template" });
+    });
+
+    it("prompts even when only one template is installed, so users can still pick the CLI default", async () => {
+        const mgr = new ChocolateyCliManager();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        sandbox.stub(mgr as any, "_findPackageTemplates").returns([
+            "/fake/msi.template"
+        ]);
+        showQuickPickStub.resolves({ label: "Default Template" } as QuickPickItem);
+
+        await mgr.new(undefined);
+
+        expect(showQuickPickStub.calledOnce, "quick-pick must still appear with a single template").to.equal(true);
+        const items = showQuickPickStub.firstCall.args[0] as QuickPickItem[];
+        expect(items).to.have.lengthOf(2);
+        expect(items.map(i => i.label)).to.deep.equal(["Default Template", "msi.template"]);
+    });
+});
