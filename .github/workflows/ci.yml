@@ -61,6 +61,19 @@ jobs:
           path: tools
           key: ${{ runner.os }}-cake-${{ hashFiles('recipe.cake', 'tools/packages.config') }}
 
+      # Cache the VS Code instance that @vscode/test-electron downloads for
+      # the integration tests.  Without this, every CI run hits
+      # update.code.visualstudio.com/api/releases/stable, which is
+      # heavily rate-limited from GitHub Actions IP pools and frequently
+      # returns HTML instead of JSON ("Failed to parse response ... as JSON").
+      # Keyed on the pinned VS Code version in src/test/runTest.ts so a bump
+      # there invalidates the cache automatically.
+      - name: Cache VS Code test host
+        uses: actions/cache@v4
+        with:
+          path: .vscode-test
+          key: ${{ runner.os }}-vscode-test-${{ hashFiles('src/test/runTest.ts') }}
+
       - name: Run Cake Test target (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
