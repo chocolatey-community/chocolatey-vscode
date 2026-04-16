@@ -139,8 +139,11 @@
 		]
 	},
 	"scripts": {
-		"vscode:prepublish": "npm run compile",
+		"vscode:prepublish": "npm run bundle -- --production",
 		"compile": "tsc -p ./",
+		"check-types": "tsc --noEmit -p ./",
+		"bundle": "node esbuild.config.js",
+		"bundle:watch": "node esbuild.config.js --watch",
 		"watch": "tsc -watch -p ./",
 		"lint": "eslint src --ext ts",
 		"pretest": "npm run compile",
@@ -160,6 +163,7 @@
 		"@typescript-eslint/parser": "^7.4.0",
 		"@vscode/test-electron": "^2.2.3",
 		"chai": "^4.3.7",
+		"esbuild": "^0.25.0",
 		"eslint": "^8.57.0",
 		"glob": "^7.2.3",
 		"mocha": "^9.2.2",
