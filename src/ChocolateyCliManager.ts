@@ -20,13 +20,19 @@ export class ChocolateyCliManager {
         }
 
         const availableTemplates: Array<QuickPickItem> = this._findPackageTemplates().map((filepath) => {
-            return { label: path.basename(filepath) };
+            return {
+                label: path.basename(filepath),
+                description: "Installed template"
+            };
         });
 
         const chocoArguments: Array<string> = ["new", result];
 
         if (availableTemplates.length > 0) {
-            availableTemplates.unshift({ label: DEFAULT_TEMPLATE_LABEL });
+            availableTemplates.unshift({
+                label: DEFAULT_TEMPLATE_LABEL,
+                description: "Defer to Chocolatey's defaultTemplateName config (or its built-in default)"
+            });
             const template = await window.showQuickPick(availableTemplates, {
                 placeHolder: "Available templates"
             });
