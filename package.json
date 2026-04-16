@@ -120,6 +120,26 @@
 					"when": "explorerResourceIsFolder",
 					"command": "chocolatey.new",
 					"group": "2_workspace"
+				},
+				{
+					"when": "explorerResourceIsFolder",
+					"command": "chocolatey.pack",
+					"group": "2_workspace"
+				},
+				{
+					"when": "explorerResourceIsFolder",
+					"command": "chocolatey.push",
+					"group": "2_workspace"
+				},
+				{
+					"when": "resourceExtname == .nuspec",
+					"command": "chocolatey.pack",
+					"group": "2_workspace"
+				},
+				{
+					"when": "resourceExtname == .nupkg",
+					"command": "chocolatey.push",
+					"group": "2_workspace"
 				}
 			]
 		},

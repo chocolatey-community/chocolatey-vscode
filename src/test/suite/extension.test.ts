@@ -34,4 +34,36 @@ describe("extension activation", () => {
             expect(registered, `command '${cmd}' should be registered`).to.include(cmd);
         }
     });
+
+    describe("explorer context menu contributions (GH-131, GH-132)", () => {
+        interface MenuEntry { when?: string; command: string; group?: string; }
+        let menus: MenuEntry[];
+
+        before(() => {
+            const extension: vscode.Extension<any> | undefined = vscode.extensions.getExtension(EXTENSION_ID);
+            expect(extension, `extension ${EXTENSION_ID} should be present`).to.not.be.undefined;
+            const contributes = extension!.packageJSON.contributes;
+            menus = contributes?.menus?.["explorer/context"] ?? [];
+        });
+
+        it("binds chocolatey.pack to right-click on a .nuspec file (GH-131)", () => {
+            const entry = menus.find(m => m.command === "chocolatey.pack" && m.when === "resourceExtname == .nuspec");
+            expect(entry, "expected explorer/context menu entry: pack when resourceExtname == .nuspec").to.not.be.undefined;
+        });
+
+        it("binds chocolatey.push to right-click on a .nupkg file (GH-132)", () => {
+            const entry = menus.find(m => m.command === "chocolatey.push" && m.when === "resourceExtname == .nupkg");
+            expect(entry, "expected explorer/context menu entry: push when resourceExtname == .nupkg").to.not.be.undefined;
+        });
+
+        it("binds chocolatey.pack to right-click on any folder (GH-131, directory case)", () => {
+            const entry = menus.find(m => m.command === "chocolatey.pack" && m.when === "explorerResourceIsFolder");
+            expect(entry, "expected explorer/context menu entry: pack when explorerResourceIsFolder").to.not.be.undefined;
+        });
+
+        it("binds chocolatey.push to right-click on any folder (GH-132, directory case)", () => {
+            const entry = menus.find(m => m.command === "chocolatey.push" && m.when === "explorerResourceIsFolder");
+            expect(entry, "expected explorer/context menu entry: push when explorerResourceIsFolder").to.not.be.undefined;
+        });
+    });
 });
