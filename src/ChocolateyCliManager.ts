@@ -33,7 +33,7 @@ export class ChocolateyCliManager {
                     }
 
                     if (uri && this._isDirectory(uri.fsPath)) {
-                        chocoArguments.push(`--output-directory="'${uri.fsPath}'"`)
+                        chocoArguments.push(`--output-directory="'${uri.fsPath}'"`);
                     }
 
                     let chocoProperties = readChocoProperties();
@@ -108,7 +108,6 @@ export class ChocolateyCliManager {
                             }
 
                             let cwd: string = quickPickItem.description ? quickPickItem.description : "";
-                            // tslint:disable-next-line:max-line-length
                             let packOp: ChocolateyOperation = new ChocolateyOperation(["pack", quickPickItem.label, additionalArguments], { isOutputChannelVisible: true, currentWorkingDirectory: cwd });
                             packOp.run();
                         });
@@ -118,7 +117,6 @@ export class ChocolateyCliManager {
                         }
 
                         let cwd: string = nuspecSelection.description ? nuspecSelection.description : "";
-                        // tslint:disable-next-line:max-line-length
                         let packOp: ChocolateyOperation = new ChocolateyOperation(["pack", nuspecSelection.label, additionalArguments], { isOutputChannelVisible: true, currentWorkingDirectory: cwd });
                         packOp.run();
                     }
@@ -128,7 +126,6 @@ export class ChocolateyCliManager {
     }
 
     public push(): void {
-        // tslint:disable-next-line:max-line-length
         function pushPackage(packages: Array<QuickPickItem>, selectedNupkg: QuickPickItem, allPackages: boolean, source: string, apikey: string): void {
             window.showInputBox({
                 prompt: "Additional command arguments?"
@@ -158,7 +155,6 @@ export class ChocolateyCliManager {
                         chocolateyArguments.unshift(packageToPush.label);
                         chocolateyArguments.unshift("push");
 
-                        // tslint:disable-next-line:max-line-length
                         let pushOp: ChocolateyOperation = new ChocolateyOperation(chocolateyArguments, { isOutputChannelVisible: true, currentWorkingDirectory: cwd });
                         pushOp.run();
 
@@ -170,7 +166,6 @@ export class ChocolateyCliManager {
                     chocolateyArguments.unshift(selectedNupkg.label);
                     chocolateyArguments.unshift("push");
 
-                    // tslint:disable-next-line:max-line-length
                     let pushOp: ChocolateyOperation = new ChocolateyOperation(chocolateyArguments, { isOutputChannelVisible: true, currentWorkingDirectory: cwd });
                     pushOp.run();
                 }
@@ -189,7 +184,6 @@ export class ChocolateyCliManager {
                         return;
                     }
 
-                    // tslint:disable-next-line:max-line-length
                     pushPackage(quickPickItems, nupkgSelection, nupkgSelection.label === "All nupkg files", specifiedSource, specifiedApiKey === undefined ? "" : specifiedApiKey);
                 });
             });
@@ -229,7 +223,7 @@ export class ChocolateyCliManager {
                     let sourceQuickPickItems: Array<QuickPickItem> = new Array<QuickPickItem>();
 
                     if(result.chocolatey.apiKeys[0].apiKeys) {
-                        result.chocolatey.apiKeys[0].apiKeys.forEach((apiKey  => {
+                        result.chocolatey.apiKeys[0].apiKeys.forEach(((apiKey: any) => {
                             sourceQuickPickItems.push({
                                     label: apiKey.$.source,
                                 });
@@ -253,7 +247,6 @@ export class ChocolateyCliManager {
                             if(sourceSelection.label === "Use custom source...") {
                                 getCustomSource(quickPickItems, nupkgSelection);
                             } else {
-                                // tslint:disable-next-line:max-line-length
                                 pushPackage(quickPickItems, nupkgSelection, nupkgSelection.label === "All nupkg files", sourceSelection.label, "");
                             }
                         });
@@ -268,7 +261,7 @@ export class ChocolateyCliManager {
 
         let chocoArguments: Array<string> = ["install"];
 
-        config.names.forEach((name) => {
+        config.names.forEach((name: string) => {
             chocoArguments.push(name);
         });
 
@@ -299,7 +292,7 @@ export class ChocolateyCliManager {
                 chocolateyArguments.push("-s=\"'" + source + "'\"");
 
                 let apiOp: ChocolateyOperation = new ChocolateyOperation(chocolateyArguments);
-                apiOp.run()
+                apiOp.run();
             });
         });
     }

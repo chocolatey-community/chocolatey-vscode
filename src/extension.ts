@@ -4,8 +4,8 @@ import * as chocolateyOps from "./ChocolateyOperation";
 import * as path from "path";
 import * as fs from "fs";
 
-var chocolateyManager : chocolateyCli.ChocolateyCliManager;
-var installed : boolean = false;
+let chocolateyManager: chocolateyCli.ChocolateyCliManager;
+let installed: boolean = false;
 
 export function activate(context: ExtensionContext): void {
     // register Commands
@@ -100,7 +100,9 @@ function execute(cmd?: string | undefined, arg?: any[] | undefined): Thenable<st
         return window.showErrorMessage("You have not yet opened a folder.");
     }
 
-    let ecmd: any = chocolateyManager[cmd];
+    // NOTE: dynamic dispatch here is carried forward from the original
+    // extension; Slice 2 replaces it with typed command routing.
+    let ecmd: any = (chocolateyManager as any)[cmd];
     if (typeof ecmd === "function") {
         try {
             ecmd.call(chocolateyManager, arg);

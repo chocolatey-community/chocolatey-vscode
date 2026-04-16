@@ -32,7 +32,7 @@
 		"workspaceContains:**/*.nuspec"
 	],
 	"engines": {
-		"vscode": "^1.30.0"
+		"vscode": "^1.85.0"
 	},
 	"categories": [
 		"Other"
@@ -142,6 +142,7 @@
 		"vscode:prepublish": "npm run compile",
 		"compile": "tsc -p ./",
 		"watch": "tsc -watch -p ./",
+		"lint": "eslint src --ext ts",
 		"pretest": "npm run compile",
 		"test:unit": "mocha --recursive out/test/unit",
 		"test:integration": "node ./out/test/runTest.js",
@@ -151,18 +152,19 @@
 		"@types/chai": "^4.3.4",
 		"@types/glob": "^7.2.0",
 		"@types/mocha": "^9.1.1",
-		"@types/node": "^13.13.2",
-		"@types/node-fetch": "^2.6.12",
+		"@types/node": "^20.11.30",
 		"@types/sinon": "^10.0.13",
-		"@types/vscode": "^1.44.0",
+		"@types/vscode": "^1.85.0",
 		"@types/xml2js": "^0.4.5",
+		"@typescript-eslint/eslint-plugin": "^7.4.0",
+		"@typescript-eslint/parser": "^7.4.0",
 		"@vscode/test-electron": "^2.2.3",
 		"chai": "^4.3.7",
+		"eslint": "^8.57.0",
 		"glob": "^7.2.3",
 		"mocha": "^9.2.2",
 		"sinon": "^14.0.2",
-		"tslint": "^6.1.1",
-		"typescript": "^3.8.3"
+		"typescript": "^5.4.5"
 	},
 	"dependencies": {
 		"xml2js": "^0.6.2"

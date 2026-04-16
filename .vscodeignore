@@ -6,7 +6,7 @@ src/**
 .gitignore
 tsconfig.json
 vsc-extension-quickstart.md
-tslint.json
+.eslintrc.json
 tools/**
 build/**
 build-results/**
