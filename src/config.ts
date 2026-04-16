@@ -1,44 +1,40 @@
 import { workspace } from "vscode";
 import * as path from "path";
 
-export function getFullAppPath(): string {
-    if (workspace.rootPath) {
-        return path.join(workspace.rootPath, "./");
+/**
+ * Returns the absolute path to the first workspace folder, or an empty
+ * string when no folder is open.  Previously named `getFullAppPath`,
+ * which used the deprecated `workspace.rootPath` API.
+ */
+export function getWorkspaceRoot(): string {
+    const folder = workspace.workspaceFolders?.[0];
+    if (!folder) {
+        return "";
     }
-
-    return "";
+    return path.join(folder.uri.fsPath, "./");
 }
 
 export function getPathToChocolateyConfig(): string {
-    let chocolateyInstallEnvironmentVariable: string | undefined = process.env.ChocolateyInstall;
-
-    if(chocolateyInstallEnvironmentVariable === undefined) {
-        // todo: this is really an error condition, and something should be done
+    const chocolateyInstall = process.env.ChocolateyInstall;
+    if (!chocolateyInstall) {
         return "";
     }
-
-    return path.join(chocolateyInstallEnvironmentVariable, "config/chocolatey.config");
+    return path.join(chocolateyInstall, "config/chocolatey.config");
 }
 
 export function getPathToChocolateyBin(): string {
-    let chocolateyInstallEnvironmentVariable: string | undefined = process.env.ChocolateyInstall;
-
-    if(chocolateyInstallEnvironmentVariable === undefined) {
-        // todo: this is really an error condition, and something should be done
+    const chocolateyInstall = process.env.ChocolateyInstall;
+    if (!chocolateyInstall) {
         return "";
     }
-
-    return path.join(chocolateyInstallEnvironmentVariable, "bin/choco.exe");
+    return path.join(chocolateyInstall, "bin/choco.exe");
 }
 
 export function getPathToChocolateyTemplates(): string {
-    let chocolateyInstallEnvironmentVariable: string | undefined = process.env.ChocolateyInstall;
-
-    if (chocolateyInstallEnvironmentVariable === undefined) {
-        // todo: this is really an error condition, and something should be done
+    const chocolateyInstall = process.env.ChocolateyInstall;
+    if (!chocolateyInstall) {
         console.error("Chocolatey installation path could not be found.");
         return "";
     }
-
-    return path.join(chocolateyInstallEnvironmentVariable, "templates");
+    return path.join(chocolateyInstall, "templates");
 }

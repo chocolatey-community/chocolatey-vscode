@@ -1,118 +1,116 @@
-import { window, commands, workspace, QuickPickItem, ExtensionContext, Uri } from "vscode";
+import { window, commands, workspace, QuickPickItem, ExtensionContext, OutputChannel, Uri } from "vscode";
 import * as chocolateyCli from "./ChocolateyCliManager";
 import * as chocolateyOps from "./ChocolateyOperation";
+import { getWorkspaceRoot } from "./config";
 import * as path from "path";
 import * as fs from "fs";
 
-let chocolateyManager: chocolateyCli.ChocolateyCliManager;
-let installed: boolean = false;
+let chocolateyManager: chocolateyCli.ChocolateyCliManager | undefined;
+let installed: boolean | undefined;
+let outputChannel: OutputChannel;
 
 export function activate(context: ExtensionContext): void {
-    // register Commands
+    outputChannel = window.createOutputChannel("Chocolatey");
+    context.subscriptions.push(outputChannel);
+
     context.subscriptions.push(
-        commands.registerCommand("chocolatey.new", (arg: any) => execute("new", arg)),
-        commands.registerCommand("chocolatey.pack", () => execute("pack")),
+        commands.registerCommand("chocolatey.new", (arg?: Uri) => runManagerCommand(m => m.new(arg))),
+        commands.registerCommand("chocolatey.pack", () => runManagerCommand(m => m.pack())),
         commands.registerCommand("chocolatey.delete", () => deleteNupkgs()),
-        commands.registerCommand("chocolatey.push", () => execute("push")),
-        commands.registerCommand("chocolatey.installTemplates", () => execute("installTemplates")),
-        commands.registerCommand("chocolatey.apikey", () => execute("apikey")),
-        commands.registerCommand("chocolatey.open", async (uri: string) => await commands.executeCommand('vscode.open', Uri.parse(uri)))
+        commands.registerCommand("chocolatey.push", () => runManagerCommand(m => m.push())),
+        commands.registerCommand("chocolatey.installTemplates", () => runManagerCommand(m => m.installTemplates())),
+        commands.registerCommand("chocolatey.apikey", () => runManagerCommand(m => m.apikey())),
+        commands.registerCommand(
+            "chocolatey.open",
+            (uri: string) => commands.executeCommand("vscode.open", Uri.parse(uri))
+        )
     );
 }
 
-function deleteNupkgs():void {
-    // check if there is an open folder in workspace
-    if (workspace.rootPath === undefined) {
-        window.showErrorMessage("You have not yet opened a folder.");
-        return;
-    }
-
-    workspace.findFiles("**/*.nupkg").then((nupkgFiles) => {
-        if(nupkgFiles.length ===0) {
-            window.showErrorMessage("There are no nupkg files in the current workspace.");
-            return;
-        }
-
-        let quickPickItems: Array<QuickPickItem> =  nupkgFiles.map((filePath) => {
-            return {
-                label: path.basename(filePath.fsPath),
-                description: filePath.fsPath
-            };
-        });
-
-        if(quickPickItems.length > 1) {
-            quickPickItems.unshift({label: "All nupkg files"});
-        }
-
-        window.showQuickPick(quickPickItems, {
-            placeHolder: "Available nupkg files..."
-          }).then((nupkgSelection) => {
-            if(!nupkgSelection) {
-                return;
-            }
-
-            if(nupkgSelection.label === "All nupkg files") {
-                quickPickItems.forEach((quickPickItem) => {
-                    if(quickPickItem.label === "All nupkg files") {
-                        return;
-                    }
-
-                    if(quickPickItem.description && fs.existsSync(quickPickItem.description)) {
-                        fs.unlinkSync(quickPickItem.description);
-                        console.log("Deleted file: " + quickPickItem.description);
-                    }
-                });
-            } else {
-                if(nupkgSelection.description && fs.existsSync(nupkgSelection.description)) {
-                    fs.unlinkSync(nupkgSelection.description);
-                        console.log("Deleted file: " + nupkgSelection.description);
-                }
-            }
-        });
-    });
+export function deactivate(): void {
+    // Nothing to clean up explicitly: the output channel is owned by
+    // context.subscriptions and is disposed by VS Code on shutdown.
 }
 
-function execute(cmd?: string | undefined, arg?: any[] | undefined): Thenable<string | undefined> | undefined {
-    // check if there is an open folder in workspace
-    if (workspace.rootPath === undefined) {
-        return window.showErrorMessage("You have not yet opened a folder.");
+/**
+ * Lazily instantiates the ChocolateyCliManager and checks that the
+ * Chocolatey CLI is installed, then runs the supplied command against
+ * the manager.  Shows a user-facing error message if any precondition
+ * fails and returns silently.
+ */
+function runManagerCommand(action: (manager: chocolateyCli.ChocolateyCliManager) => void): void {
+    if (!getWorkspaceRoot()) {
+        window.showErrorMessage("You have not yet opened a folder.");
+        return;
     }
 
     if (!chocolateyManager) {
         chocolateyManager = new chocolateyCli.ChocolateyCliManager();
     }
 
-    if (!installed) {
+    if (installed === undefined) {
         installed = chocolateyOps.isChocolateyCliInstalled();
     }
 
-    if (!cmd) {
+    if (!installed) {
+        window.showErrorMessage("Chocolatey is not installed");
         return;
     }
 
-    // ensure Chocolatey is installed
-    if (!installed) {
-        return window.showErrorMessage("Chocolatey is not installed");
+    try {
+        action(chocolateyManager);
+    } catch (err) {
+        outputChannel.appendLine(`Command failed: ${err instanceof Error ? err.message : String(err)}`);
+    }
+}
+
+function deleteNupkgs(): void {
+    if (!getWorkspaceRoot()) {
+        window.showErrorMessage("You have not yet opened a folder.");
+        return;
     }
 
-    // check if there is an open folder in workspace
-    if (workspace.rootPath === undefined) {
-        return window.showErrorMessage("You have not yet opened a folder.");
-    }
-
-    // NOTE: dynamic dispatch here is carried forward from the original
-    // extension; Slice 2 replaces it with typed command routing.
-    let ecmd: any = (chocolateyManager as any)[cmd];
-    if (typeof ecmd === "function") {
-        try {
-            ecmd.call(chocolateyManager, arg);
-            return;
-        } catch (e) {
-            // well, clearly we didn't call a function
-            console.log(e);
+    workspace.findFiles("**/*.nupkg").then((nupkgFiles) => {
+        if (nupkgFiles.length === 0) {
+            window.showErrorMessage("There are no nupkg files in the current workspace.");
             return;
         }
-    }
 
-    return;
+        const quickPickItems: Array<QuickPickItem> = nupkgFiles.map((filePath) => {
+            return {
+                label: path.basename(filePath.fsPath),
+                description: filePath.fsPath
+            };
+        });
+
+        if (quickPickItems.length > 1) {
+            quickPickItems.unshift({ label: "All nupkg files" });
+        }
+
+        window.showQuickPick(quickPickItems, {
+            placeHolder: "Available nupkg files..."
+        }).then((nupkgSelection) => {
+            if (!nupkgSelection) {
+                return;
+            }
+
+            if (nupkgSelection.label === "All nupkg files") {
+                quickPickItems.forEach((quickPickItem) => {
+                    if (quickPickItem.label === "All nupkg files") {
+                        return;
+                    }
+                    deleteNupkgAt(quickPickItem.description);
+                });
+            } else {
+                deleteNupkgAt(nupkgSelection.description);
+            }
+        });
+    });
+}
+
+function deleteNupkgAt(fsPath: string | undefined): void {
+    if (fsPath && fs.existsSync(fsPath)) {
+        fs.unlinkSync(fsPath);
+        outputChannel.appendLine(`Deleted file: ${fsPath}`);
+    }
 }
