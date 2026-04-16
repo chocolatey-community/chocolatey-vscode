@@ -1,4 +1,4 @@
-#load nuget:?package=Cake.VsCode.Recipe&version=0.1.0
+#load nuget:?package=Cake.VsCode.Recipe&version=1.0.0
 
 Environment.SetVariableNames();
 
@@ -9,7 +9,8 @@ BuildParameters.SetParameters(context: Context,
                             repositoryName: "chocolatey-vscode",
                             appVeyorAccountName: "chocolateycommunity",
                             shouldRunGitVersion: true,
-                            shouldDeployGraphDocumentation: false);
+                            marketPlacePublisher: "gep13",
+                            preferDotNetGlobalToolUsage: true);
 
 // We remove the installation of typescript
 // as it conflicts with the version used
