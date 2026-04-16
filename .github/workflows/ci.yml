@@ -56,7 +56,7 @@ jobs:
       # NuGet round-trip.  Keyed on recipe.cake + tools/packages.config
       # so any recipe version change invalidates the cache.
       - name: Cache Cake tools
-        uses: actions/cache@13aacd865c20de90d75de3b17ebe84f7a17d57d2
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae
         with:
           path: tools
           key: ${{ runner.os }}-cake-${{ hashFiles('recipe.cake', 'tools/packages.config') }}
@@ -69,7 +69,7 @@ jobs:
       # Keyed on the pinned VS Code version in src/test/runTest.ts so a bump
       # there invalidates the cache automatically.
       - name: Cache VS Code test host
-        uses: actions/cache@13aacd865c20de90d75de3b17ebe84f7a17d57d2
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae
         with:
           path: .vscode-test
           key: ${{ runner.os }}-vscode-test-${{ hashFiles('src/test/runTest.ts') }}
