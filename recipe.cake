@@ -17,7 +17,19 @@ BuildParameters.SetParameters(context: Context,
 var packageTask = (CakeTask)BuildParameters.Tasks.PackageExtensionTask.Task;
 var taskToRemove = packageTask.Dependencies.First(x => x.Name == BuildParameters.Tasks.InstallTypeScriptTask.Task.Name);
 packageTask.Dependencies.Remove(taskToRemove);
-                            
+
+// Run the unit and integration test suites via `npm test`.  ...
+var testTask = Task("Test")
+    .IsDependentOn("Npm-Install")
+    .Does(() =>
+{
+    NpmRunScript("test");
+});
+
+// Packaging (and therefore publishing) the extension now requires the
+// test suites to pass first.
+BuildParameters.Tasks.PackageExtensionTask.IsDependentOn("Test");
+
 BuildParameters.PrintParameters(Context);
 
 Build.Run();
