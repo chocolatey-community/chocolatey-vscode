@@ -1,0 +1,52 @@
+name: Release
+
+# Replaces the retired AppVeyor pipeline.  The Cake AppVeyor target
+# itself (from Cake.VsCode.Recipe) decides whether to actually publish
+# based on GitVersion output and the branch name; pushes to develop
+# build + test, pushes to master / release/* / hotfix/* publish.
+#
+# Secrets expected (configure in repo Settings -> Secrets and variables
+# -> Actions):
+#   VSMARKETPLACE_TOKEN  - Personal Access Token for the Visual Studio
+#                          Marketplace publisher.
+#   CHOCOLATEY_API_KEY   - API key for chocolatey.org.
+#   GITHUB_PAT           - Optional PAT with `repo` scope for creating
+#                          GitHub Releases.  Falls back to the default
+#                          GITHUB_TOKEN, which works for most flows.
+
+on:
+  push:
+    branches:
+      - master
+      - "release/**"
+      - "hotfix/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # GitVersion in the Cake recipe needs full git history.
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Cake AppVeyor target
+        run: .\build.ps1 -Target AppVeyor -Verbosity Diagnostic
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_PAT || secrets.GITHUB_TOKEN }}
+          VSMARKETPLACE_TOKEN: ${{ secrets.VSMARKETPLACE_TOKEN }}
+          CHOCOLATEY_API_KEY: ${{ secrets.CHOCOLATEY_API_KEY }}

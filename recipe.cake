@@ -18,9 +18,19 @@ var packageTask = (CakeTask)BuildParameters.Tasks.PackageExtensionTask.Task;
 var taskToRemove = packageTask.Dependencies.First(x => x.Name == BuildParameters.Tasks.InstallTypeScriptTask.Task.Name);
 packageTask.Dependencies.Remove(taskToRemove);
 
-// Run the unit and integration test suites via `npm test`.  ...
+// Run ESLint against the TypeScript sources.
+var lintTask = Task("Lint")
+    .IsDependentOn("Npm-Install")
+    .Does(() =>
+{
+    NpmRunScript("lint");
+});
+
+// Run the unit and integration test suites via `npm test`.  Depends on
+// Lint so a single Cake invocation from CI exercises both gates.
 var testTask = Task("Test")
     .IsDependentOn("Npm-Install")
+    .IsDependentOn("Lint")
     .Does(() =>
 {
     NpmRunScript("test");
