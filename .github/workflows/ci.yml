@@ -27,13 +27,13 @@ jobs:
           - macos-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@1e31de5234b9f8995739874a8ce0492dc87873e2 # v4
         with:
           # GitVersion inside the Cake recipe needs full git history.
           fetch-depth: 0
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4
         with:
           node-version: "20"
           cache: npm
@@ -56,7 +56,7 @@ jobs:
       # NuGet round-trip.  Keyed on recipe.cake + tools/packages.config
       # so any recipe version change invalidates the cache.
       - name: Cache Cake tools
-        uses: actions/cache@v4
+        uses: actions/cache@13aacd865c20de90d75de3b17ebe84f7a17d57d2 # v4
         with:
           path: tools
           key: ${{ runner.os }}-cake-${{ hashFiles('recipe.cake', 'tools/packages.config') }}
@@ -69,7 +69,7 @@ jobs:
       # Keyed on the pinned VS Code version in src/test/runTest.ts so a bump
       # there invalidates the cache automatically.
       - name: Cache VS Code test host
-        uses: actions/cache@v4
+        uses: actions/cache@13aacd865c20de90d75de3b17ebe84f7a17d57d2 # v4
         with:
           path: .vscode-test
           key: ${{ runner.os }}-vscode-test-${{ hashFiles('src/test/runTest.ts') }}
@@ -95,7 +95,7 @@ jobs:
 
       - name: Upload bundled extension as artifact
         if: runner.os == 'Windows'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 # v4
         with:
           name: extension-bundle
           path: out/extension.js
