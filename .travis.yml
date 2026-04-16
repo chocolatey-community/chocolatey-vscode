@@ -1,8 +1,0 @@
-language: csharp
-
-os:
-  - osx
-  - linux
-
-script:
-  - ./build.sh --verbosity=diagnostic

@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # GitVersion inside the Cake recipe needs full git history.
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      # Cake 0.32 (the version pinned in tools/packages.config) runs on
+      # the .NET Framework via mono on Linux / macOS.  GitHub runners
+      # don't ship mono by default.  xvfb is needed on Linux so the VS
+      # Code test-electron host has a virtual display.
+      - name: Install mono + xvfb (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mono-complete xvfb
+
+      - name: Install mono (macOS)
+        if: runner.os == 'macOS'
+        run: brew install mono
+
+      # Cache the restored Cake tools directory so repeat runs skip the
+      # NuGet round-trip.  Keyed on recipe.cake + tools/packages.config
+      # so any recipe version change invalidates the cache.
+      - name: Cache Cake tools
+        uses: actions/cache@v4
+        with:
+          path: tools
+          key: ${{ runner.os }}-cake-${{ hashFiles('recipe.cake', 'tools/packages.config') }}
+
+      - name: Run Cake Test target (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: .\build.ps1 -Target Test -Verbosity Diagnostic
+
+      - name: Run Cake Test target (Linux)
+        if: runner.os == 'Linux'
+        run: xvfb-run -a ./build.sh --target=Test --verbosity=Diagnostic
+
+      - name: Run Cake Test target (macOS)
+        if: runner.os == 'macOS'
+        run: ./build.sh --target=Test --verbosity=Diagnostic
+
+      - name: Upload bundled extension as artifact
+        if: runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: extension-bundle
+          path: out/extension.js
+          if-no-files-found: warn
+          retention-days: 14
