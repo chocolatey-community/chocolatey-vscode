@@ -15,9 +15,9 @@ export function activate(context: ExtensionContext): void {
 
     context.subscriptions.push(
         commands.registerCommand("chocolatey.new", (arg?: Uri) => runManagerCommand(m => m.new(arg))),
-        commands.registerCommand("chocolatey.pack", () => runManagerCommand(m => m.pack())),
+        commands.registerCommand("chocolatey.pack", (arg?: Uri) => runManagerCommand(m => m.pack(arg))),
         commands.registerCommand("chocolatey.delete", () => deleteNupkgs()),
-        commands.registerCommand("chocolatey.push", () => runManagerCommand(m => m.push())),
+        commands.registerCommand("chocolatey.push", (arg?: Uri) => runManagerCommand(m => m.push(arg))),
         commands.registerCommand("chocolatey.installTemplates", () => runManagerCommand(m => m.installTemplates())),
         commands.registerCommand("chocolatey.apikey", () => runManagerCommand(m => m.apikey())),
         commands.registerCommand(

@@ -1,4 +1,4 @@
-import { window, QuickPickItem, workspace, Uri } from "vscode";
+import { window, QuickPickItem, RelativePattern, workspace, Uri } from "vscode";
 import { ChocolateyOperation } from "./ChocolateyOperation";
 import * as path from "path";
 import * as xml2js from "xml2js";
@@ -59,27 +59,37 @@ export class ChocolateyCliManager {
         }
     }
 
-    public async pack(): Promise<void> {
-        const nuspecFiles = await workspace.findFiles("**/*.nuspec");
-        if (nuspecFiles.length === 0) {
-            window.showErrorMessage("There are no nuspec files in the current workspace.");
-            return;
-        }
+    public async pack(uri?: Uri): Promise<void> {
+        let quickPickItems: Array<QuickPickItem>;
+        let nuspecSelection: QuickPickItem | undefined;
 
-        const quickPickItems: Array<QuickPickItem> = nuspecFiles.map((filePath) => ({
-            label: path.basename(filePath.fsPath),
-            description: path.dirname(filePath.fsPath)
-        }));
+        // Context menu on a specific .nuspec file: pack it directly, no
+        // quick-pick.  Matches the user intent from Issue GH-131.
+        if (uri && this._isFile(uri.fsPath) && uri.fsPath.toLowerCase().endsWith(".nuspec")) {
+            nuspecSelection = this._toQuickPickItem(uri.fsPath);
+            quickPickItems = [nuspecSelection];
+        } else {
+            // Either no URI (command palette) or a folder URI (context menu
+            // on a folder).  In both cases we still show a quick-pick, but
+            // the search is scoped to the folder when one was supplied.
+            const nuspecFiles = await this._findFilesByExtension("nuspec", uri);
+            if (nuspecFiles.length === 0) {
+                window.showErrorMessage(this._noFilesMessage("nuspec", uri));
+                return;
+            }
 
-        if (quickPickItems.length > 1) {
-            quickPickItems.unshift({ label: ALL_NUSPEC_LABEL });
-        }
+            quickPickItems = nuspecFiles.map((filePath) => this._toQuickPickItem(filePath.fsPath));
 
-        const nuspecSelection = await window.showQuickPick(quickPickItems, {
-            placeHolder: "Available nuspec files..."
-        });
-        if (!nuspecSelection) {
-            return;
+            if (quickPickItems.length > 1) {
+                quickPickItems.unshift({ label: ALL_NUSPEC_LABEL });
+            }
+
+            nuspecSelection = await window.showQuickPick(quickPickItems, {
+                placeHolder: "Available nuspec files..."
+            });
+            if (!nuspecSelection) {
+                return;
+            }
         }
 
         const additionalArguments = (await window.showInputBox({
@@ -98,27 +108,37 @@ export class ChocolateyCliManager {
         }
     }
 
-    public async push(): Promise<void> {
-        const nupkgFiles = await workspace.findFiles("**/*.nupkg");
-        if (nupkgFiles.length === 0) {
-            window.showErrorMessage("There are no nupkg files in the current workspace.");
-            return;
-        }
+    public async push(uri?: Uri): Promise<void> {
+        let quickPickItems: Array<QuickPickItem>;
+        let nupkgSelection: QuickPickItem | undefined;
 
-        const quickPickItems: Array<QuickPickItem> = nupkgFiles.map((filePath) => ({
-            label: path.basename(filePath.fsPath),
-            description: path.dirname(filePath.fsPath)
-        }));
+        // Context menu on a specific .nupkg file: push it directly, no
+        // quick-pick.  Matches the user intent from Issue GH-132.
+        if (uri && this._isFile(uri.fsPath) && uri.fsPath.toLowerCase().endsWith(".nupkg")) {
+            nupkgSelection = this._toQuickPickItem(uri.fsPath);
+            quickPickItems = [nupkgSelection];
+        } else {
+            // Either no URI (command palette) or a folder URI (context menu
+            // on a folder).  In both cases we still show a quick-pick, but
+            // the search is scoped to the folder when one was supplied.
+            const nupkgFiles = await this._findFilesByExtension("nupkg", uri);
+            if (nupkgFiles.length === 0) {
+                window.showErrorMessage(this._noFilesMessage("nupkg", uri));
+                return;
+            }
 
-        if (quickPickItems.length > 1) {
-            quickPickItems.unshift({ label: ALL_NUPKG_LABEL });
-        }
+            quickPickItems = nupkgFiles.map((filePath) => this._toQuickPickItem(filePath.fsPath));
 
-        const nupkgSelection = await window.showQuickPick(quickPickItems, {
-            placeHolder: "Available nupkg files..."
-        });
-        if (!nupkgSelection) {
-            return;
+            if (quickPickItems.length > 1) {
+                quickPickItems.unshift({ label: ALL_NUPKG_LABEL });
+            }
+
+            nupkgSelection = await window.showQuickPick(quickPickItems, {
+                placeHolder: "Available nupkg files..."
+            });
+            if (!nupkgSelection) {
+                return;
+            }
         }
 
         const configuredSources = await this._readConfiguredSources();
@@ -272,6 +292,44 @@ export class ChocolateyCliManager {
     }
 
     private _isDirectory(p: string): boolean {
-        return fs.lstatSync(p).isDirectory();
+        try {
+            return fs.lstatSync(p).isDirectory();
+        } catch {
+            return false;
+        }
+    }
+
+    private _isFile(p: string): boolean {
+        try {
+            return fs.lstatSync(p).isFile();
+        } catch {
+            return false;
+        }
+    }
+
+    private _toQuickPickItem(fsPath: string): QuickPickItem {
+        return {
+            label: path.basename(fsPath),
+            description: path.dirname(fsPath)
+        };
+    }
+
+    /**
+     * Finds *.{extension} files in the workspace, optionally scoped to
+     * the folder represented by `uri`.  When `uri` points at a directory
+     * the glob is applied relative to that directory; otherwise the search
+     * covers the whole workspace.
+     */
+    private async _findFilesByExtension(extension: "nuspec" | "nupkg", uri?: Uri): Promise<Uri[]> {
+        const glob = `**/*.${extension}`;
+        if (uri && this._isDirectory(uri.fsPath)) {
+            return Array.from(await workspace.findFiles(new RelativePattern(uri.fsPath, glob)));
+        }
+        return Array.from(await workspace.findFiles(glob));
+    }
+
+    private _noFilesMessage(extension: "nuspec" | "nupkg", uri?: Uri): string {
+        const scope = uri ? `'${uri.fsPath}'` : "the current workspace";
+        return `There are no ${extension} files in ${scope}.`;
     }
 }
