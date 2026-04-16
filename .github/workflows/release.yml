@@ -35,6 +35,12 @@ jobs:
           # GitVersion in the Cake recipe needs full git history.
           fetch-depth: 0
 
+      - name: Install dotnet #needed for GitVersion
+        uses: actions/setup-dotnet@baa11fbfe1d6520db94683bd5c7a3818018e4309 # v5
+        with:
+          dotnet-version: |
+            5.0.x
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -45,7 +51,7 @@ jobs:
         run: npm ci
 
       - name: Run Cake AppVeyor target
-        run: .\build.ps1 -Target AppVeyor -Verbosity Diagnostic
+        run: .\build.ps1 --target=AppVeyor --verbosity=Diagnostic
         env:
           GITHUB_PAT: ${{ secrets.GITHUB_PAT || secrets.GITHUB_TOKEN }}
           VSMARKETPLACE_TOKEN: ${{ secrets.VSMARKETPLACE_TOKEN }}
