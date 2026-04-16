@@ -6,7 +6,7 @@ import { capitalizeFirstLetter } from "./helpers";
 import { getFullAppPath, getPathToChocolateyBin } from "./config";
 
 export interface IChocolateyOperationResult {
-    code: Number;
+    code: number;
     stdout: Array<string>;
     stderr: Array<string>;
 }
@@ -52,7 +52,7 @@ export class ChocolateyOperation {
         }
     }
 
-    public run(): Promise<{}> {
+    public run(): Promise<IChocolateyOperationResult | void> {
         return new Promise((resolve, reject) => {
             if (!workspace || !workspace.rootPath) {
                 return reject();
@@ -121,7 +121,6 @@ export class ChocolateyOperation {
         });
     }
 
-    // tslint:disable-next-line:max-line-length
     constructor(cmd: string | Array<string>, options: { isOutputChannelVisible: boolean; currentWorkingDirectory: string } = { isOutputChannelVisible: true, currentWorkingDirectory: getFullAppPath() }) {
         this._isOutputChannelVisible = options.isOutputChannelVisible;
         this.cmd = (Array.isArray(cmd)) ? cmd : [cmd];
