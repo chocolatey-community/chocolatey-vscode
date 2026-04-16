@@ -30,7 +30,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           # GitVersion in the Cake recipe needs full git history.
           fetch-depth: 0

@@ -27,7 +27,7 @@ jobs:
           - macos-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           # GitVersion inside the Cake recipe needs full git history.
           fetch-depth: 0
