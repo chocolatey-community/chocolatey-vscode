@@ -5,6 +5,11 @@
 # Declare files that will always have CRLF line endings on checkout.
 *.sln text eol=crlf
 
+# Shell scripts must keep LF line endings even when checked out on
+# Windows; otherwise Linux/macOS refuse to execute them because the
+# shebang line is read as `#!/usr/bin/env bash\r`.
+*.sh text eol=lf
+
 # Denote all files that are truly binary and should not be modified.
 *.png binary
 *.jpg binary
