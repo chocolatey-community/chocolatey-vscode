@@ -142,13 +142,25 @@
 		"vscode:prepublish": "npm run compile",
 		"compile": "tsc -p ./",
 		"watch": "tsc -watch -p ./",
-		"test": "npm run compile && node ./node_modules/vscode/bin/test"
+		"pretest": "npm run compile",
+		"test:unit": "mocha --recursive out/test/unit",
+		"test:integration": "node ./out/test/runTest.js",
+		"test": "npm run test:unit && npm run test:integration"
 	},
 	"devDependencies": {
+		"@types/chai": "^4.3.4",
+		"@types/glob": "^7.2.0",
+		"@types/mocha": "^9.1.1",
 		"@types/node": "^13.13.2",
 		"@types/node-fetch": "^2.6.12",
+		"@types/sinon": "^10.0.13",
 		"@types/vscode": "^1.44.0",
 		"@types/xml2js": "^0.4.5",
+		"@vscode/test-electron": "^2.2.3",
+		"chai": "^4.3.7",
+		"glob": "^7.2.3",
+		"mocha": "^9.2.2",
+		"sinon": "^14.0.2",
 		"tslint": "^6.1.1",
 		"typescript": "^3.8.3"
 	},
