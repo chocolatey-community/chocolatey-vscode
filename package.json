@@ -176,7 +176,7 @@
 		"@types/glob": "^7.2.0",
 		"@types/mocha": "^9.1.1",
 		"@types/node": "^20.11.30",
-		"@types/sinon": "^10.0.13",
+		"@types/sinon": "^21.0.1",
 		"@types/vscode": "^1.85.0",
 		"@types/xml2js": "^0.4.14",
 		"@typescript-eslint/eslint-plugin": "^7.4.0",
@@ -187,7 +187,7 @@
 		"eslint": "^8.57.0",
 		"glob": "^7.2.3",
 		"mocha": "^11.7.5",
-		"sinon": "^14.0.2",
+		"sinon": "^21.1.2",
 		"typescript": "^5.4.5"
 	},
 	"dependencies": {
