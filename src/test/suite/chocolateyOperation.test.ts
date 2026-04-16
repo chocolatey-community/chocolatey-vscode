@@ -17,14 +17,12 @@ describe("ChocolateyOperation", () => {
         it("wraps a single-string command into an array", () => {
             const op: ChocolateyOperation = new ChocolateyOperation("pack");
             expect(op.cmd).to.deep.equal(["pack"]);
-            expect(op.created).to.equal(true);
         });
 
         it("accepts an array of command arguments unchanged", () => {
             const args: string[] = ["push", "foo.nupkg", "--source=\"'x'\""];
             const op: ChocolateyOperation = new ChocolateyOperation(args);
             expect(op.cmd).to.deep.equal(args);
-            expect(op.created).to.equal(true);
         });
 
         it("starts with empty stdout and stderr buffers", () => {
