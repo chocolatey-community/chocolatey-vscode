@@ -2,7 +2,7 @@ import { expect } from "chai";
 import * as path from "path";
 import * as vscode from "vscode";
 import {
-    getFullAppPath,
+    getWorkspaceRoot,
     getPathToChocolateyBin,
     getPathToChocolateyConfig,
     getPathToChocolateyTemplates
@@ -20,15 +20,16 @@ describe("config", () => {
         }
     });
 
-    describe("getFullAppPath", () => {
+    describe("getWorkspaceRoot", () => {
         it("returns a non-empty path rooted in the open workspace", () => {
             // The test runner opens src/test/fixtures/workspace as the workspace root.
-            const appPath: string = getFullAppPath();
+            const appPath: string = getWorkspaceRoot();
             expect(appPath).to.be.a("string");
             expect(appPath.length).to.be.greaterThan(0);
-            // Should match whatever VS Code thinks the workspace root is.
-            if (vscode.workspace.rootPath) {
-                expect(path.normalize(appPath)).to.equal(path.normalize(path.join(vscode.workspace.rootPath, "./")));
+            // Should match whatever VS Code thinks the first workspace folder is.
+            const folder = vscode.workspace.workspaceFolders?.[0];
+            if (folder) {
+                expect(path.normalize(appPath)).to.equal(path.normalize(path.join(folder.uri.fsPath, "./")));
             }
         });
     });

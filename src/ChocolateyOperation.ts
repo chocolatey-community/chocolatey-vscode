@@ -1,9 +1,9 @@
-import { OutputChannel, window, workspace } from "vscode";
+import { OutputChannel, window } from "vscode";
 import * as cp from "child_process";
 import * as os from "os";
 
 import { capitalizeFirstLetter } from "./helpers";
-import { getFullAppPath, getPathToChocolateyBin } from "./config";
+import { getWorkspaceRoot, getPathToChocolateyBin } from "./config";
 
 export interface IChocolateyOperationResult {
     code: number;
@@ -54,8 +54,8 @@ export class ChocolateyOperation {
 
     public run(): Promise<IChocolateyOperationResult | void> {
         return new Promise((resolve, reject) => {
-            if (!workspace || !workspace.rootPath) {
-                return reject();
+            if (!getWorkspaceRoot()) {
+                return reject(new Error("No workspace folder is open."));
             }
 
             let lastOut: string = "";
@@ -68,12 +68,12 @@ export class ChocolateyOperation {
                 joinedArgs.unshift(chocolateyPath);
 
                 this._process = this._spawn("powershell.exe", joinedArgs, {
-                    cwd: this._currentWorkingDirectory ? this._currentWorkingDirectory : getFullAppPath(),
+                    cwd: this._currentWorkingDirectory ? this._currentWorkingDirectory : getWorkspaceRoot(),
                     stdio: ["ignore", "pipe", "pipe"]
                 });
             } else {
                 this._process = this._spawn(chocolateyPath, this.cmd, {
-                    cwd: this._currentWorkingDirectory ? this._currentWorkingDirectory : getFullAppPath()
+                    cwd: this._currentWorkingDirectory ? this._currentWorkingDirectory : getWorkspaceRoot()
                 });
             }
 
@@ -121,7 +121,7 @@ export class ChocolateyOperation {
         });
     }
 
-    constructor(cmd: string | Array<string>, options: { isOutputChannelVisible: boolean; currentWorkingDirectory: string } = { isOutputChannelVisible: true, currentWorkingDirectory: getFullAppPath() }) {
+    constructor(cmd: string | Array<string>, options: { isOutputChannelVisible: boolean; currentWorkingDirectory: string } = { isOutputChannelVisible: true, currentWorkingDirectory: getWorkspaceRoot() }) {
         this._isOutputChannelVisible = options.isOutputChannelVisible;
         this.cmd = (Array.isArray(cmd)) ? cmd : [cmd];
         this._currentWorkingDirectory = options.currentWorkingDirectory;
@@ -143,7 +143,7 @@ export function isChocolateyCliInstalled(): boolean {
 
     try {
         let exec: Buffer = cp.execSync(`${chocolateyBin} -v`, {
-            cwd: getFullAppPath()
+            cwd: getWorkspaceRoot()
         });
 
         console.log("Chocolatey is apparently installed");

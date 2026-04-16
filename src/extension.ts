@@ -1,6 +1,7 @@
 import { window, commands, workspace, QuickPickItem, ExtensionContext, Uri } from "vscode";
 import * as chocolateyCli from "./ChocolateyCliManager";
 import * as chocolateyOps from "./ChocolateyOperation";
+import { getWorkspaceRoot } from "./config";
 import * as path from "path";
 import * as fs from "fs";
 
@@ -22,7 +23,7 @@ export function activate(context: ExtensionContext): void {
 
 function deleteNupkgs():void {
     // check if there is an open folder in workspace
-    if (workspace.rootPath === undefined) {
+    if (!getWorkspaceRoot()) {
         window.showErrorMessage("You have not yet opened a folder.");
         return;
     }
@@ -74,7 +75,7 @@ function deleteNupkgs():void {
 
 function execute(cmd?: string | undefined, arg?: any[] | undefined): Thenable<string | undefined> | undefined {
     // check if there is an open folder in workspace
-    if (workspace.rootPath === undefined) {
+    if (!getWorkspaceRoot()) {
         return window.showErrorMessage("You have not yet opened a folder.");
     }
 
@@ -96,7 +97,7 @@ function execute(cmd?: string | undefined, arg?: any[] | undefined): Thenable<st
     }
 
     // check if there is an open folder in workspace
-    if (workspace.rootPath === undefined) {
+    if (!getWorkspaceRoot()) {
         return window.showErrorMessage("You have not yet opened a folder.");
     }
 
