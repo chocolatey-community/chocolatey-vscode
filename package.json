@@ -188,7 +188,7 @@
 		"glob": "^7.2.3",
 		"mocha": "^11.7.5",
 		"sinon": "^14.0.2",
-		"typescript": "^5.4.5"
+		"typescript": "^6.0.3"
 	},
 	"dependencies": {
 		"xml2js": "^0.6.2"
