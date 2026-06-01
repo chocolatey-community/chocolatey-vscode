@@ -75,7 +75,7 @@ jobs:
           key: ${{ runner.os }}-vscode-test-${{ hashFiles('src/test/runTest.ts') }}
 
       - name: Install dotnet #needed for GitVersion
-        uses: actions/setup-dotnet@baa11fbfe1d6520db94683bd5c7a3818018e4309
+        uses: actions/setup-dotnet@9a946fdbd5fb07b82b2f5a4466058b876ab72bb2
         with:
           dotnet-version: |
             5.0.x
