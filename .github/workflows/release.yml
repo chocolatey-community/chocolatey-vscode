@@ -36,7 +36,7 @@ jobs:
           fetch-depth: 0
 
       - name: Install dotnet #needed for GitVersion
-        uses: actions/setup-dotnet@baa11fbfe1d6520db94683bd5c7a3818018e4309
+        uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1
         with:
           dotnet-version: |
             5.0.x
