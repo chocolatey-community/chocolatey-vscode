@@ -1,72 +1,402 @@
 {
-    "Install-ChocolateyPackage": {
-        "prefix": "chocoInstallChocolateyPackage",
-        "body": [
-            "\\$ErrorActionPreference = 'Stop';",
-            "",
-            "\\$packageName= '${1:packageName}'",
-            "\\$toolsDir   = \"$(Split-Path -parent \\$MyInvocation.MyCommand.Definition)\"",
-            "\\$url        = '${2:DownloadUrl}'",
-            "\\$url64      = '${3:64BitDownloadUrl}'",
-            "",
-            "\\$packageArgs = @{",
-                "\tpackageName   = \\$packageName",
-                "\tunzipLocation = \\$toolsDir",
-                "\tfileType      = '${4:fileType}'",
-                "\turl           = \\$url",
-                "\turl64bit      = \\$url64",
-
-                "\tsilentArgs    = \"${5:silentArgs}\"",
-                "\tvalidExitCodes= @(${6:validExitCodes})",
-
-                "\tsoftwareName  = '${7:softwareName}'",
-                "\tchecksum      = '${8:checkSum}'",
-                "\tchecksumType  = '${9:checkSumType}'",
-                "\tchecksum64    = '${10:checkSum64}'",
-                "\tchecksumType64= '${11:checkSum64Type}'",
-            "}",
-            "",
-            "Install-ChocolateyPackage @packageArgs"
-        ],
-        "description": "Chocolatey Install-ChocolateyPackage Helper Function"
-    },
-        "Uninstall-ChocolateyPackage": {
-        "prefix": "chocoUninstallChocolateyPackage",
-        "body": [
-            "\\$ErrorActionPreference = 'Stop';",
-            "",
-            "\\$packageArgs = @{",
-            "\tpackageName    = \\$env:ChocolateyPackageName",
-            "\tsoftwareName   = '${1:softwareName}*'",
-            "\tfileType       = '${2|exe,msi,msu|}'",
-            "\tsilentArgs     = '${3:silentArgs}'",
-            "\t# https://msdn.microsoft.com/en-us/library/aa376931(v=vs.85).aspx",
-            "\tvalidExitCodes = @(${4:validExitCodes})",
-            "}",
-            "",
-            "\\$uninstalled = \\$false",
-            "[array]\\$key = Get-UninstallRegistryKey -SoftwareName \\$packageArgs['softwareName']",
-            "",
-            "if (\\$key.Count -eq 1) {",
-            "\t\\$key | % {",
-            "\t\t\\$packageArgs['file'] = \"$(\\$_.UninstallString)\"",
-            "\t\tif (\\$packageArgs['fileType'] -eq 'MSI') {",
-            "\t\t\t\\$packageArgs['silentArgs'] = \"$(\\$_.PSChildName) $(\\$packageArgs['silentArgs'])\"",
-            "",
-            "\t\t\t\\$packageArgs['file'] = ''",
-            "\t\t}",
-            "",
-            "\t\tUninstall-ChocolateyPackage @packageArgs",
-            "\t}",
-            "} elseif (\\$key.Count -eq 0) {",
-            "\tWrite-Warning \"$(\\$packageArgs['packageName']) has already been uninstalled by other means.\"",
-            "} elseif (\\$key.Count -gt 1) {",
-            "\tWrite-Warning \"$(\\$key.Count) matches found!\"",
-            "\tWrite-Warning \"To prevent accidental data loss, no programs will be uninstalled.\"",
-            "\tWrite-Warning \"Please alert package maintainer the following keys were matched:\"",
-            "\t\\$key | % {Write-Warning \"- $(\\$_.DisplayName)\"}",
-            "}"
-        ],
-        "description": "Chocolatey Uninstall-ChocolateyPackage Helper Function"
-    }
+  "Install-ChocolateyPackage": {
+    "prefix": "chocoInstallChocolateyPackage",
+    "body": [
+      "\\$ErrorActionPreference = 'Stop';",
+      "",
+      "\\$packageName = '${1:packageName}'",
+      "\\$toolsDir = \"\\$(Split-Path -Parent \\$MyInvocation.MyCommand.Definition)\"",
+      "\\$url = '${2:DownloadUrl}'",
+      "\\$url64 = '${3:64BitDownloadUrl}'",
+      "",
+      "\\$packageArgs = @{",
+      "  packageName = \\$packageName",
+      "  unzipLocation = \\$toolsDir",
+      "  fileType = '${4:fileType}'",
+      "  url = \\$url",
+      "  url64bit = \\$url64",
+      "  silentArgs = \"${5:silentArgs}\"",
+      "  validExitCodes = @(${6:validExitCodes})",
+      "  softwareName = '${7:softwareName}'",
+      "  checksum = '${8:checkSum}'",
+      "  checksumType = '${9:checkSumType}'",
+      "  checksum64 = '${10:checkSum64}'",
+      "  checksumType64 = '${11:checkSum64Type}'",
+      "}",
+      "",
+      "Install-ChocolateyPackage @packageArgs"
+    ],
+    "description": "Chocolatey Install-ChocolateyPackage Helper Function"
+  },
+  "Uninstall-ChocolateyPackage": {
+    "prefix": "chocoUninstallChocolateyPackage",
+    "body": [
+      "\\$ErrorActionPreference = 'Stop';",
+      "",
+      "\\$packageArgs = @{",
+      "  packageName = \\$env:ChocolateyPackageName",
+      "  softwareName = '${1:softwareName}*'",
+      "  fileType = '${2|exe,msi,msu|}'",
+      "  silentArgs = '${3:silentArgs}'",
+      "  # https://msdn.microsoft.com/en-us/library/aa376931(v=vs.85).aspx",
+      "  validExitCodes = @(${4:validExitCodes})",
+      "}",
+      "",
+      "\\$uninstalled = \\$false",
+      "[array]\\$key = Get-UninstallRegistryKey -SoftwareName \\$packageArgs['softwareName']",
+      "",
+      "if (\\$key.Count -eq 1) {",
+      "  \\$key | % {",
+      "    \\$packageArgs['file'] = \"\\$(\\$_.UninstallString)\"",
+      "    if (\\$packageArgs['fileType'] -eq 'MSI') {",
+      "      \\$packageArgs['silentArgs'] = \"\\$(\\$_.PSChildName) \\$(\\$packageArgs['silentArgs'])\"",
+      "      \\$packageArgs['file'] = ''",
+      "    }",
+      "",
+      "    Uninstall-ChocolateyPackage @packageArgs",
+      "  }",
+      "} elseif (\\$key.Count -eq 0) {",
+      "  Write-Warning \"\\$(\\$packageArgs['packageName']) has already been uninstalled by other means.\"",
+      "} elseif (\\$key.Count -gt 1) {",
+      "  Write-Warning \"\\$(\\$key.Count) matches found!\"",
+      "  Write-Warning \"To prevent accidental data loss, no programs will be uninstalled.\"",
+      "  Write-Warning \"Please alert package maintainer the following keys were matched:\"",
+      "  \\$key | % { Write-Warning \"- \\$(\\$_.DisplayName)\" }",
+      "}",
+      ""
+    ],
+    "description": "Chocolatey Uninstall-ChocolateyPackage Helper Function"
+  },
+  "Format-FileSize": {
+    "prefix": "chocoFormatFileSize",
+    "body": [
+      "\\$size = ${1:1024}",
+      "Format-FileSize -Size \\$size"
+    ],
+    "description": "Chocolatey Format-FileSize Helper Function"
+  },
+  "Get-ChecksumValid": {
+    "prefix": "chocoGetChecksumValid",
+    "body": [
+      "\\$file = '${1:filePath}'",
+      "\\$expectedChecksum = '${2:checksum}'",
+      "\\$checksumType = '${3|md5,sha1,sha256,sha512|}'",
+      "Get-ChecksumValid -File \\$file -Checksum \\$expectedChecksum -ChecksumType \\$checksumType"
+    ],
+    "description": "Chocolatey Get-ChecksumValid Helper Function"
+  },
+  "Get-ChocolateyConfigValue": {
+    "prefix": "chocoGetChocolateyConfigValue",
+    "body": [
+      "\\$configName = '${1:configName}'",
+      "\\$defaultValue = '${2:defaultValue}'",
+      "\\$configValue = Get-ChocolateyConfigValue -Name \\$configName -DefaultValue \\$defaultValue",
+      "\\$configValue"
+    ],
+    "description": "Chocolatey Get-ChocolateyConfigValue Helper Function"
+  },
+  "Get-ChocolateyPath": {
+    "prefix": "chocoGetChocolateyPath",
+    "body": [
+      "\\$path = Get-ChocolateyPath -PathType '${1|User,Machine|}'",
+      "\\$path"
+    ],
+    "description": "Chocolatey Get-ChocolateyPath Helper Function"
+  },
+  "Get-ChocolateyUnzip": {
+    "prefix": "chocoGetChocolateyUnzip",
+    "body": [
+      "\\$toolsDir = \"\\$(Split-Path -Parent \\$MyInvocation.MyCommand.Definition)\"",
+      "\\$zipFile = '${1:archive.zip}'",
+      "\\$destination = '${2:destination}'",
+      "Get-ChocolateyUnzip -FileFullPath \\$zipFile -Destination \\$destination"
+    ],
+    "description": "Chocolatey Get-ChocolateyUnzip Helper Function"
+  },
+  "Get-ChocolateyWebFile": {
+    "prefix": "chocoGetChocolateyWebFile",
+    "body": [
+      "\\$url = '${1:DownloadUrl}'",
+      "\\$fileFullPath = \"${2:destinationPath}\"",
+      "\\$checksum = '${3:checksum}'",
+      "Get-ChocolateyWebFile -Url \\$url -FileFullPath \\$fileFullPath -Checksum \\$checksum"
+    ],
+    "description": "Chocolatey Get-ChocolateyWebFile Helper Function"
+  },
+  "Get-FtpFile": {
+    "prefix": "chocoGetFtpFile",
+    "body": [
+      "\\$ftpUrl = '${1:ftp://server/path/file}'",
+      "\\$destination = '${2:destinationPath}'",
+      "Get-FtpFile -Url \\$ftpUrl -Destination \\$destination"
+    ],
+    "description": "Chocolatey Get-FtpFile Helper Function"
+  },
+  "Get-OSArchitectureWidth": {
+    "prefix": "chocoGetOSArchitectureWidth",
+    "body": [
+      "\\$arch = Get-OSArchitectureWidth",
+      "\\$arch"
+    ],
+    "description": "Chocolatey Get-OSArchitectureWidth Helper Function"
+  },
+  "Get-PackageParameters": {
+    "prefix": "chocoGetPackageParameters",
+    "body": [
+      "\\$packageParameters = Get-PackageParameters",
+      "\\$packageParameters"
+    ],
+    "description": "Chocolatey Get-PackageParameters Helper Function"
+  },
+  "Get-ToolsLocation": {
+    "prefix": "chocoGetToolsLocation",
+    "body": [
+      "\\$toolsLocation = Get-ToolsLocation",
+      "\\$toolsLocation"
+    ],
+    "description": "Chocolatey Get-ToolsLocation Helper Function"
+  },
+  "Get-UACEnabled": {
+    "prefix": "chocoGetUACEnabled",
+    "body": [
+      "\\$uacEnabled = Get-UACEnabled",
+      "\\$uacEnabled"
+    ],
+    "description": "Chocolatey Get-UACEnabled Helper Function"
+  },
+  "Get-UninstallRegistryKey": {
+    "prefix": "chocoGetUninstallRegistryKey",
+    "body": [
+      "\\$softwareName = '${1:softwareName}*'",
+      "[array]\\$keys = Get-UninstallRegistryKey -SoftwareName \\$softwareName",
+      "\\$keys"
+    ],
+    "description": "Chocolatey Get-UninstallRegistryKey Helper Function"
+  },
+  "Get-VirusCheckValid": {
+    "prefix": "chocoGetVirusCheckValid",
+    "body": [
+      "\\$file = '${1:filePath}'",
+      "\\$isValid = Get-VirusCheckValid -File \\$file",
+      "\\$isValid"
+    ],
+    "description": "Chocolatey Get-VirusCheckValid Helper Function"
+  },
+  "Get-WebFile": {
+    "prefix": "chocoGetWebFile",
+    "body": [
+      "\\$url = '${1:DownloadUrl}'",
+      "\\$fileFullPath = '${2:destinationPath}'",
+      "\\$checksum = '${3:checksum}'",
+      "Get-WebFile -Url \\$url -FileFullPath \\$fileFullPath -Checksum \\$checksum"
+    ],
+    "description": "Chocolatey Get-WebFile Helper Function"
+  },
+  "Get-WebFileName": {
+    "prefix": "chocoGetWebFileName",
+    "body": [
+      "\\$url = '${1:DownloadUrl}'",
+      "\\$fileName = Get-WebFileName -Url \\$url",
+      "\\$fileName"
+    ],
+    "description": "Chocolatey Get-WebFileName Helper Function"
+  },
+  "Get-WebHeaders": {
+    "prefix": "chocoGetWebHeaders",
+    "body": [
+      "\\$url = '${1:DownloadUrl}'",
+      "\\$headers = Get-WebHeaders -Url \\$url",
+      "\\$headers"
+    ],
+    "description": "Chocolatey Get-WebHeaders Helper Function"
+  },
+  "Install-BinFile": {
+    "prefix": "chocoInstallBinFile",
+    "body": [
+      "\\$name = '${1:toolName}'",
+      "\\$path = '${2:toolPath}'",
+      "Install-BinFile -Name \\$name -Path \\$path"
+    ],
+    "description": "Chocolatey Install-BinFile Helper Function"
+  },
+  "Install-ChocolateyEnvironmentVariable": {
+    "prefix": "chocoInstallChocolateyEnvironmentVariable",
+    "body": [
+      "\\$variableName = '${1:VariableName}'",
+      "\\$variableValue = '${2:Value}'",
+      "Install-ChocolateyEnvironmentVariable -VariableName \\$variableName -VariableValue \\$variableValue -VariableType '${3|User,Machine|}'"
+    ],
+    "description": "Chocolatey Install-ChocolateyEnvironmentVariable Helper Function"
+  },
+  "Install-ChocolateyExplorerMenuItem": {
+    "prefix": "chocoInstallChocolateyExplorerMenuItem",
+    "body": [
+      "\\$menuName = '${1:MenuName}'",
+      "\\$menuCommand = '${2:Command}'",
+      "Install-ChocolateyExplorerMenuItem -MenuName \\$menuName -MenuCommand \\$menuCommand"
+    ],
+    "description": "Chocolatey Install-ChocolateyExplorerMenuItem Helper Function"
+  },
+  "Install-ChocolateyFileAssociation": {
+    "prefix": "chocoInstallChocolateyFileAssociation",
+    "body": [
+      "\\$extension = '${1:.ext}'",
+      "\\$executablePath = '${2:C:\\Program Files\\App\\app.exe}'",
+      "Install-ChocolateyFileAssociation -Extension \\$extension -ExecutablePath \\$executablePath"
+    ],
+    "description": "Chocolatey Install-ChocolateyFileAssociation Helper Function"
+  },
+  "Install-ChocolateyInstallPackage": {
+    "prefix": "chocoInstallChocolateyInstallPackage",
+    "body": [
+      "\\$packageArgs = @{",
+      "  packageName = \\$env:ChocolateyPackageName",
+      "  fileType = '${1|exe,msi,msu|}',",
+      "  file = '${2:installerPath}',",
+      "  silentArgs = '${3:silentArgs}',",
+      "  validExitCodes = @(${4:validExitCodes})",
+      "}",
+      "Install-ChocolateyInstallPackage @packageArgs"
+    ],
+    "description": "Chocolatey Install-ChocolateyInstallPackage Helper Function"
+  },
+  "Install-ChocolateyPinnedTaskBarItem": {
+    "prefix": "chocoInstallChocolateyPinnedTaskBarItem",
+    "body": [
+      "\\$targetPath = '${1:C:\\Program Files\\App\\app.exe}'",
+      "Install-ChocolateyPinnedTaskBarItem -TargetFilePath \\$targetPath"
+    ],
+    "description": "Chocolatey Install-ChocolateyPinnedTaskBarItem Helper Function"
+  },
+  "Install-ChocolateyPowershellCommand": {
+    "prefix": "chocoInstallChocolateyPowershellCommand",
+    "body": [
+      "\\$packageArgs = @{",
+      "  packageName = \\$env:ChocolateyPackageName",
+      "  fileType = 'exe'",
+      "  file = '${1:scriptPath}.ps1'",
+      "  silentArgs = '${2:arguments}'",
+      "}",
+      "Install-ChocolateyPowershellCommand @packageArgs"
+    ],
+    "description": "Chocolatey Install-ChocolateyPowershellCommand Helper Function"
+  },
+  "Install-ChocolateyShortcut": {
+    "prefix": "chocoInstallChocolateyShortcut",
+    "body": [
+      "\\$shortcutFilePath = '${1:C:\\Users\\Public\\Desktop\\App.lnk}'",
+      "\\$targetPath = '${2:C:\\Program Files\\App\\app.exe}'",
+      "Install-ChocolateyShortcut -ShortcutFilePath \\$shortcutFilePath -Target \\$targetPath"
+    ],
+    "description": "Chocolatey Install-ChocolateyShortcut Helper Function"
+  },
+  "Install-ChocolateyVsixPackage": {
+    "prefix": "chocoInstallChocolateyVsixPackage",
+    "body": [
+      "\\$vsixUrl = '${1:DownloadUrl}'",
+      "\\$vsixPath = \"\\$toolsDir\\${2:extension.vsix}\"",
+      "Install-ChocolateyVsixPackage -VsixUrl \\$vsixUrl -VsixFile \\$vsixPath"
+    ],
+    "description": "Chocolatey Install-ChocolateyVsixPackage Helper Function"
+  },
+  "Install-ChocolateyWindowsService": {
+    "prefix": "chocoInstallChocolateyWindowsService",
+    "body": [
+      "\\$serviceName = '${1:ServiceName}'",
+      "\\$displayName = '${2:DisplayName}'",
+      "\\$startupType = '${3|Automatic,Manual,Disabled|}'",
+      "Install-ChocolateyWindowsService -Name \\$serviceName -DisplayName \\$displayName -StartupType \\$startupType"
+    ],
+    "description": "Chocolatey Install-ChocolateyWindowsService Helper Function"
+  },
+  "Install-ChocolateyZipPackage": {
+    "prefix": "chocoInstallChocolateyZipPackage",
+    "body": [
+      "\\$toolsDir = \"\\$(Split-Path -Parent \\$MyInvocation.MyCommand.Definition)\"",
+      "\\$zipFile = '${1:archive.zip}'",
+      "\\$destination = \\$toolsDir",
+      "Install-ChocolateyZipPackage -PackageName '${2:packageName}' -Url '${3:DownloadUrl}' -UnzipLocation \\$destination"
+    ],
+    "description": "Chocolatey Install-ChocolateyZipPackage Helper Function"
+  },
+  "Install-Vsix": {
+    "prefix": "chocoInstallVsix",
+    "body": [
+      "\\$vsixPath = '${1:C:\\path\\to\\extension.vsix}'",
+      "Install-Vsix -FilePath \\$vsixPath"
+    ],
+    "description": "Chocolatey Install-Vsix Helper Function"
+  },
+  "Set-PowerShellExitCode": {
+    "prefix": "chocoSetPowerShellExitCode",
+    "body": [
+      "Set-PowerShellExitCode -ExitCode ${1:0}"
+    ],
+    "description": "Chocolatey Set-PowerShellExitCode Helper Function"
+  },
+  "Start-ChocolateyProcessAsAdmin": {
+    "prefix": "chocoStartChocolateyProcessAsAdmin",
+    "body": [
+      "\\$processArgs = '${1:arguments}'",
+      "\\$filePath = '${2:C:\\Program Files\\App\\app.exe}'",
+      "Start-ChocolateyProcessAsAdmin -FilePath \\$filePath -Arguments \\$processArgs"
+    ],
+    "description": "Chocolatey Start-ChocolateyProcessAsAdmin Helper Function"
+  },
+  "Start-ChocolateyWindowsService": {
+    "prefix": "chocoStartChocolateyWindowsService",
+    "body": [
+      "\\$serviceName = '${1:ServiceName}'",
+      "Start-ChocolateyWindowsService -Name \\$serviceName"
+    ],
+    "description": "Chocolatey Start-ChocolateyWindowsService Helper Function"
+  },
+  "Stop-ChocolateyWindowsService": {
+    "prefix": "chocoStopChocolateyWindowsService",
+    "body": [
+      "\\$serviceName = '${1:ServiceName}'",
+      "Stop-ChocolateyWindowsService -Name \\$serviceName"
+    ],
+    "description": "Chocolatey Stop-ChocolateyWindowsService Helper Function"
+  },
+  "Uninstall-BinFile": {
+    "prefix": "chocoUninstallBinFile",
+    "body": [
+      "\\$name = '${1:toolName}'",
+      "Uninstall-BinFile -Name \\$name"
+    ],
+    "description": "Chocolatey Uninstall-BinFile Helper Function"
+  },
+  "Uninstall-ChocolateyEnvironmentVariable": {
+    "prefix": "chocoUninstallChocolateyEnvironmentVariable",
+    "body": [
+      "\\$variableName = '${1:VariableName}'",
+      "Uninstall-ChocolateyEnvironmentVariable -VariableName \\$variableName -VariableType '${2|User,Machine|}'"
+    ],
+    "description": "Chocolatey Uninstall-ChocolateyEnvironmentVariable Helper Function"
+  },
+  "Uninstall-ChocolateyWindowsService": {
+    "prefix": "chocoUninstallChocolateyWindowsService",
+    "body": [
+      "\\$serviceName = '${1:ServiceName}'",
+      "Uninstall-ChocolateyWindowsService -Name \\$serviceName"
+    ],
+    "description": "Chocolatey Uninstall-ChocolateyWindowsService Helper Function"
+  },
+  "Uninstall-ChocolateyZipPackage": {
+    "prefix": "chocoUninstallChocolateyZipPackage",
+    "body": [
+      "\\$zipFile = '${1:archive.zip}'",
+      "\\$destination = '${2:destination}'",
+      "Uninstall-ChocolateyZipPackage -ZipFile \\$zipFile -Destination \\$destination"
+    ],
+    "description": "Chocolatey Uninstall-ChocolateyZipPackage Helper Function"
+  },
+  "Write-FunctionCallLogMessage": {
+    "prefix": "chocoWriteFunctionCallLogMessage",
+    "body": [
+      "Write-FunctionCallLogMessage -Message '${1:message}'"
+    ],
+    "description": "Chocolatey Write-FunctionCallLogMessage Helper Function"
+  }
 }
